@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"window_shape_ctr",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"window_shape_ctr",
+  "parent":{
+    "name":"window_shape",
+    "path":"folders/Global/window_shape.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

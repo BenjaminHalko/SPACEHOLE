@@ -3,6 +3,9 @@
 #macro RES_WIDTH 256
 #macro RES_HEIGHT 224
 
+window_shape_init();
+window_enable_per_pixel_alpha();
+
 randomize();
 
 getOsType();
@@ -20,7 +23,6 @@ ini_open(SAVEFILE);
 global.username = ini_read_string("settings","username","");
 global.audioVol = ini_read_real("settings","vol",0.7);
 global.pb =  ini_read_real("score","score",0);
-global.render = ini_read_real("settings","render",true);
 ini_close();
 
 if (string_length(global.username) > 10)

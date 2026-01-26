@@ -19,6 +19,7 @@
     {"$GMFolder":"","%Name":"Objects","folderPath":"folders/~Leaderboard API/Firebase/Firebase RealTime/Extensions/Firebase REST API Library (Don't Touch)/Listeners RealTime/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Tools","folderPath":"folders/~Leaderboard API/Firebase/Firebase RealTime/Extensions/Firebase REST API Library (Don't Touch)/Tools.yy","name":"Tools","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Global","folderPath":"folders/Global.yy","name":"Global","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"window_shape","folderPath":"folders/Global/window_shape.yy","name":"window_shape","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Menu","folderPath":"folders/Menu.yy","name":"Menu","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
@@ -31,6 +32,7 @@
   "name":"GGJ-Mask",
   "resources":[
     {"id":{"name":"FirebaseSetup","path":"extensions/FirebaseSetup/FirebaseSetup.yy",},},
+    {"id":{"name":"window_shape","path":"extensions/window_shape/window_shape.yy",},},
     {"id":{"name":"YYFirebaseRealTime","path":"extensions/YYFirebaseRealTime/YYFirebaseRealTime.yy",},},
     {"id":{"name":"fFont","path":"fonts/fFont/fFont.yy",},},
     {"id":{"name":"Obj_FirebaseREST_Listener_On_RealTime","path":"objects/Obj_FirebaseREST_Listener_On_RealTime/Obj_FirebaseREST_Listener_On_RealTime.yy",},},
@@ -50,6 +52,7 @@
     {"id":{"name":"HelperFunctions","path":"scripts/HelperFunctions/HelperFunctions.yy",},},
     {"id":{"name":"Input","path":"scripts/Input/Input.yy",},},
     {"id":{"name":"LeaderboardAPI","path":"scripts/LeaderboardAPI/LeaderboardAPI.yy",},},
+    {"id":{"name":"window_shape_ctr","path":"scripts/window_shape_ctr/window_shape_ctr.yy",},},
     {"id":{"name":"sArrow","path":"sprites/sArrow/sArrow.yy",},},
     {"id":{"name":"sAudio","path":"sprites/sAudio/sAudio.yy",},},
     {"id":{"name":"sAudioLine","path":"sprites/sAudioLine/sAudioLine.yy",},},
