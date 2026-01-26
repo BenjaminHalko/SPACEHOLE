@@ -1,7 +1,7 @@
 /// @desc 
 
-#macro RES_WIDTH 256
-#macro RES_HEIGHT 224
+#macro RES_WIDTH 480
+#macro RES_HEIGHT 270
 
 window_shape_init();
 window_enable_per_pixel_alpha();
