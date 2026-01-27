@@ -33,18 +33,18 @@ function __MaskParent() constructor {
     /// @param {real} bottom
     static HasCollision = function(_left, _top, _right, _bottom) {
         var _ptsLen = array_length(points);
-        for (var i = 0; i < _ptsLen - 5; i += 2) {
+        for (var i = 0; i < _ptsLen-3; i++) {
             if (!rectangle_in_triangle(
                 _left,
                 _top,
                 _right,
                 _bottom,
-                x + points[i],
-                y + points[i + 1],
-                x + points[i + 2],
-                y + points[i + 3],
-                x + points[i + 4],
-                y + points[i + 5]
+                x + points[i][0],
+                y + points[i][1],
+                x + points[i+1][0],
+                y + points[i+1][1],
+                x + points[i+2][0],
+                y + points[i+2][1]
             )) {
                 return false;
             }
@@ -80,7 +80,7 @@ function __MaskParent() constructor {
 
 function MaskBasicCircle() : __MaskParent() constructor {
     static BaseRadius = 32;
-    static Sides = 16;
+    static Sides = 48;
     
     repeat(Sides) {
         array_push(points, [0, 0], [0, 0], [0, 0]);
@@ -92,8 +92,9 @@ function MaskBasicCircle() : __MaskParent() constructor {
     static UpdateOffsets = function() {
         var _pointOffsetLen = array_length(pointOffsets);
         for(var i = 0; i < _pointOffsetLen; i++) {
+            if (irandom(5) != 0) continue;
             var _angle = random(360);
-            var _dist = random(BaseRadius * size / 2);
+            var _dist = random(BaseRadius * size / 6);
             pointOffsets[i][0] = lengthdir_x(_dist, _angle);
             pointOffsets[i][1] = lengthdir_y(_dist, _angle);
         }

@@ -2,8 +2,8 @@
 
 // Config
 growSpeed = 0.5;
-maxGrow = 3;
-attackShrink = 0.2;
+maxGrow = 4;
+attackShrink = 1;
 
 // State
 attackPulse = 0;

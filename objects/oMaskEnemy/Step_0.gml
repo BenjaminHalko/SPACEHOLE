@@ -7,10 +7,7 @@ if (keyboard_check_pressed(vk_space)) {
 }
 
 // Offset
-if (offsetTiming-- < 0) {
-    offsetTiming = 2;
-    mask.UpdateOffsets();
-}
+mask.UpdateOffsets();
 
 // Grow
 targetSize = Approach(targetSize, maxGrow, growSpeed / 60);
