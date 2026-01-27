@@ -2,12 +2,12 @@
 
 // Config
 growSpeed = 2;
-maxGrow = 4;
+maxGrow = 0;
 attackShrink = 1;
 
 // State
 attackPulse = 0;
-targetSize = 2;
+targetSize = 0;
 dead = false;
 offsetTiming = 5;
 

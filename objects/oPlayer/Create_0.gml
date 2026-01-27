@@ -2,7 +2,7 @@
 hsp = 0;
 vsp = 0;
 moveSpd = 4;
-grv = 0.5;
+grv = 0.3;
 
 // Not Speed
 radius = 10;
@@ -13,7 +13,7 @@ swingTarget = oMaskEnemy;
 swinging = false;
 swingingPrev = false;
 swingSpeed = 0;
-ropeLength = 100;
+ropeLength = 130;
 
 sides = 5;
 
