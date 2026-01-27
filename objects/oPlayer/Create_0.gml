@@ -13,7 +13,7 @@ swingTarget = oMaskEnemy;
 swinging = false;
 swingingPrev = false;
 swingSpeed = 0;
-ropeLength = 130;
+ropeLength = 90;
 
 sides = 5;
 

@@ -12,7 +12,7 @@ if (swingTarget != noone and swinging) {
 
 
 // Move
-vsp = min(vsp + grv, 12);
+vsp = clamp(vsp + grv, -18, 12);
 
 if (swinging) {
     var _dist = point_distance(x, y, swingTarget.x, swingTarget.y);
@@ -49,8 +49,8 @@ if (swinging) {
 
     var _xTarget = swingTarget.x + lengthdir_x(_dist, _dir);
     var _yTarget = swingTarget.y + lengthdir_y(_dist, _dir);
-    hsp = (_xTarget - x) * 1.1;
-    vsp = (_yTarget - y) * 1.1;
+    hsp = (_xTarget - x) * 1.4;
+    vsp = (_yTarget - y) * 1.4;
     x = _xTarget;
     y = _yTarget;
 } else {
