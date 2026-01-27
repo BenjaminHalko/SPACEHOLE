@@ -1,7 +1,7 @@
 /// @desc 
 
-#macro RES_WIDTH 480
-#macro RES_HEIGHT 270
+#macro RES_WIDTH 320
+#macro RES_HEIGHT 180
 
 randomize();
 
@@ -13,7 +13,7 @@ if (DESKTOP) {
     window_shape_init();
     window_enable_per_pixel_alpha();
 	window_enable_borderless_fullscreen(true);
-	window_set_size(RES_WIDTH*3, RES_HEIGHT*3);
+	window_set_size(RES_WIDTH*4, RES_HEIGHT*4);
 	window_center();
 }
 

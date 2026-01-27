@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"MaskConfig",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"MaskConfig",
+  "parent":{
+    "name":"Masks",
+    "path":"folders/Mask/Masks.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
