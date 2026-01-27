@@ -45,6 +45,7 @@
     {"id":{"name":"oGlobalController","path":"objects/oGlobalController/oGlobalController.yy",},},
     {"id":{"name":"oLeaderboardAPI","path":"objects/oLeaderboardAPI/oLeaderboardAPI.yy",},},
     {"id":{"name":"oMaskEnemy","path":"objects/oMaskEnemy/oMaskEnemy.yy",},},
+    {"id":{"name":"oMaskParticle","path":"objects/oMaskParticle/oMaskParticle.yy",},},
     {"id":{"name":"oMenu","path":"objects/oMenu/oMenu.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},

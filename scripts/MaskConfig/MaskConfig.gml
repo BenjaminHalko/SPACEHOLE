@@ -80,20 +80,20 @@ function __MaskParent() constructor {
 
 function MaskBasicCircle() : __MaskParent() constructor {
     static BaseRadius = 32;
-    static Sides = 48;
+    static Sides = 70;
     
     repeat(Sides) {
         array_push(points, [0, 0], [0, 0], [0, 0]);
         var _len = array_length(points);
         array_push(pointsLine, points[_len - 2], points[_len - 1]);
-        array_push(pointOffsets, [0, 0], [0, 0]);
+        array_push(pointOffsets, [0, 0]);
     }
     
     static UpdateOffsets = function() {
         var _pointOffsetLen = array_length(pointOffsets);
         for(var i = 0; i < _pointOffsetLen; i++) {
             if (irandom(5) != 0) continue;
-            var _angle = random(360);
+            var _angle = i / _pointOffsetLen * 360 + random_range(-10, 10);
             var _dist = random(BaseRadius * size / 6);
             pointOffsets[i][0] = lengthdir_x(_dist, _angle);
             pointOffsets[i][1] = lengthdir_y(_dist, _angle);
