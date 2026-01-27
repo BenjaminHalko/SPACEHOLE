@@ -1,11 +1,5 @@
 /// @desc Enemy behaviour
 
-// Attack
-if (keyboard_check_pressed(vk_space)) {
-    attackPulse = 1;
-    targetSize = max(0, targetSize - attackShrink);
-}
-
 // Offset
 mask.UpdateOffsets();
 

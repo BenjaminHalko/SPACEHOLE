@@ -1,6 +1,6 @@
 Input();
 
-swinging = keyboard_check(vk_shift);
+swinging = keyboard_check(vk_space);
 
 if (swingTarget != noone and swinging) {
     oCamera.xTo = lerp(x, swingTarget.x, 0.5);
