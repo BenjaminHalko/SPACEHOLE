@@ -1,6 +1,6 @@
 /// @desc 
 
-radius = 4;
+radius = 10;
 percent = 1;
 spd = random_range(0.02,0.04);
 image_angle = random(360);
