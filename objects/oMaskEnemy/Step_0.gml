@@ -3,7 +3,7 @@
 // Attack
 if (keyboard_check_pressed(vk_space)) {
     attackPulse = 1;
-    targetSize -= attackShrink;
+    targetSize = max(0, targetSize - attackShrink);
 }
 
 // Offset
