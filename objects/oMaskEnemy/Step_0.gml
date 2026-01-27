@@ -1,5 +1,7 @@
 /// @desc Enemy behaviour
 
+image_index = (oPlayer.swingTarget == id and oPlayer.swinging);
+
 // Offset
 mask.UpdateOffsets();
 
