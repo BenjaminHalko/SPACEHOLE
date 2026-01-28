@@ -1,9 +1,11 @@
 /// @desc 
 
 #macro RES_WIDTH 320
-#macro RES_HEIGHT 180
+#macro RES_HEIGHT global.windowHeight
 
 randomize();
+
+RES_HEIGHT = 180;
 
 getOsType();
 

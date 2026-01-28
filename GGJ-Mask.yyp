@@ -32,7 +32,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2024.14.3.217",
   },
   "name":"GGJ-Mask",
   "resources":[
@@ -51,6 +51,7 @@
     {"id":{"name":"oMaskParticle","path":"objects/oMaskParticle/oMaskParticle.yy",},},
     {"id":{"name":"oMenu","path":"objects/oMenu/oMenu.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
+    {"id":{"name":"pNullZone","path":"objects/pNullZone/pNullZone.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
     {"id":{"name":"FirebaseRealTimeUserFunctions","path":"scripts/FirebaseRealTimeUserFunctions/FirebaseRealTimeUserFunctions.yy",},},

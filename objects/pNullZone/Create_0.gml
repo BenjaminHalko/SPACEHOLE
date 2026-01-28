@@ -1,0 +1,1 @@
+mask = new __MaskParent();

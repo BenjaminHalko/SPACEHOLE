@@ -1,11 +1,13 @@
 /// @desc Update Camera
 
 //Update Object Position
+yTo = min(yTo, oBackground.mask.y - viewHeightHalf + 60)
+
 x += (xTo - x) / 12;
-y += (yTo - y) / 12;
+y += (yTo - y) / 4;
 
 //Keep Camera center inside room
-//x = clamp(x, viewWidthHalf, room_width-viewWidthHalf);
+x = clamp(x, viewWidthHalf, room_width-viewWidthHalf);
 //y = clamp(y, viewHeightHalf, room_height-viewHeightHalf);
 
 //Screenshake

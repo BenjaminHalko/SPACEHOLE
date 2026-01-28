@@ -2,15 +2,14 @@ function __MaskParent() constructor {
     x = 0;
     y = 0;
     size = 0;
-    attack = 0;
     points = [];
     pointsLine = [];
     pointOffsets = [];
 
-    static Draw = function() {
+    Draw = function() {
         var _ptsLen = array_length(points);
         
-        draw_primitive_begin(pr_trianglelist);
+        draw_primitive_begin(pr_trianglestrip);
         for (var i = 0; i < _ptsLen; i++) {
             draw_vertex(x + points[i][0], y + points[i][1]);
         }
@@ -31,10 +30,10 @@ function __MaskParent() constructor {
     /// @param {real} top
     /// @param {real} right
     /// @param {real} bottom
-    static HasCollision = function(_left, _top, _right, _bottom) {
+    static HasCollision = function(_x, _y, _radius) {
         var _ptsLen = array_length(points);
         for (var i = 0; i < _ptsLen-3; i++) {
-            if (!rectangle_in_triangle(
+            if (!tri(
                 _left,
                 _top,
                 _right,
@@ -115,6 +114,100 @@ function MaskBasicCircle() : __MaskParent() constructor {
                 lengthdir_x(BaseRadius * size, (i + 1) / Sides * 360) + pointOffsets[Wrap(i + 1, 0, Sides-1)][0],
                 lengthdir_y(BaseRadius * size, (i + 1) / Sides * 360) + pointOffsets[Wrap(i + 1, 0, Sides-1)][1],
                 10);
+        }
+    }
+}
+
+function MaskEndZone() : __MaskParent() constructor {
+    static Height = RES_HEIGHT * 2;
+    static Segments = 30;
+    static MinStep = 15;
+    static MaxStep = 40;
+    static MinOffset = 5;
+    static MaxOffset = 10;
+
+    __resetTimer = 0;
+    __segmentT = []; // Fixed t values (0-1) along the path
+    __sideOffsets = []; // Current target side offsets
+    __initialized = false;
+
+    // Initialize points for triangle strip: alternating top (lightning) and bottom points
+    for (var i = 0; i <= Segments; i++) {
+        array_push(points, [0, 0]); // Top point (lightning vertex)
+        array_push(points, [0, Height]); // Bottom point
+        array_push(__sideOffsets, 0);
+    }
+
+    // Line points for outline (just the lightning top)
+    for (var i = 0; i < Segments; i++) {
+        array_push(pointsLine, points[i * 2], points[(i + 1) * 2]);
+    }
+
+    static GenerateSegmentPositions = function() {
+        __segmentT = [0]; // Start at 0
+        var _cumulative = 0;
+
+        for (var i = 1; i < Segments; i++) {
+            _cumulative += random_range(MinStep, MaxStep);
+            array_push(__segmentT, _cumulative);
+        }
+
+        // Normalize to 0-1 range
+        var _total = _cumulative + random_range(MinStep, MaxStep);
+        for (var i = 1; i < Segments; i++) {
+            __segmentT[i] /= _total;
+        }
+
+        array_push(__segmentT, 1); // End at 1
+    }
+
+    static GenerateSideOffsets = function() {
+        for (var i = 0; i <= Segments; i++) {
+            if (i == 0 || i == Segments) {
+                __sideOffsets[i] = 0;
+            } else {
+                var _taper = sin(__segmentT[i] * pi);
+                __sideOffsets[i] = choose(-1, 1) * random_range(MinOffset, MaxOffset) * _taper;
+            }
+        }
+    }
+
+    static Update = function() {
+        var _startX = 0;
+        var _startY = 0;
+        var _endX = RES_WIDTH;
+        var _endY = 0;
+        if (!__initialized) {
+            GenerateSegmentPositions();
+            __initialized = true;
+        }
+
+        __resetTimer -= 1;
+        if (__resetTimer <= 0) {
+            GenerateSideOffsets();
+            __resetTimer = 3;
+        }
+
+        var _dir = point_direction(_startX, _startY, _endX, _endY);
+        var _length = point_distance(_startX, _startY, _endX, _endY);
+        var _distX = lengthdir_x(1, _dir);
+        var _distY = lengthdir_y(1, _dir);
+        var _sideX = lengthdir_x(1, _dir + 90);
+        var _sideY = lengthdir_y(1, _dir + 90);
+
+        for (var i = 0; i <= Segments; i++) {
+            var _topIndex = i * 2;
+            var _bottomIndex = _topIndex + 1;
+
+            var _dist = __segmentT[i] * _length;
+            var _targetX = _startX + _distX * _dist + _sideX * __sideOffsets[i];
+            var _targetY = _startY + _distY * _dist + _sideY * __sideOffsets[i];
+
+            // Top point approaches target
+            ApproachPoint(_topIndex, _targetX, _targetY, 10);
+
+            // Bottom point stays below the top point
+            SetPoint(_bottomIndex, points[_topIndex][0], points[_topIndex][1] + Height);
         }
     }
 }

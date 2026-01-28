@@ -1,5 +1,8 @@
 /// @desc Create particles
 
+
+mask.Update();
+
 /*
 with(oMaskEnemy) {
     var _lines = array_length(mask.pointsLine);

@@ -12,7 +12,26 @@ if (swingTarget != noone and swinging) {
 
 
 // Move
-vsp = clamp(vsp + grv, -18, 12);
+var _maskCollision = false;
+
+with (oMaskEnemy) {
+    if (point_distance(x, y, other.x, other.y) < mask.size * mask.BaseRadius) {
+        _maskCollision = true;
+        break;
+    }
+}
+
+
+if (y - radius < oBackground.mask.y) {
+    if (!_maskCollision) {
+        vsp = clamp(vsp + grv, -18, 12);
+    }
+} else {
+    hsp = ApproachEase(hsp, 0, 0.1, 0.8);
+    vsp = ApproachEase(vsp, 0.2, 10, 0.5);
+}
+
+
 
 if (swinging) {
     var _dist = point_distance(x, y, swingTarget.x, swingTarget.y);
@@ -54,6 +73,11 @@ if (swinging) {
     x = _xTarget;
     y = _yTarget;
 } else {
+    if (x < 0)
+        hsp = abs(hsp);
+    else if (x > RES_WIDTH)
+        hsp = -abs(hsp);
+    
     swingTarget = instance_nearest(x, y, oMaskEnemy);
     
     var _move = keyRight - keyLeft;
@@ -62,8 +86,6 @@ if (swinging) {
     
     x += hsp;
     y += vsp;
-    
-    if (y > room_height) vsp = -15;
 }
 
 image_angle -= hsp * 3;

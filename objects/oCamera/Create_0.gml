@@ -8,3 +8,6 @@ xOffset = 0;
 shakeLength = 0;
 shakeMagnitude = 0;
 shakeRemain = 0;
+
+x = follow.x;
+y = follow.y;

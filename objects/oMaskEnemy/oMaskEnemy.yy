@@ -15,7 +15,10 @@
     "name":"Mask",
     "path":"folders/Mask.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"pNullZone",
+    "path":"objects/pNullZone/pNullZone.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
