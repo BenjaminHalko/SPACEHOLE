@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"pNullZone",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"oLauncher",
+  "eventList":[],
   "managed":true,
-  "name":"pNullZone",
+  "name":"oLauncher",
   "overriddenProperties":[],
   "parent":{
-    "name":"Mask",
-    "path":"folders/Mask.yy",
+    "name":"Launcher",
+    "path":"folders/Level Objs/Launcher.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -29,7 +27,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sLauncher",
+    "path":"sprites/sLauncher/sLauncher.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

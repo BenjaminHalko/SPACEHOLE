@@ -1,17 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"oMaskParticle",
+  "%Name":"oPlayerDash",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oMaskParticle",
+  "name":"oPlayerDash",
   "overriddenProperties":[],
   "parent":{
-    "name":"Mask",
-    "path":"folders/Mask.yy",
+    "name":"Player",
+    "path":"folders/Level Objs/Player.yy",
   },
   "parentObjectId":null,
   "persistent":false,

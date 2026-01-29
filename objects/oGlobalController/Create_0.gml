@@ -1,11 +1,11 @@
 /// @desc 
 
-#macro RES_WIDTH 320
+#macro RES_WIDTH 480
 #macro RES_HEIGHT global.windowHeight
 
 randomize();
 
-RES_HEIGHT = 180;
+RES_HEIGHT = 270;
 
 getOsType();
 
@@ -15,9 +15,18 @@ if (DESKTOP) {
     window_shape_init();
     window_enable_per_pixel_alpha();
 	window_enable_borderless_fullscreen(true);
-	window_set_size(RES_WIDTH*4, RES_HEIGHT*4);
+	window_set_size(RES_WIDTH*3, RES_HEIGHT*3);
 	window_center();
 }
+
+// Load Shaders
+global.uDissolve = shader_get_uniform(shDissolve, "u_dissolve");
+global.uDissolveCol = shader_get_uniform(shDissolve, "u_edgeColor");
+global.uDissolveWidth = shader_get_uniform(shDissolve, "u_edgeWidth");
+global.uDissolvePos = shader_get_uniform(shDissolve, "u_position");
+
+// Game State
+global.gameOver = false;
 
 // Load Save Data
 ini_open(SAVEFILE);

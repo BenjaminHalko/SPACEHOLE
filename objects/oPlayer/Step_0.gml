@@ -1,38 +1,47 @@
-Input();
+/// @desc Update Player
 
-swinging = keyboard_check(vk_space);
-
-if (swingTarget != noone and swinging) {
-    oCamera.xTo = lerp(x, swingTarget.x, 0.5);
-    oCamera.yTo = lerp(y, swingTarget.y, 0.5);
-} else {
-    oCamera.xTo = x;
-    oCamera.yTo = y;
+if (global.gameOver) {
+    exit;
 }
 
-
-// Move
+// Death
 var _maskCollision = false;
-
-with (oMaskEnemy) {
-    if (point_distance(x, y, other.x, other.y) < mask.size * mask.BaseRadius) {
+with (pMask) {
+    if (mask.HasCollision(other.x, other.y)) {
         _maskCollision = true;
         break;
     }
 }
 
+death = Approach(death, _maskCollision, _maskCollision ? deathSpd : deathRecovery);
+if (death >= 1) {
+    global.gameOver = true;
+}
 
+if (_maskCollision and y > oBackground.mask.y) {
+    var _dir = point_direction(0, 0, hsp, vsp);
+    var _spd = 0.5;
+    hsp = ApproachEase(hsp, lengthdir_x(_spd, _dir), abs(lengthdir_x(1, _dir)), 0.85);
+    vsp = ApproachEase(vsp, lengthdir_y(_spd, _dir), abs(lengthdir_y(1, _dir)), 0.85);
+}
+
+// Move Camera
 if (y - radius < oBackground.mask.y) {
+    if (swingTarget != noone and swinging) {
+        oCamera.xTo = lerp(x, swingTarget.x, 0.5);
+        oCamera.yTo = lerp(y, swingTarget.y, 0.5);
+    } else {
+        oCamera.xTo = x;
+        oCamera.yTo = y;
+    }
     if (!_maskCollision) {
         vsp = clamp(vsp + grv, -18, 12);
     }
-} else {
-    hsp = ApproachEase(hsp, 0, 0.1, 0.8);
-    vsp = ApproachEase(vsp, 0.2, 10, 0.5);
 }
 
+swinging = swingTarget != noone and keyboard_check(vk_space);
 
-
+// Movement
 if (swinging) {
     var _dist = point_distance(x, y, swingTarget.x, swingTarget.y);
     var _dir = point_direction(swingTarget.x, swingTarget.y, x, y);
@@ -68,25 +77,47 @@ if (swinging) {
 
     var _xTarget = swingTarget.x + lengthdir_x(_dist, _dir);
     var _yTarget = swingTarget.y + lengthdir_y(_dist, _dir);
-    hsp = (_xTarget - x) * 1.4;
-    vsp = (_yTarget - y) * 1.4;
-    x = _xTarget;
-    y = _yTarget;
+    hsp = (_xTarget - x);
+    vsp = (_yTarget - y);
 } else {
+    if (swingingPrev) {
+        hsp *= 1.5;
+        vsp *= 1.5;
+    }
     if (x < 0)
         hsp = abs(hsp);
     else if (x > RES_WIDTH)
         hsp = -abs(hsp);
     
     swingTarget = instance_nearest(x, y, oMaskEnemy);
+    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 120) {
+        swingTarget = noone;
+    }
     
-    var _move = keyRight - keyLeft;
-    hsp = ApproachEase(hsp, _move * moveSpd, 0.02, 0.85);
-    hsp = clamp(hsp, -5, 5);
+    // Jump off wall (biased upward)
+    if (wallContact && keyboard_check_pressed(vk_space)) {
+        var _jumpX = wallNormalX * (1 - jumpUpBias);
+        var _jumpY = lerp(wallNormalY, -1, jumpUpBias);
+        var _len = sqrt(_jumpX * _jumpX + _jumpY * _jumpY);
+        hsp += (_jumpX / _len) * jumpStrength;
+        vsp += (_jumpY / _len) * jumpStrength;
+    }
     
-    x += hsp;
-    y += vsp;
+    // Dash
+    PlayerLauncherCollision();
+    if (dashTimer > 0) {
+        dashTimer--;
+        instance_create_depth(x, y, depth + 1, oPlayerDash, {
+            image_angle: image_angle
+        });
+    }
 }
+
+x += hsp;
+y += vsp;
+
+// Wall Collision
+PlayerWallCollision();
 
 image_angle -= hsp * 3;
 lightning.Step();

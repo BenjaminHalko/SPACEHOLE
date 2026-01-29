@@ -1,8 +1,10 @@
 /// @desc Update Camera
 
-//Update Object Position
-yTo = min(yTo, oBackground.mask.y - viewHeightHalf + 60)
+if (y >= oBackground.mask.y - viewHeightHalf + 60) {
+    //yTo = min(yTo, y);
+}
 
+//Update Object Position
 x += (xTo - x) / 12;
 y += (yTo - y) / 4;
 

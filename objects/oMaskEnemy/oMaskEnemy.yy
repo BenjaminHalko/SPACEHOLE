@@ -12,12 +12,12 @@
   "name":"oMaskEnemy",
   "overriddenProperties":[],
   "parent":{
-    "name":"Mask",
-    "path":"folders/Mask.yy",
+    "name":"Enemy",
+    "path":"folders/Level Objs/Enemy.yy",
   },
   "parentObjectId":{
-    "name":"pNullZone",
-    "path":"objects/pNullZone/pNullZone.yy",
+    "name":"pMask",
+    "path":"objects/pMask/pMask.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

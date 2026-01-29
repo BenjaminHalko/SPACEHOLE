@@ -26,31 +26,6 @@ function __MaskParent() constructor {
         draw_primitive_end();
     }
     
-    /// @param {real} left
-    /// @param {real} top
-    /// @param {real} right
-    /// @param {real} bottom
-    static HasCollision = function(_x, _y, _radius) {
-        var _ptsLen = array_length(points);
-        for (var i = 0; i < _ptsLen-3; i++) {
-            if (!tri(
-                _left,
-                _top,
-                _right,
-                _bottom,
-                x + points[i][0],
-                y + points[i][1],
-                x + points[i+1][0],
-                y + points[i+1][1],
-                x + points[i+2][0],
-                y + points[i+2][1]
-            )) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     /// @param {real} index
     /// @param {real} x
     /// @param {real} y
@@ -86,6 +61,10 @@ function MaskBasicCircle() : __MaskParent() constructor {
         var _len = array_length(points);
         array_push(pointsLine, points[_len - 2], points[_len - 1]);
         array_push(pointOffsets, [0, 0]);
+    }
+    
+    static HasCollision = function(_x, _y) {
+        return point_distance(_x, _y, x, y) < BaseRadius * size;
     }
     
     static UpdateOffsets = function() {
@@ -170,6 +149,10 @@ function MaskEndZone() : __MaskParent() constructor {
                 __sideOffsets[i] = choose(-1, 1) * random_range(MinOffset, MaxOffset) * _taper;
             }
         }
+    }
+    
+    static HasCollision = function(_x, _y) {
+        return _y > y;
     }
 
     static Update = function() {

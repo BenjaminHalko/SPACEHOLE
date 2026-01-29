@@ -3,6 +3,10 @@
 
 mask.Update();
 
+if (mask.y > oCamera.y + oCamera.viewHeightHalf - 8) {
+    // mask.y = ApproachEase(mask.y, oCamera.y + oCamera.viewHeightHalf - 8, 10, 0.8);
+}
+
 /*
 with(oMaskEnemy) {
     var _lines = array_length(mask.pointsLine);

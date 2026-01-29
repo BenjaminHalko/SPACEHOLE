@@ -1,4 +1,5 @@
-draw_set_colour(c_fuchsia);
+draw_set_alpha(0.2);
+draw_set_colour(c_orange);
 draw_primitive_begin(pr_trianglefan);
 
 draw_vertex(x, y);
@@ -10,3 +11,4 @@ for(var i = 0; i <= sides; i++) {
 }
 
 draw_primitive_end();
+draw_set_alpha(1);

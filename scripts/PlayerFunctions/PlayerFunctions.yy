@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"MaskConfig",
+  "%Name":"PlayerFunctions",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"MaskConfig",
+  "name":"PlayerFunctions",
   "parent":{
-    "name":"Masks",
-    "path":"folders/Level Objs/Masks.yy",
+    "name":"Player",
+    "path":"folders/Level Objs/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
