@@ -15,18 +15,7 @@ shader_set_uniform_f(global.uDissolveCol, 1.0, 0.5, 0);
 shader_set_uniform_f(global.uDissolveWidth, 0.03);
 shader_set_uniform_f(global.uDissolvePos, x, y);
 
-draw_set_colour(merge_colour(c_blue, c_red, death));
-draw_primitive_begin(pr_trianglefan);
-
-draw_vertex(x, y);
-
-for(var i = 0; i <= sides; i++) {
-    draw_vertex(
-        x + lengthdir_x(radius, image_angle + 45 + i / sides * 360),
-        y + lengthdir_y(radius, image_angle + 45 + i / sides * 360));
-}
-
-draw_primitive_end();
+draw_self();
 
 shader_reset();
 

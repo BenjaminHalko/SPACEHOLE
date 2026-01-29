@@ -78,6 +78,7 @@
     {"id":{"name":"sAudioLine","path":"sprites/sAudioLine/sAudioLine.yy",},},
     {"id":{"name":"sLauncher","path":"sprites/sLauncher/sLauncher.yy",},},
     {"id":{"name":"sMaskEnemy","path":"sprites/sMaskEnemy/sMaskEnemy.yy",},},
+    {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"sSemiSolid","path":"sprites/sSemiSolid/sSemiSolid.yy",},},
     {"id":{"name":"sWall","path":"sprites/sWall/sWall.yy",},},
   ],
