@@ -1,5 +1,4 @@
-surface = surface_create(RES_WIDTH, RES_HEIGHT);
-
+/// @desc Create Mask
 
 mask = new MaskEndZone();
 mask.x = 0;
