@@ -1,9 +1,12 @@
-/// @desc Draw BG
+/// @desc Draw Background
 
-gpu_set_blendmode_ext(bm_zero, bm_zero);
 
-with (pMask) {
-    mask.Draw();
-}
+var _camX = camera_get_view_x(view_camera[0]);
+var _camY = camera_get_view_y(view_camera[0]);
 
-gpu_set_blendmode(bm_normal);
+draw_set_colour(c_black);
+shader_set(shBackground);
+
+draw_rectangle(_camX, _camY, _camX + RES_WIDTH, _camY + RES_HEIGHT, false);
+
+shader_reset();

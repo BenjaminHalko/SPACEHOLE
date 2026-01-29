@@ -13,7 +13,7 @@
   "option_mac_build_number":0,
   "option_mac_copyright":"",
   "option_mac_disable_sandbox":false,
-  "option_mac_display_cursor":false,
+  "option_mac_display_cursor":true,
   "option_mac_display_name":"SPACEHOLE",
   "option_mac_enable_retina":false,
   "option_mac_enable_steam":false,

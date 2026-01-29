@@ -5,7 +5,7 @@ if (global.gameOver) {
 }
 
 // Death
-var _maskCollision = false;
+var _maskCollision = place_meeting(x, y, pMask);
 with (pMask) {
     if (mask.HasCollision(other.x, other.y)) {
         _maskCollision = true;
@@ -18,15 +18,15 @@ if (death >= 1) {
     global.gameOver = true;
 }
 
-if (_maskCollision and y > oBackground.mask.y) {
+if (_maskCollision and y > oDoomZone.mask.y) {
     var _dir = point_direction(0, 0, hsp, vsp);
-    var _spd = 0.5;
+    var _spd = 0.4;
     hsp = ApproachEase(hsp, lengthdir_x(_spd, _dir), abs(lengthdir_x(1, _dir)), 0.85);
     vsp = ApproachEase(vsp, lengthdir_y(_spd, _dir), abs(lengthdir_y(1, _dir)), 0.85);
 }
 
 // Move Camera
-if (y - radius < oBackground.mask.y) {
+if (y - radius < oDoomZone.mask.y) {
     if (swingTarget != noone and swinging) {
         oCamera.xTo = lerp(x, swingTarget.x, 0.5);
         oCamera.yTo = lerp(y, swingTarget.y, 0.5);
@@ -37,6 +37,12 @@ if (y - radius < oBackground.mask.y) {
     if (!_maskCollision) {
         vsp = clamp(vsp + grv, -18, 12);
     }
+}
+
+// Jump
+jumpTimer--;
+if (keyboard_check_pressed(vk_space)) {
+    jumpTimer = 10;
 }
 
 swinging = swingTarget != noone and keyboard_check(vk_space);
@@ -95,7 +101,7 @@ if (swinging) {
     }
     
     // Jump off wall (biased upward)
-    if (wallContact && keyboard_check_pressed(vk_space)) {
+    if (wallContact && jumpTimer) {
         var _jumpX = wallNormalX * (1 - jumpUpBias);
         var _jumpY = lerp(wallNormalY, -1, jumpUpBias);
         var _len = sqrt(_jumpX * _jumpX + _jumpY * _jumpY);

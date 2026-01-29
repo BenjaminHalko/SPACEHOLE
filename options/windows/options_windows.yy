@@ -10,7 +10,7 @@
   "option_windows_d3dswapeffectdiscard":true,
   "option_windows_description_info":"A GameMaker Game",
   "option_windows_disable_sandbox":false,
-  "option_windows_display_cursor":false,
+  "option_windows_display_cursor":true,
   "option_windows_display_name":"SPACEHOLE",
   "option_windows_enable_steam":false,
   "option_windows_executable_name":"${project_name}.exe",

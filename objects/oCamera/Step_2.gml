@@ -1,6 +1,6 @@
 /// @desc Update Camera
 
-if (y >= oBackground.mask.y - viewHeightHalf + 60) {
+if (y >= oDoomZone.mask.y - viewHeightHalf + 60) {
     //yTo = min(yTo, y);
 }
 

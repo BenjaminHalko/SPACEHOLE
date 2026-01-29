@@ -1,3 +1,19 @@
+/// @func PointIsMasked(_x, _y)
+/// @desc Check if a world-space point is inside any mask
+function PointIsMasked(_x, _y) {
+    with (oPlayer) {
+        if (place_meeting(_x, _y, pMask)) {
+            return true;
+        }
+    }
+    with (pMask) {
+        if (mask.HasCollision(_x, _y)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /// @func PlayerWallCollision()
 /// @desc Handles circle vs rotated rectangle collision for player against oWall instances
 function PlayerWallCollision() {
@@ -32,6 +48,36 @@ function PlayerWallCollision() {
         var _radius = other.radius;
 
         if (_distSq < _radius * _radius) {
+            // Check if any point on player perimeter is inside wall AND not masked
+            var _samples = 12;
+            var _hasExposedCollision = false;
+
+            for (var i = 0; i < _samples; i++) {
+                var _angle = i / _samples * 360;
+                // Sample point on player's circumference (world space)
+                var _sampleX = other.x + lengthdir_x(_radius, _angle);
+                var _sampleY = other.y + lengthdir_y(_radius, _angle);
+
+                // Transform to wall's local space
+                var _sdx = _sampleX - x;
+                var _sdy = _sampleY - y;
+                var _sLocalX = _sdx * _cos + _sdy * _sin;
+                var _sLocalY = -_sdx * _sin + _sdy * _cos;
+
+                // Check if inside wall rectangle
+                if (abs(_sLocalX) <= _hw && abs(_sLocalY) <= _hh) {
+                    // Inside wall - check if NOT masked
+                    if (!PointIsMasked(_sampleX, _sampleY)) {
+                        _hasExposedCollision = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!_hasExposedCollision) {
+                continue;  // Fully masked - skip collision
+            }
+
             var _dist = sqrt(_distSq);
             var _overlap = _radius - _dist;
 
@@ -118,6 +164,36 @@ function PlayerLauncherCollision() {
         var _distSq = _diffX * _diffX + _diffY * _diffY;
 
         if (_distSq < other.radius * other.radius) {
+            // Check if any point on player perimeter is inside launcher AND not masked
+            var _samples = 12;
+            var _hasExposedCollision = false;
+
+            for (var i = 0; i < _samples; i++) {
+                var _angle = i / _samples * 360;
+                // Sample point on player's circumference (world space)
+                var _sampleX = other.x + lengthdir_x(other.radius, _angle);
+                var _sampleY = other.y + lengthdir_y(other.radius, _angle);
+
+                // Transform to launcher's local space
+                var _sdx = _sampleX - x;
+                var _sdy = _sampleY - y;
+                var _sLocalX = _sdx * _cos + _sdy * _sin;
+                var _sLocalY = -_sdx * _sin + _sdy * _cos;
+
+                // Check if inside launcher rectangle
+                if (abs(_sLocalX) <= _hw && abs(_sLocalY) <= _hh) {
+                    // Inside launcher - check if NOT masked
+                    if (!PointIsMasked(_sampleX, _sampleY)) {
+                        _hasExposedCollision = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!_hasExposedCollision) {
+                continue;  // Fully masked - skip collision
+            }
+
             // Launch player in direction + 90
             var _launchDir = image_angle + 90;
             var _launchSpeed = 12;

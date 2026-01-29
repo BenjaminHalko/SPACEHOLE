@@ -97,6 +97,133 @@ function MaskBasicCircle() : __MaskParent() constructor {
     }
 }
 
+function MaskBasicRectangle() : __MaskParent() constructor {
+    static Sides = 70;
+
+    // 4 corner points relative to center: top-left, top-right, bottom-right, bottom-left
+    corners = [
+        [-24, -16],
+        [24, -16],
+        [24, 16],
+        [-24, 16]
+    ];
+
+    repeat(Sides) {
+        array_push(points, [0, 0], [0, 0], [0, 0]);
+        var _len = array_length(points);
+        array_push(pointsLine, points[_len - 2], points[_len - 1]);
+        array_push(pointOffsets, [0, 0]);
+    }
+
+    /// @param {real} x1 Top-left x
+    /// @param {real} y1 Top-left y
+    /// @param {real} x2 Top-right x
+    /// @param {real} y2 Top-right y
+    /// @param {real} x3 Bottom-right x
+    /// @param {real} y3 Bottom-right y
+    /// @param {real} x4 Bottom-left x
+    /// @param {real} y4 Bottom-left y
+    static SetCorners = function(_x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4) {
+        corners[0] = [_x1, _y1];
+        corners[1] = [_x2, _y2];
+        corners[2] = [_x3, _y3];
+        corners[3] = [_x4, _y4];
+    }
+    
+    static SetSize = function(_width, _height, _rotation) {
+        var _dir = point_direction(0, 0, _width / 2, -_height / 2);
+        var _dist = point_distance(0, 0, _width / 2, _height / 2);
+        corners[0] = [lengthdir_x(_dist, 180 - _dir + _rotation), lengthdir_y(_dist, 180 - _dir + _rotation)];
+        corners[1] = [lengthdir_x(_dist, _dir + _rotation), lengthdir_y(_dist, _dir + _rotation)];
+        corners[2] = [lengthdir_x(_dist, -_dir + _rotation), lengthdir_y(_dist, -_dir + _rotation)];
+        corners[3] = [lengthdir_x(_dist, 180 + _dir + _rotation), lengthdir_y(_dist, 180 + _dir + _rotation)];
+    }
+
+    static HasCollision = function(_x, _y) {
+        var _tc = corners;
+        var _px = _x - x;
+        var _py = _y - y;
+
+        // Point-in-quadrilateral using cross product method
+        for (var i = 0; i < 4; i++) {
+            var _next = (i + 1) mod 4;
+            var _edgeX = _tc[_next][0] - _tc[i][0];
+            var _edgeY = _tc[_next][1] - _tc[i][1];
+            var _toPointX = _px - _tc[i][0];
+            var _toPointY = _py - _tc[i][1];
+            var _cross = _edgeX * _toPointY - _edgeY * _toPointX;
+            if (_cross > 0) return false;
+        }
+        return true;
+    }
+
+    /// @param {real} t Value from 0 to 1 representing position around perimeter
+    /// @returns {array} [x, y] position on rectangle edge
+    static GetPerimeterPoint = function(_t) {
+        var _tc = corners;
+
+        // Calculate edge lengths
+        var _lengths = [];
+        var _totalLen = 0;
+        for (var i = 0; i < 4; i++) {
+            var _next = (i + 1) mod 4;
+            var _len = point_distance(_tc[i][0], _tc[i][1], _tc[_next][0], _tc[_next][1]);
+            array_push(_lengths, _len);
+            _totalLen += _len;
+        }
+
+        var _dist = _t * _totalLen;
+        var _cumulative = 0;
+
+        for (var i = 0; i < 4; i++) {
+            if (_dist <= _cumulative + _lengths[i]) {
+                var _edgeT = (_dist - _cumulative) / _lengths[i];
+                var _next = (i + 1) mod 4;
+                return [
+                    lerp(_tc[i][0], _tc[_next][0], _edgeT),
+                    lerp(_tc[i][1], _tc[_next][1], _edgeT)
+                ];
+            }
+            _cumulative += _lengths[i];
+        }
+
+        return [_tc[0][0], _tc[0][1]];
+    }
+
+    static UpdateOffsets = function() {
+        var _pointOffsetLen = array_length(pointOffsets);
+        for(var i = 0; i < _pointOffsetLen; i++) {
+            if (irandom(5) != 0) continue;
+            var _perimPt = GetPerimeterPoint(i / _pointOffsetLen);
+            var _angle = point_direction(0, 0, _perimPt[0], _perimPt[1]) + random_range(-20, 20);
+            var _dist = random(8);
+            pointOffsets[i][0] = lengthdir_x(_dist, _angle);
+            pointOffsets[i][1] = lengthdir_y(_dist, _angle);
+        }
+    }
+
+    static Update = function() {
+        for (var i = 0; i < Sides; i++) {
+            var _index = i * 3;
+
+            SetPoint(_index, 0, 0);
+
+            var _pt1 = GetPerimeterPoint(i / Sides);
+            var _pt2 = GetPerimeterPoint((i + 1) / Sides);
+
+            ApproachPoint(_index + 1,
+                _pt1[0] + pointOffsets[i][0],
+                _pt1[1] + pointOffsets[i][1],
+                10);
+
+            ApproachPoint(_index + 2,
+                _pt2[0] + pointOffsets[Wrap(i + 1, 0, Sides-1)][0],
+                _pt2[1] + pointOffsets[Wrap(i + 1, 0, Sides-1)][1],
+                10);
+        }
+    }
+}
+
 function MaskEndZone() : __MaskParent() constructor {
     static Height = RES_HEIGHT * 2;
     static Segments = 30;

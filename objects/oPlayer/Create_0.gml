@@ -4,8 +4,8 @@ vsp = 0;
 moveSpd = 4;
 grv = 0.3;
 
-deathSpd = 1 / 60 / 3;
-deathRecovery = 1 / 60;
+deathSpd = 1 / 60 / 1.5;
+deathRecovery = 2 / 60;
 
 // Not Speed
 death = 0;
@@ -13,6 +13,7 @@ deathCurve = animcurve_get_channel(PlayerCurves, "burn");
 radius = 16;
 image_angle = 0;
 dashTimer = 0;
+jumpTimer = 0;
 
 // Wall contact / jump
 wallContact = false;
@@ -20,7 +21,7 @@ wallNormalX = 0;
 wallNormalY = -1;
 jumpStrength = 8;
 jumpUpBias = 0.8; // 0 = pure normal, 1 = pure up
-wallFriction = 0.98; // 0 = full stop, 1 = no friction
+wallFriction = 1; // 0 = full stop, 1 = no friction
 
 // Swing
 swingTarget = oMaskEnemy;
