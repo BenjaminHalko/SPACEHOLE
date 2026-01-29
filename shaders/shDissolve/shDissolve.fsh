@@ -7,7 +7,6 @@ varying vec4 v_vColour;
 uniform float u_dissolve;      // 0.0 = fully visible, 1.0 = fully dissolved
 uniform vec3 u_edgeColor;      // Color of the dissolve edge glow
 uniform float u_edgeWidth;     // Width of the edge glow (0.0 - 0.1 works well)
-uniform vec2 u_position;       // Object position for relative noise                                                                                                                                                                      
 
 // Simple hash function for noise
 float hash(vec2 p) {
@@ -44,8 +43,8 @@ void main()
 {
     vec4 texColor = v_vColour * texture2D(gm_BaseTexture, v_vTexcoord);
 
-    // Generate noise pattern using screen coordinates (works with primitives)
-    vec2 noiseCoord = (gl_FragCoord.xy - u_position) / 16.0; 
+    // Generate noise pattern using screen coordinates
+    vec2 noiseCoord = gl_FragCoord.xy / 16.0; 
     float noiseValue = fbm(noiseCoord);
 
     // Calculate dissolve threshold

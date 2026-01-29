@@ -1,6 +1,6 @@
 {
   "$GMProject":"v1",
-  "%Name":"GGJ-Mask",
+  "%Name":"SPACEHOLE",
   "AudioGroups":[
     {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -36,8 +36,9 @@
   "MetaData":{
     "IDEVersion":"2024.14.3.217",
   },
-  "name":"GGJ-Mask",
+  "name":"SPACEHOLE",
   "resources":[
+    {"id":{"name":"PlayerCurves","path":"animcurves/PlayerCurves/PlayerCurves.yy",},},
     {"id":{"name":"FirebaseSetup","path":"extensions/FirebaseSetup/FirebaseSetup.yy",},},
     {"id":{"name":"window_shape","path":"extensions/window_shape/window_shape.yy",},},
     {"id":{"name":"YYFirebaseRealTime","path":"extensions/YYFirebaseRealTime/YYFirebaseRealTime.yy",},},

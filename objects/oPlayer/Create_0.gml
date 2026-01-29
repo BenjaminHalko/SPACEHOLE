@@ -5,10 +5,11 @@ moveSpd = 4;
 grv = 0.3;
 
 deathSpd = 1 / 60 / 3;
-deathRecovery = 3 / 60;
+deathRecovery = 1 / 60;
 
 // Not Speed
 death = 0;
+deathCurve = animcurve_get_channel(PlayerCurves, "burn");
 radius = 16;
 image_angle = 0;
 dashTimer = 0;

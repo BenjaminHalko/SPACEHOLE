@@ -10,10 +10,9 @@ if (death > 0.5) {
 }
 
 shader_set(shDissolve);
-shader_set_uniform_f(global.uDissolve, death);
+shader_set_uniform_f(global.uDissolve, animcurve_channel_evaluate(deathCurve, death));
 shader_set_uniform_f(global.uDissolveCol, 1.0, 0.5, 0);
-shader_set_uniform_f(global.uDissolveWidth, 0.03);
-shader_set_uniform_f(global.uDissolvePos, x, y);
+shader_set_uniform_f(global.uDissolveWidth, 0.08);
 
 draw_self();
 

@@ -23,7 +23,6 @@ if (DESKTOP) {
 global.uDissolve = shader_get_uniform(shDissolve, "u_dissolve");
 global.uDissolveCol = shader_get_uniform(shDissolve, "u_edgeColor");
 global.uDissolveWidth = shader_get_uniform(shDissolve, "u_edgeWidth");
-global.uDissolvePos = shader_get_uniform(shDissolve, "u_position");
 
 // Game State
 global.gameOver = false;
