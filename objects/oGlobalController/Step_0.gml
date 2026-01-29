@@ -11,8 +11,6 @@ if (_height != RES_HEIGHT) {
     surface_resize(application_surface, RES_WIDTH, RES_HEIGHT);
     camera_set_view_size(view_camera[0], RES_WIDTH, RES_HEIGHT);
     oCamera.viewHeightHalf = RES_HEIGHT / 2;
-    
-    surface_resize(oBackground.surface, RES_WIDTH, RES_HEIGHT);
 }
 
 // Fullscreen
