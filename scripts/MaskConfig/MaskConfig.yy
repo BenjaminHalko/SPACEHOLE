@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"MaskConfig",
   "parent":{
-    "name":"Masks",
-    "path":"folders/Level Objs/Masks.yy",
+    "name":"Doom Zone",
+    "path":"folders/Doom Zone.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

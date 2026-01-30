@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Peg",
-    "path":"folders/Level Objs/Collision/Peg.yy",
+    "path":"folders/Level Objs/Peg.yy",
   },
   "parentObjectId":null,
   "persistent":false,

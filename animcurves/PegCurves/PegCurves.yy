@@ -12,7 +12,7 @@
   "name":"PegCurves",
   "parent":{
     "name":"Peg",
-    "path":"folders/Level Objs/Collision/Peg.yy",
+    "path":"folders/Level Objs/Peg.yy",
   },
   "resourceType":"GMAnimCurve",
   "resourceVersion":"2.0",

@@ -4,7 +4,7 @@
   "name":"shDissolve",
   "parent":{
     "name":"Player",
-    "path":"folders/Level Objs/Player.yy",
+    "path":"folders/Player.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

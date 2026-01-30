@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Player",
-    "path":"folders/Level Objs/Player.yy",
+    "path":"folders/Player.yy",
   },
   "parentObjectId":null,
   "persistent":false,

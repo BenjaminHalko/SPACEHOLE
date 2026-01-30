@@ -11,7 +11,7 @@
   "name":"PlayerCurves",
   "parent":{
     "name":"Player",
-    "path":"folders/Level Objs/Player.yy",
+    "path":"folders/Player.yy",
   },
   "resourceType":"GMAnimCurve",
   "resourceVersion":"2.0",

@@ -10,8 +10,8 @@
   "name":"oDoomZone",
   "overriddenProperties":[],
   "parent":{
-    "name":"Masks",
-    "path":"folders/Level Objs/Masks.yy",
+    "name":"Doom Zone",
+    "path":"folders/Doom Zone.yy",
   },
   "parentObjectId":{
     "name":"pMask",

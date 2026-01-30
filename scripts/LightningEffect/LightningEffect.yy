@@ -6,7 +6,7 @@
   "name":"LightningEffect",
   "parent":{
     "name":"Player",
-    "path":"folders/Level Objs/Player.yy",
+    "path":"folders/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
