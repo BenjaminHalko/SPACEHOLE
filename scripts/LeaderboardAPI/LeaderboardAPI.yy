@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"LeaderboardAPI",
   "parent":{
-    "name":"~Leaderboard API",
-    "path":"folders/~Leaderboard API.yy",
+    "name":"Leaderboard API",
+    "path":"folders/Global/Extensions/Leaderboard API.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

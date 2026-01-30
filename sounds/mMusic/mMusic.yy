@@ -10,7 +10,7 @@
   "compression":2,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":96.0,
+  "duration":160.0,
   "exportDir":"",
   "name":"mMusic",
   "parent":{

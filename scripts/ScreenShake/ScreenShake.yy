@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"CameraFunctions",
+  "%Name":"ScreenShake",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"CameraFunctions",
+  "name":"ScreenShake",
   "parent":{
     "name":"Camera",
-    "path":"folders/Global/Camera.yy",
+    "path":"folders/Camera.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

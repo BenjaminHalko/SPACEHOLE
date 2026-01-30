@@ -6,7 +6,7 @@
   "name":"window_shape_ctr",
   "parent":{
     "name":"window_shape",
-    "path":"folders/Global/window_shape.yy",
+    "path":"folders/Global/Extensions/window_shape.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

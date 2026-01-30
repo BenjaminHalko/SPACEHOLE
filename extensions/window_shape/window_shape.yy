@@ -114,7 +114,7 @@
   "packageId":"",
   "parent":{
     "name":"window_shape",
-    "path":"folders/Global/window_shape.yy",
+    "path":"folders/Global/Extensions/window_shape.yy",
   },
   "productId":"",
   "resourceType":"GMExtension",

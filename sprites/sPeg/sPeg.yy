@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"Collision",
-    "path":"folders/Level Objs/Collision.yy",
+    "name":"Peg",
+    "path":"folders/Level Objs/Collision/Peg.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

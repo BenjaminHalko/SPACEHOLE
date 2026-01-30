@@ -54,7 +54,7 @@
   "packageId":"",
   "parent":{
     "name":"Extensions",
-    "path":"folders/~Leaderboard API/Firebase/Firebase RealTime/Extensions.yy",
+    "path":"folders/Global/Extensions/Leaderboard API/Firebase/Firebase RealTime/Extensions.yy",
   },
   "productId":"",
   "resourceType":"GMExtension",

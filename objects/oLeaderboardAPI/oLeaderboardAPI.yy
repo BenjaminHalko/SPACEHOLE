@@ -11,8 +11,8 @@
   "name":"oLeaderboardAPI",
   "overriddenProperties":[],
   "parent":{
-    "name":"~Leaderboard API",
-    "path":"folders/~Leaderboard API.yy",
+    "name":"Leaderboard API",
+    "path":"folders/Global/Extensions/Leaderboard API.yy",
   },
   "parentObjectId":null,
   "persistent":true,
