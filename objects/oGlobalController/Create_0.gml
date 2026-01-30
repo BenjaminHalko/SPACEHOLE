@@ -40,3 +40,8 @@ if (string_length(global.username) > 10)
 audio_master_gain(global.audioVol);
 
 instance_create_layer(0,0,layer,oLeaderboardAPI);
+
+
+// Music
+music = audio_play_sound(mMusic, 1, true);
+audio_sound_loop_start(music, 4.8);

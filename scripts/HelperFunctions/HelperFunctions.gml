@@ -110,32 +110,6 @@ function RotateVector(_x, _y, _angle) {
 	}
 }
 
-function drawCircle(_x, _y, _radius, _bubble=true) {
-    var _offset = 0.5 + (!BROWSER and !OPERA)*0.5;
-    
-	
-	if (_bubble) {
-        draw_circle(_x-_offset, _y-_offset, _radius, false);
-        
-        // Outline
-		var _currentColor = draw_get_color();
-		var _newSat = color_get_saturation(_currentColor) * 0.3;
-		draw_set_color(make_color_hsv(
-			color_get_hue(_currentColor),
-			_newSat,
-			color_get_value(_currentColor)
-		));
-		draw_circle(_x-_offset, _y-_offset, _radius, true);
-	} else {
-        draw_circle(_x-_offset, _y-_offset, _radius, false);
-    }
-}
-
-function drawCircleOutline(_x, _y, _radius) {
-	var _offset = 0.5 + (!BROWSER and !OPERA)*0.5;
-	draw_circle(_x-_offset, _y-_offset, _radius, true);
-}
-
 function Save(_section, _key, _value) {
 	ini_open(SAVEFILE);
 	if is_real(_value) ini_write_real(_section, _key, _value);

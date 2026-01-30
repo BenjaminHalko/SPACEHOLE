@@ -1,5 +1,6 @@
 /// @desc Set up camera
 cam = view_camera[0];
+camera_set_view_size(cam, RES_WIDTH, RES_HEIGHT);
 viewWidthHalf = RES_WIDTH * 0.5;
 viewHeightHalf = RES_HEIGHT * 0.5;
 follow = oPlayer;

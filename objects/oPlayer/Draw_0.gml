@@ -7,6 +7,7 @@ shader_set_uniform_f(global.uDissolve, animcurve_channel_evaluate(deathCurve, de
 shader_set_uniform_f(global.uDissolveCol, 1.0, 0.5, 0);
 shader_set_uniform_f(global.uDissolveWidth, 0.08);
 
+// draw_sprite_ext(sprite_index, image_index, x + 4, y + 4, image_xscale, image_yscale, image_angle, c_black, 0.5);
 draw_self();
 
 shader_set_uniform_f(global.uDissolve, animcurve_channel_evaluate(deathCurve, max(0, (death - 0.8) * 5)));

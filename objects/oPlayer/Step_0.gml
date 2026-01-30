@@ -20,7 +20,7 @@ if (death >= 1) {
 
 if (_maskCollision and y > oDoomZone.mask.y) {
     var _dir = point_direction(0, 0, hsp, vsp);
-    var _spd = 0.4;
+    var _spd = 0.3;
     hsp = ApproachEase(hsp, lengthdir_x(_spd, _dir), abs(lengthdir_x(1, _dir)), 0.85);
     vsp = ApproachEase(vsp, lengthdir_y(_spd, _dir), abs(lengthdir_y(1, _dir)), 0.85);
 }
@@ -36,6 +36,7 @@ if (y - radius < oDoomZone.mask.y) {
     }
     if (!_maskCollision) {
         vsp = clamp(vsp + grv, -18, 12);
+        hsp = ApproachEase(hsp, 0, 0.01, 0.8);
     }
 }
 
