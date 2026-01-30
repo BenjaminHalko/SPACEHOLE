@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"RoomLoaderConfig",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"RoomLoaderConfig",
+  "parent":{
+    "name":"Public",
+    "path":"folders/Global/Extensions/GMRoomLoader/Public.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
