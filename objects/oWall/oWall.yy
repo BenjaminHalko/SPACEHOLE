@@ -11,7 +11,10 @@
     "name":"Collision",
     "path":"folders/Level Objs/Collision.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"pEntity",
+    "path":"objects/pEntity/pEntity.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

@@ -1,5 +1,7 @@
 /// @desc Peg State
 
+event_inherited();
+
 scale = 1;
 deactive = 0;
 

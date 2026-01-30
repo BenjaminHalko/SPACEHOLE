@@ -1,10 +1,11 @@
 /// @desc Create Mask
 
+event_inherited();
+
 // Handle flip
-if (image_xscale < 0) {
+if (flipped) {
     image_angle = 90 - (image_angle - 90);
     image_xscale = -image_xscale;
-    xTo = RES_WIDTH - xTo;
 }
 
 mask = new MaskBasicRectangle();

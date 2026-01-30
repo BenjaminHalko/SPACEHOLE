@@ -16,7 +16,6 @@ function RoomLoader() {
 	static __layerWhitelist = new __RoomLoaderLayerFilter("Whitelist", true);
 	static __layerBlacklist = new __RoomLoaderLayerFilter("Blacklist", false);
 	static __payload = undefined;
-	static __debugView = new __RoomLoaderDebugView();
 	
 	static __xOrigin = ROOMLOADER_DEFAULT_XORIGIN;
 	static __yOrigin = ROOMLOADER_DEFAULT_YORIGIN;
@@ -906,7 +905,9 @@ function RoomLoader() {
 	static Mirror = function(_mirror = true) {
 		if (_mirror) {
 			__xScale = -1;
-		}
+		}  else {
+            __xScale = 1;
+        }
 		
 		return self;
 	};

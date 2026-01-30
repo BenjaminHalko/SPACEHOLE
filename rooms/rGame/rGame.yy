@@ -35,8 +35,8 @@
   ],
   "name":"rGame",
   "parent":{
-    "name":"SPACEHOLE",
-    "path":"SPACEHOLE.yyp",
+    "name":"Global",
+    "path":"folders/Global.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

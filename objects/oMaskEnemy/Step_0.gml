@@ -1,5 +1,7 @@
 /// @desc Enemy behaviour
 
+event_inherited();
+
 image_index = (oPlayer.swingTarget == id and oPlayer.swinging);
 
 // Offset

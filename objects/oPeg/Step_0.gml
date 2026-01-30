@@ -1,5 +1,7 @@
 /// @desc Bounce
 
+event_inherited();
+
 if (deactive <= 0) {
     if (place_meeting(x, y, oPlayer) and !PointIsMasked(x, y)) {
         var _dir = point_direction(x, y, oPlayer.x, oPlayer.y);

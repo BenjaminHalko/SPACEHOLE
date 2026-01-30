@@ -124,6 +124,7 @@ y += vsp;
 
 // Wall Collision
 PlayerWallCollision();
+PlayerFlipperCollision();
 
 image_angle -= hsp * 3;
 lightning.Step();

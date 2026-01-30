@@ -1,5 +1,7 @@
 /// @desc Setup Enemy
 
+event_inherited();
+
 // Config
 growSpeed = 2;
 maxGrow = 0;

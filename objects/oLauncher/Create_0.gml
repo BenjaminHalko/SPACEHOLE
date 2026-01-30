@@ -1,7 +1,9 @@
 /// @desc Init
 
+event_inherited();
+
 // Handle flip
-if (image_xscale < 0) {
+if (flipped) {
     image_xscale = -image_xscale;
     image_angle = -image_angle;
 }

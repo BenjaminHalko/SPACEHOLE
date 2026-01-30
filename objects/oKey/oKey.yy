@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"pMask",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"oKey",
+  "eventList":[],
   "managed":true,
-  "name":"pMask",
+  "name":"oKey",
   "overriddenProperties":[],
   "parent":{
-    "name":"_Parents",
-    "path":"folders/Level Objs/_Parents.yy",
+    "name":"Door",
+    "path":"folders/Level Objs/Door.yy",
   },
   "parentObjectId":{
     "name":"pEntity",
