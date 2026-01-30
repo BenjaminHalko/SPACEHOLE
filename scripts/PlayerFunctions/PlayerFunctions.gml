@@ -196,7 +196,7 @@ function PlayerLauncherCollision() {
 
             // Launch player in direction + 90
             var _launchDir = image_angle + 90;
-            var _launchSpeed = 12;
+            var _launchSpeed = 14;
 
             other.hsp = lengthdir_x(_launchSpeed, _launchDir);
             other.vsp = lengthdir_y(_launchSpeed, _launchDir);

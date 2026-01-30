@@ -1,7 +1,12 @@
 /// @desc Game Step
 
-if (room == rInit)
+if (room == rInit) {
+    if (keyboard_check_pressed(vk_space)) {
+        room_goto_next();
+    }
     exit;
+}
+
 
 // Window Height
 var _height = ceil((RES_WIDTH / window_get_width()) * window_get_height());

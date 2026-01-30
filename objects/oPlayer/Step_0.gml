@@ -34,10 +34,9 @@ if (y - radius < oDoomZone.mask.y) {
         oCamera.xTo = x;
         oCamera.yTo = y;
     }
-    if (!_maskCollision) {
-        vsp = clamp(vsp + grv, -18, 12);
-        hsp = ApproachEase(hsp, 0, 0.01, 0.8);
-    }
+    
+    vsp = clamp(vsp + (_maskCollision ? grv / 3 : grv), -18, 12);
+    hsp = ApproachEase(hsp, 0, 0.01, 0.8);
 }
 
 // Jump

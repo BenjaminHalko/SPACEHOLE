@@ -18,4 +18,4 @@ global.userID = "";
 global.noInternet = false;
 
 LeaderboardGet();
-room_goto_next();
+//room_goto_next();
