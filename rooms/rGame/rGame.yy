@@ -19,7 +19,6 @@
     {"name":"inst_9FE2552","path":"rooms/rGame/rGame.yy",},
     {"name":"inst_37C54FD9","path":"rooms/rGame/rGame.yy",},
     {"name":"inst_523D6348","path":"rooms/rGame/rGame.yy",},
-    {"name":"inst_7C17C753","path":"rooms/rGame/rGame.yy",},
     {"name":"inst_7915E323","path":"rooms/rGame/rGame.yy",},
     {"name":"inst_20C43CAF","path":"rooms/rGame/rGame.yy",},
     {"name":"inst_132C4D81","path":"rooms/rGame/rGame.yy",},
@@ -37,7 +36,6 @@
       ],"layers":[],"name":"GUI","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"Player","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"v4","%Name":"inst_7C355940","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_7C355940","objectId":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":160.0,"y":-640.0,},
-        {"$GMRInstance":"v4","%Name":"inst_7C17C753","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_7C17C753","objectId":{"name":"oGlobalController","path":"objects/oGlobalController/oGlobalController.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":0.0,"y":32.0,},
       ],"layers":[],"name":"Player","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"MaskZone","depth":200,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"v4","%Name":"inst_6D9942C2","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6D9942C2","objectId":{"name":"oMaskedZone","path":"objects/oMaskedZone/oMaskedZone.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":-20.317183,"scaleX":13.0,"scaleY":7.0,"x":353.99088,"y":-75.11094,},
