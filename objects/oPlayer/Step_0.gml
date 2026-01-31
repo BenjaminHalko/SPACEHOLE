@@ -28,12 +28,12 @@ if (_maskCollision and y > oDoomZone.mask.y) {
 // Move Camera
 if (y - radius < oDoomZone.mask.y) {
     if (swingTarget != noone and swinging) {
-        oCamera.yTo = lerp(y, swingTarget.y, 0.5);
+        oCamera.yTo = lerp(y, swingTarget.y, 0.5) - 30;
     } else {
-        oCamera.yTo = y;
+        oCamera.yTo = y - 10;
     }
     
-    vsp = clamp(vsp + (_maskCollision ? grv / 3 : grv), -18, 12);
+    vsp = clamp(vsp + (_maskCollision ? grv / 6 : grv), -18, 12);
     hsp = ApproachEase(hsp, 0, 0.01, 0.8);
 }
 
@@ -49,6 +49,8 @@ swinging = swingTarget != noone and keyboard_check(vk_space);
 if (swinging) {
     var _dist = point_distance(x, y, swingTarget.x, swingTarget.y);
     var _dir = point_direction(swingTarget.x, swingTarget.y, x, y);
+    
+    ropeLength = 50 + 50 * abs(swingTarget.image_xscale);
 
     // On first frame of swinging, convert linear velocity to angular velocity
     if (!swingingPrev) {
@@ -57,15 +59,15 @@ if (swinging) {
         var _tangentDir = _dir + 90;
         var _tangentSpeed = dot_product(hsp, vsp, lengthdir_x(1, _tangentDir), lengthdir_y(1, _tangentDir));
         // Convert to angular velocity (degrees per frame)
-        swingSpeed = (_tangentSpeed / max(_dist, 1)) * (180 / pi) * 1.5;
+        swingSpeed = (_tangentSpeed / max(_dist, 1)) * (180 / pi) * 2;
 
-        swingSpeed = clamp(swingSpeed, -8, 8);
+        swingSpeed = clamp(swingSpeed, -4, 4);
     }
 
     // Apply gravity as angular acceleration
     // sin(angle from vertical) determines how much gravity affects swing
     // _dir is from pivot's perspective, so we use cos(_dir) for horizontal offset
-    var _gravityAccel = -(grv * 0.7 / max(ropeLength, 1)) * cos(degtorad(_dir)) * (180 / pi);
+    var _gravityAccel = -(grv / max(ropeLength, 1)) * cos(degtorad(_dir)) * (180 / pi) * 0.8;
     swingSpeed += _gravityAccel;
 
     // Small amount of damping for feel
@@ -76,7 +78,7 @@ if (swinging) {
     _dir += swingSpeed;
 
     // Maintain rope length (slight elasticity)
-    swingTarget.targetSize = ApproachEase(swingTarget.targetSize, 4, 1.5, 0.8);
+    swingTarget.targetSize = ApproachEase(swingTarget.targetSize, 2 + 3 * abs(swingTarget.image_xscale), 6, 0.8);
     _dist = lerp(_dist, ropeLength, 0.1);
 
     var _xTarget = swingTarget.x + lengthdir_x(_dist, _dir);
@@ -85,8 +87,8 @@ if (swinging) {
     vsp = (_yTarget - y);
 } else {
     if (swingingPrev) {
-        hsp *= 1.2;
-        vsp *= 1.2;
+        hsp *= 1.5;
+        vsp *= 1.5;
     }
     if (x < 0 and hsp < 0)
         hsp = abs(hsp);

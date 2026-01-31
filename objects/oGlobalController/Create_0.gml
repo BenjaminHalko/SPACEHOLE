@@ -11,7 +11,7 @@ enum GameState {
 
 randomize();
 
-RES_HEIGHT = 270;
+RES_HEIGHT = RES_WIDTH * 0.75;
 
 getOsType();
 

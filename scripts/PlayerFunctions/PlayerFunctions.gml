@@ -246,11 +246,13 @@ function PlayerLauncherCollision() {
                     }
                     ScreenShake(2, 30);
                 }
-            } else {
-                // Launch player in direction + 90
+            } else if (other.dashTimer <= 5) {
+                // Launch player in direction + 90r
                 var _launchDir = image_angle + 90;
-                var _launchSpeed = 12;
+                var _launchSpeed = 14;
                 
+                other.x = x;
+                other.y = y;
                 other.hsp = lengthdir_x(_launchSpeed, _launchDir);
                 other.vsp = lengthdir_y(_launchSpeed, _launchDir);
                 other.dashTimer = 10;
