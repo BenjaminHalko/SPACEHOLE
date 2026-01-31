@@ -6,7 +6,7 @@ event_inherited();
 growSpeed = 2;
 maxGrow = 0;
 attackShrink = 1;
-radius = 24;
+radius = 16 * abs(image_xscale);
 
 // State
 attackPulse = 0;

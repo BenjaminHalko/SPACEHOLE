@@ -1,6 +1,4 @@
 draw_set_color(c_white);
-mask.DrawOutline();
-
 var _camY = camera_get_view_y(view_camera[0]);
 shader_set(shPlanet);
 shader_set_uniform_f(global.uPlanetTime, current_time / 1000);
