@@ -31,12 +31,12 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sWall",
-    "path":"sprites/sWall/sWall.yy",
+    "name":"sSemiSolid",
+    "path":"sprites/sSemiSolid/sSemiSolid.yy",
   },
   "spriteMaskId":null,
   "tags":[
     "lvlObj",
   ],
-  "visible":false,
+  "visible":true,
 }

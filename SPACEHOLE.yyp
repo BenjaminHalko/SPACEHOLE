@@ -80,7 +80,6 @@
     {"id":{"name":"oSemiSolid","path":"objects/oSemiSolid/oSemiSolid.yy",},},
     {"id":{"name":"oTransition","path":"objects/oTransition/oTransition.yy",},},
     {"id":{"name":"oWall","path":"objects/oWall/oWall.yy",},},
-    {"id":{"name":"oWallRenderer","path":"objects/oWallRenderer/oWallRenderer.yy",},},
     {"id":{"name":"pEntity","path":"objects/pEntity/pEntity.yy",},},
     {"id":{"name":"pMask","path":"objects/pMask/pMask.yy",},},
     {"id":{"name":"lvIntro","path":"rooms/lvIntro/lvIntro.yy",},},
