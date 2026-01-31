@@ -107,7 +107,7 @@ function PlayerWallCollision() {
             var _worldNormY = _normX * _sin + _normY * _cos;
 
             // Semi-solid: only collide when landing on top (normal points up, player moving down)
-            if (object_is_ancestor(object_index, oSemiSolid)) {
+            if (object_index == oSemiSolid) {
                 if (_worldNormY >= 0 || other.vsp < 0) {
                     continue;
                 }
