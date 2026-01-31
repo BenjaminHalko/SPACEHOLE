@@ -125,7 +125,7 @@ y += vsp;
 // Wall Collision
 PlayerWallCollision();
 
-image_angle -= hsp * 3;
+image_angle = ApproachEase(image_angle, -hsp * 15, 10, 0.8);
 lightning.Step();
 
 swingingPrev = swinging;
