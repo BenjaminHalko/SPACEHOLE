@@ -26,7 +26,8 @@ function PlayerWallCollision() {
 
         // Wall center IS (x, y) since sprite origin is centered
         // Transform player to wall's local space (rotate around wall center)
-        var _rad = degtorad(-image_angle);
+        var _angle = -image_angle;
+        var _rad = degtorad(_angle);
         var _cos = cos(_rad);
         var _sin = sin(_rad);
 
@@ -106,7 +107,7 @@ function PlayerWallCollision() {
             var _worldNormY = _normX * _sin + _normY * _cos;
 
             // Semi-solid: only collide when landing on top (normal points up, player moving down)
-            if (object_index == oSemiSolid) {
+            if (object_is_ancestor(object_index, oSemiSolid)) {
                 if (_worldNormY >= 0 || other.vsp < 0) {
                     continue;
                 }
@@ -139,138 +140,104 @@ function PlayerWallCollision() {
     }
 }
 
-
+/// @func PlayerFlipperCollision()
+/// @desc Handles circle vs line collision for player against oFlipper instances (semi-solid)
 function PlayerFlipperCollision() {
     with (oFlipper) {
-        // Triangle in LOCAL sprite space (before any transforms)
-        var _w = sprite_width - 12;
-        var _hh = sprite_height / 2;
+        // Line endpoints in local space (base sprite coords relative to origin 12,12)
+        // Triangle starts 6px from left, origin is 12px from left
+        // A = top-left of triangle, B = bottom-right
+        var _ax = -6;   // 6 - 12 = -6
+        var _ay = -12;  // 0 - 12 = -12 (top)
+        var _bx = 52;   // 64 - 12 = 52 (right edge)
+        var _by = 12;   // 24 - 12 = 12 (bottom)
 
-        // Local vertices: A(0,hh), B(w,hh), C(0,-hh)
-        // Transform each vertex to WORLD space
+        // Apply image_xscale (flip horizontally if negative)
+        var _xscale = image_xscale;
+        _ax *= _xscale;
+        _bx *= _xscale;
+
+        // Transform to world space (rotate by image_angle, translate by position)
         var _rad = degtorad(image_angle);
         var _cos = cos(_rad);
         var _sin = sin(_rad);
-        var _xs = image_xscale;
 
-        // World vertex A (origin corner, right angle)
-        var _ax = x + 0 * _xs * _cos - _hh * _sin;
-        var _ay = y + 0 * _xs * _sin + _hh * _cos;
+        var _worldAx = x + _ax * _cos - _ay * _sin;
+        var _worldAy = y + _ax * _sin + _ay * _cos;
+        var _worldBx = x + _bx * _cos - _by * _sin;
+        var _worldBy = y + _bx * _sin + _by * _cos;
 
-        // World vertex B (far corner of bottom edge)
-        var _bx = x + _w * _xs * _cos - _hh * _sin;
-        var _by = y + _w * _xs * _sin + _hh * _cos;
+        // Circle-line segment collision
+        // Find closest point on segment to player center
+        var _dx = _worldBx - _worldAx;
+        var _dy = _worldBy - _worldAy;
+        var _lenSq = _dx * _dx + _dy * _dy;
 
-        // World vertex C (top of origin side)
-        var _cx = x + 0 * _xs * _cos - (-_hh) * _sin;
-        var _cy = y + 0 * _xs * _sin + (-_hh) * _cos;
+        var _t = clamp((
+            (other.x - _worldAx) * _dx + (other.y - _worldAy) * _dy
+        ) / _lenSq, 0, 1);
 
-        // Player position and radius
-        var _playerX = other.x;
-        var _playerY = other.y;
-        var _radius = other.radius;
+        var _closestX = _worldAx + _t * _dx;
+        var _closestY = _worldAy + _t * _dy;
 
-        // Find closest point on triangle perimeter (in world space)
-        var _closestX, _closestY;
-        var _minDistSq = infinity;
+        var _distX = other.x - _closestX;
+        var _distY = other.y - _closestY;
+        var _distSq = _distX * _distX + _distY * _distY;
 
-        // Edge A-B (bottom edge)
-        var _abx = _bx - _ax;
-        var _aby = _by - _ay;
-        var _abLenSq = _abx * _abx + _aby * _aby;
-        var _t = clamp(((_playerX - _ax) * _abx + (_playerY - _ay) * _aby) / _abLenSq, 0, 1);
-        var _px = _ax + _t * _abx;
-        var _py = _ay + _t * _aby;
-        var _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
-        if (_distSq < _minDistSq) {
-            _minDistSq = _distSq;
-            _closestX = _px;
-            _closestY = _py;
-        }
+        if (_distSq < other.radius * other.radius) {
+            // Calculate line normal (perpendicular, pointing "up" from surface)
+            var _lineLen = sqrt(_lenSq);
+            var _normX = -_dy / _lineLen;  // Perpendicular to line
+            var _normY = _dx / _lineLen;
 
-        // Edge C-A (left/origin edge)
-        var _cax = _ax - _cx;
-        var _cay = _ay - _cy;
-        var _caLenSq = _cax * _cax + _cay * _cay;
-        _t = clamp(((_playerX - _cx) * _cax + (_playerY - _cy) * _cay) / _caLenSq, 0, 1);
-        _px = _cx + _t * _cax;
-        _py = _cy + _t * _cay;
-        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
-        if (_distSq < _minDistSq) {
-            _minDistSq = _distSq;
-            _closestX = _px;
-            _closestY = _py;
-        }
-
-        // Edge B-C (hypotenuse)
-        var _bcx = _cx - _bx;
-        var _bcy = _cy - _by;
-        var _bcLenSq = _bcx * _bcx + _bcy * _bcy;
-        _t = clamp(((_playerX - _bx) * _bcx + (_playerY - _by) * _bcy) / _bcLenSq, 0, 1);
-        _px = _bx + _t * _bcx;
-        _py = _by + _t * _bcy;
-        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
-        if (_distSq < _minDistSq) {
-            _minDistSq = _distSq;
-            _closestX = _px;
-            _closestY = _py;
-        }
-
-        // Check collision
-        if (_minDistSq >= _radius * _radius) {
-            continue;
-        }
-
-        var _dist = sqrt(_minDistSq);
-        var _overlap = _radius - _dist;
-
-        // Push normal (world space, from closest point toward player)
-        var _normX, _normY;
-        if (_dist > 0.001) {
-            _normX = (_playerX - _closestX) / _dist;
-            _normY = (_playerY - _closestY) / _dist;
-        } else {
-            // Fallback: use perpendicular to hypotenuse pointing outward
-            var _bcLen = sqrt(_bcLenSq);
-            // Perpendicular to B->C, choosing direction away from A
-            _normX = _bcy / _bcLen;
-            _normY = -_bcx / _bcLen;
-            // Check if this points toward or away from A, flip if needed
-            var _toAx = _ax - _bx;
-            var _toAy = _ay - _by;
-            if (_normX * _toAx + _normY * _toAy > 0) {
+            // Ensure normal points away from triangle's filled area (upward)
+            // For standard orientation, normal should point up-left
+            if (_normY > 0) {
                 _normX = -_normX;
                 _normY = -_normY;
             }
+
+            // Semi-solid check: only collide when player moving toward surface
+            var _velDot = other.hsp * _normX + other.vsp * _normY;
+            if (_velDot >= 0) continue;  // Moving away, skip
+
+            // Mask check (sample points)
+            var _hasExposedCollision = false;
+            var _samples = 8;
+            for (var i = 0; i < _samples; i++) {
+                var _sampleAngle = i / _samples * 360;
+                var _sampleX = other.x + lengthdir_x(other.radius, _sampleAngle);
+                var _sampleY = other.y + lengthdir_y(other.radius, _sampleAngle);
+                // Check if collision point is not masked
+                if (!PointIsMasked(_closestX, _closestY)) {
+                    _hasExposedCollision = true;
+                    break;
+                }
+            }
+            if (!_hasExposedCollision) continue;
+
+            // Push player out
+            var _dist = sqrt(_distSq);
+            var _overlap = other.radius - _dist;
+            other.x += _normX * _overlap;
+            other.y += _normY * _overlap;
+
+            // Wall contact info
+            other.wallContact = true;
+            other.wallNormalX = _normX;
+            other.wallNormalY = _normY;
+
+            // Remove velocity into surface
+            other.hsp -= _normX * _velDot;
+            other.vsp -= _normY * _velDot;
+
+            // Apply friction
+            var _tangentX = -_normY;
+            var _tangentY = _normX;
+            var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
+            other.hsp -= _tangentX * _tangentDot * (1 - other.wallFriction);
+            other.vsp -= _tangentY * _tangentDot * (1 - other.wallFriction);
         }
-
-        // Check mask at closest point
-        if (PointIsMasked(_closestX, _closestY)) {
-            continue;
-        }
-
-        // Push player out
-        other.x += _normX * _overlap;
-        other.y += _normY * _overlap;
-
-        // Store wall contact info
-        other.wallContact = true;
-        other.wallNormalX = _normX * 2;
-        other.wallNormalY = _normY * 2;
-
-        // Reflect velocity
-        var _dot = other.hsp * _normX + other.vsp * _normY;
-        if (_dot < 0) {
-            other.hsp -= _normX * _dot;
-            other.vsp -= _normY * _dot;
-        }
-
-        // Apply friction
-        var _tangentX = -_normY;
-        var _tangentY = _normX;
-        var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
-        other.hsp -= _tangentX * _tangentDot * (1 - other.flipperFriction);
-        other.vsp -= _tangentY * _tangentDot * (1 - other.flipperFriction);
     }
 }
 
