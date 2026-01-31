@@ -1,16 +1,8 @@
 /// @desc Update Camera
 
-if (y >= oDoomZone.mask.y - viewHeightHalf + 60) {
-    //yTo = min(yTo, y);
-}
-
 //Update Object Position
 x += (xTo - x) / 12;
-y += (yTo - y) / 4;
-
-//Keep Camera center inside room
-x = clamp(x, viewWidthHalf, room_width-viewWidthHalf);
-//y = clamp(y, viewHeightHalf, room_height-viewHeightHalf);
+y += (yTo - y) / 8;
 
 //Screenshake
 x += random_range(-shakeRemain,shakeRemain);

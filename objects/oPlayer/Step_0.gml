@@ -28,10 +28,8 @@ if (_maskCollision and y > oDoomZone.mask.y) {
 // Move Camera
 if (y - radius < oDoomZone.mask.y) {
     if (swingTarget != noone and swinging) {
-        oCamera.xTo = lerp(x, swingTarget.x, 0.5);
         oCamera.yTo = lerp(y, swingTarget.y, 0.5);
     } else {
-        oCamera.xTo = x;
         oCamera.yTo = y;
     }
     
@@ -124,6 +122,7 @@ y += vsp;
 
 // Wall Collision
 PlayerWallCollision();
+PlayerFlipperCollision();
 
 image_angle = ApproachEase(image_angle, -hsp * 15, 10, 0.8);
 lightning.Step();

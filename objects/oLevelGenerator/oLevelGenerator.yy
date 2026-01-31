@@ -9,8 +9,8 @@
   "name":"oLevelGenerator",
   "overriddenProperties":[],
   "parent":{
-    "name":"Generator",
-    "path":"folders/Generator.yy",
+    "name":"Levels",
+    "path":"folders/Levels.yy",
   },
   "parentObjectId":null,
   "persistent":false,

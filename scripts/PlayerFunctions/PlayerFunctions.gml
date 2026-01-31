@@ -140,6 +140,140 @@ function PlayerWallCollision() {
 }
 
 
+function PlayerFlipperCollision() {
+    with (oFlipper) {
+        // Triangle in LOCAL sprite space (before any transforms)
+        var _w = sprite_width - 12;
+        var _hh = sprite_height / 2;
+
+        // Local vertices: A(0,hh), B(w,hh), C(0,-hh)
+        // Transform each vertex to WORLD space
+        var _rad = degtorad(image_angle);
+        var _cos = cos(_rad);
+        var _sin = sin(_rad);
+        var _xs = image_xscale;
+
+        // World vertex A (origin corner, right angle)
+        var _ax = x + 0 * _xs * _cos - _hh * _sin;
+        var _ay = y + 0 * _xs * _sin + _hh * _cos;
+
+        // World vertex B (far corner of bottom edge)
+        var _bx = x + _w * _xs * _cos - _hh * _sin;
+        var _by = y + _w * _xs * _sin + _hh * _cos;
+
+        // World vertex C (top of origin side)
+        var _cx = x + 0 * _xs * _cos - (-_hh) * _sin;
+        var _cy = y + 0 * _xs * _sin + (-_hh) * _cos;
+
+        // Player position and radius
+        var _playerX = other.x;
+        var _playerY = other.y;
+        var _radius = other.radius;
+
+        // Find closest point on triangle perimeter (in world space)
+        var _closestX, _closestY;
+        var _minDistSq = infinity;
+
+        // Edge A-B (bottom edge)
+        var _abx = _bx - _ax;
+        var _aby = _by - _ay;
+        var _abLenSq = _abx * _abx + _aby * _aby;
+        var _t = clamp(((_playerX - _ax) * _abx + (_playerY - _ay) * _aby) / _abLenSq, 0, 1);
+        var _px = _ax + _t * _abx;
+        var _py = _ay + _t * _aby;
+        var _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
+        if (_distSq < _minDistSq) {
+            _minDistSq = _distSq;
+            _closestX = _px;
+            _closestY = _py;
+        }
+
+        // Edge C-A (left/origin edge)
+        var _cax = _ax - _cx;
+        var _cay = _ay - _cy;
+        var _caLenSq = _cax * _cax + _cay * _cay;
+        _t = clamp(((_playerX - _cx) * _cax + (_playerY - _cy) * _cay) / _caLenSq, 0, 1);
+        _px = _cx + _t * _cax;
+        _py = _cy + _t * _cay;
+        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
+        if (_distSq < _minDistSq) {
+            _minDistSq = _distSq;
+            _closestX = _px;
+            _closestY = _py;
+        }
+
+        // Edge B-C (hypotenuse)
+        var _bcx = _cx - _bx;
+        var _bcy = _cy - _by;
+        var _bcLenSq = _bcx * _bcx + _bcy * _bcy;
+        _t = clamp(((_playerX - _bx) * _bcx + (_playerY - _by) * _bcy) / _bcLenSq, 0, 1);
+        _px = _bx + _t * _bcx;
+        _py = _by + _t * _bcy;
+        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
+        if (_distSq < _minDistSq) {
+            _minDistSq = _distSq;
+            _closestX = _px;
+            _closestY = _py;
+        }
+
+        // Check collision
+        if (_minDistSq >= _radius * _radius) {
+            continue;
+        }
+
+        var _dist = sqrt(_minDistSq);
+        var _overlap = _radius - _dist;
+
+        // Push normal (world space, from closest point toward player)
+        var _normX, _normY;
+        if (_dist > 0.001) {
+            _normX = (_playerX - _closestX) / _dist;
+            _normY = (_playerY - _closestY) / _dist;
+        } else {
+            // Fallback: use perpendicular to hypotenuse pointing outward
+            var _bcLen = sqrt(_bcLenSq);
+            // Perpendicular to B->C, choosing direction away from A
+            _normX = _bcy / _bcLen;
+            _normY = -_bcx / _bcLen;
+            // Check if this points toward or away from A, flip if needed
+            var _toAx = _ax - _bx;
+            var _toAy = _ay - _by;
+            if (_normX * _toAx + _normY * _toAy > 0) {
+                _normX = -_normX;
+                _normY = -_normY;
+            }
+        }
+
+        // Check mask at closest point
+        if (PointIsMasked(_closestX, _closestY)) {
+            continue;
+        }
+
+        // Push player out
+        other.x += _normX * _overlap;
+        other.y += _normY * _overlap;
+
+        // Store wall contact info
+        other.wallContact = true;
+        other.wallNormalX = _worldNormX * 2;
+        other.wallNormalY = _worldNormY * 2;
+
+        // Reflect velocity
+        var _dot = other.hsp * _worldNormX + other.vsp * _worldNormY;
+        if (_dot < 0) {
+            other.hsp -= _worldNormX * _dot;
+            other.vsp -= _worldNormY * _dot;
+        }
+
+        // Apply friction
+        var _tangentX = -_worldNormY;
+        var _tangentY = _worldNormX;
+        var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
+        other.hsp -= _tangentX * _tangentDot * (1 - other.flipperFriction);
+        other.vsp -= _tangentY * _tangentDot * (1 - other.flipperFriction);
+    }
+}
+
 function PlayerLauncherCollision() {
     with (oLauncher) {
         // Check circle vs rectangle overlap
@@ -193,14 +327,26 @@ function PlayerLauncherCollision() {
             if (!_hasExposedCollision) {
                 continue;  // Fully masked - skip collision
             }
-
-            // Launch player in direction + 90
-            var _launchDir = image_angle + 90;
-            var _launchSpeed = 14;
-
-            other.hsp = lengthdir_x(_launchSpeed, _launchDir);
-            other.vsp = lengthdir_y(_launchSpeed, _launchDir);
-            other.dashTimer = 10;
+            
+            if (object_index == oKey) {
+                if (!active) {
+                    active = true;
+                    with (oDoor) {
+                        if (doorID == other.doorID) {
+                            active = true;
+                        }
+                    }
+                    ScreenShake(2, 30);
+                }
+            } else {
+                // Launch player in direction + 90
+                var _launchDir = image_angle + 90;
+                var _launchSpeed = 14;
+                
+                other.hsp = lengthdir_x(_launchSpeed, _launchDir);
+                other.vsp = lengthdir_y(_launchSpeed, _launchDir);
+                other.dashTimer = 10;
+            }
         }
     }
 }

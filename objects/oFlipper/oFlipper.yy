@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"pMask",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"oFlipper",
+  "eventList":[],
   "managed":true,
-  "name":"pMask",
+  "name":"oFlipper",
   "overriddenProperties":[],
   "parent":{
-    "name":"_Parents",
-    "path":"folders/Level Objs/_Parents.yy",
+    "name":"Flipper",
+    "path":"folders/Level Objs/Flipper.yy",
   },
   "parentObjectId":{
     "name":"pEntity",
@@ -32,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sFlipper",
+    "path":"sprites/sFlipper/sFlipper.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

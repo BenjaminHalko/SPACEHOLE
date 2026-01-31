@@ -13,7 +13,10 @@
     "name":"Peg",
     "path":"folders/Level Objs/Peg.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"pEntity",
+    "path":"objects/pEntity/pEntity.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

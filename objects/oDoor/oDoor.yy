@@ -1,19 +1,20 @@
 {
   "$GMObject":"",
-  "%Name":"pMask",
+  "%Name":"oDoor",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"pMask",
+  "name":"oDoor",
   "overriddenProperties":[],
   "parent":{
-    "name":"_Parents",
-    "path":"folders/Level Objs/_Parents.yy",
+    "name":"Door",
+    "path":"folders/Level Objs/Door.yy",
   },
   "parentObjectId":{
-    "name":"pEntity",
-    "path":"objects/pEntity/pEntity.yy",
+    "name":"oWall",
+    "path":"objects/oWall/oWall.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -28,11 +29,16 @@
   "physicsShape":1,
   "physicsShapePoints":[],
   "physicsStartAwake":true,
-  "properties":[],
+  "properties":[
+    {"$GMObjectProperty":"v2","%Name":"doorID","filters":[],"listItems":[],"multiselect":false,"name":"doorID","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
+  ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sDoor",
+    "path":"sprites/sDoor/sDoor.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }
