@@ -66,21 +66,6 @@ function MaskBasicCircle() : __MaskParent() constructor {
     static HasCollision = function(_x, _y) {
         return point_distance(_x, _y, x, y) < BaseRadius * size;
     }
-
-    DrawColoured = function() {
-        // Draw triangles with vertex colors: center dark, edges glowing
-        draw_primitive_begin(pr_trianglelist);
-        for (var i = 0; i < Sides; i++) {
-            var _index = i * 3;
-            // Center vertex (dark)
-            draw_vertex_colour(x + points[_index][0], y + points[_index][1], centerColor, centerAlpha);
-            // Edge vertex 1 (glow)
-            draw_vertex_colour(x + points[_index + 1][0], y + points[_index + 1][1], edgeColor, edgeAlpha);
-            // Edge vertex 2 (glow)
-            draw_vertex_colour(x + points[_index + 2][0], y + points[_index + 2][1], edgeColor, edgeAlpha);
-        }
-        draw_primitive_end();
-    }
     
     static UpdateOffsets = function() {
         var _pointOffsetLen = array_length(pointOffsets);

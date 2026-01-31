@@ -1,2 +1,5 @@
 /// @desc Cleanup
-// Nothing to clean up
+
+if (surface_exists(maskSurface)) {
+    surface_free(maskSurface);
+}
