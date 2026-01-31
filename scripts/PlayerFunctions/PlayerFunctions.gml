@@ -17,7 +17,7 @@ function PointIsMasked(_x, _y) {
 /// @func PlayerWallCollision()
 /// @desc Handles circle vs rotated rectangle collision for player against oWall instances
 function PlayerWallCollision() {
-    wallContact = false;
+    wallContact = noone;
 
     with (oWall) {
         // Rectangle half-dimensions (sprite_width/height include scale)
@@ -118,7 +118,7 @@ function PlayerWallCollision() {
             other.y += _worldNormY * _overlap;
 
             // Store wall contact info for jumping
-            other.wallContact = true;
+            other.wallContact = id;
             other.wallNormalX = _worldNormX;
             other.wallNormalY = _worldNormY;
 
@@ -141,103 +141,44 @@ function PlayerWallCollision() {
 }
 
 /// @func PlayerFlipperCollision()
-/// @desc Handles circle vs line collision for player against oFlipper instances (semi-solid)
+/// @desc Handles flipper collision using place_meeting
 function PlayerFlipperCollision() {
     with (oFlipper) {
-        // Line endpoints in local space (base sprite coords relative to origin 12,12)
-        // Triangle starts 6px from left, origin is 12px from left
-        // A = top-left of triangle, B = bottom-right
-        var _ax = -6;   // 6 - 12 = -6
-        var _ay = -12;  // 0 - 12 = -12 (top)
-        var _bx = 52;   // 64 - 12 = 52 (right edge)
-        var _by = 12;   // 24 - 12 = 12 (bottom)
+        if (!place_meeting(x, y, other)) continue;
 
-        // Apply image_xscale (flip horizontally if negative)
-        var _xscale = image_xscale;
-        _ax *= _xscale;
-        _bx *= _xscale;
+        // Skip if both player and flipper positions are masked
+        if (PointIsMasked(other.x, other.y) && PointIsMasked(x, y)) continue;
 
-        // Transform to world space (rotate by image_angle, translate by position)
+        // Surface normal (points up from flipper)
         var _rad = degtorad(image_angle);
-        var _cos = cos(_rad);
-        var _sin = sin(_rad);
+        var _normX = -sin(_rad);
+        var _normY = -cos(_rad);
 
-        var _worldAx = x + _ax * _cos - _ay * _sin;
-        var _worldAy = y + _ax * _sin + _ay * _cos;
-        var _worldBx = x + _bx * _cos - _by * _sin;
-        var _worldBy = y + _bx * _sin + _by * _cos;
+        // Set wall contact for jumping
+        other.wallContact = id;
+        other.wallNormalX = _normX;
+        other.wallNormalY = _normY;
 
-        // Circle-line segment collision
-        // Find closest point on segment to player center
-        var _dx = _worldBx - _worldAx;
-        var _dy = _worldBy - _worldAy;
-        var _lenSq = _dx * _dx + _dy * _dy;
+        // Semi-solid: only collide when moving toward surface
+        var _velDot = other.hsp * _normX + other.vsp * _normY;
+        if (_velDot >= 0) continue;
 
-        var _t = clamp((
-            (other.x - _worldAx) * _dx + (other.y - _worldAy) * _dy
-        ) / _lenSq, 0, 1);
-
-        var _closestX = _worldAx + _t * _dx;
-        var _closestY = _worldAy + _t * _dy;
-
-        var _distX = other.x - _closestX;
-        var _distY = other.y - _closestY;
-        var _distSq = _distX * _distX + _distY * _distY;
-
-        if (_distSq < other.radius * other.radius) {
-            // Calculate line normal (perpendicular, pointing "up" from surface)
-            var _lineLen = sqrt(_lenSq);
-            var _normX = -_dy / _lineLen;  // Perpendicular to line
-            var _normY = _dx / _lineLen;
-
-            // Ensure normal points away from triangle's filled area (upward)
-            // For standard orientation, normal should point up-left
-            if (_normY > 0) {
-                _normX = -_normX;
-                _normY = -_normY;
-            }
-
-            // Semi-solid check: only collide when player moving toward surface
-            var _velDot = other.hsp * _normX + other.vsp * _normY;
-            if (_velDot >= 0) continue;  // Moving away, skip
-
-            // Mask check (sample points)
-            var _hasExposedCollision = false;
-            var _samples = 8;
-            for (var i = 0; i < _samples; i++) {
-                var _sampleAngle = i / _samples * 360;
-                var _sampleX = other.x + lengthdir_x(other.radius, _sampleAngle);
-                var _sampleY = other.y + lengthdir_y(other.radius, _sampleAngle);
-                // Check if collision point is not masked
-                if (!PointIsMasked(_closestX, _closestY)) {
-                    _hasExposedCollision = true;
-                    break;
-                }
-            }
-            if (!_hasExposedCollision) continue;
-
-            // Push player out
-            var _dist = sqrt(_distSq);
-            var _overlap = other.radius - _dist;
-            other.x += _normX * _overlap;
-            other.y += _normY * _overlap;
-
-            // Wall contact info
-            other.wallContact = true;
-            other.wallNormalX = _normX;
-            other.wallNormalY = _normY;
-
-            // Remove velocity into surface
-            other.hsp -= _normX * _velDot;
-            other.vsp -= _normY * _velDot;
-
-            // Apply friction
-            var _tangentX = -_normY;
-            var _tangentY = _normX;
-            var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
-            other.hsp -= _tangentX * _tangentDot * (1 - other.wallFriction);
-            other.vsp -= _tangentY * _tangentDot * (1 - other.wallFriction);
+        // Push player out along normal until no longer colliding
+        while (place_meeting(x, y, other)) {
+            other.x += _normX;
+            other.y += _normY;
         }
+
+        // Remove velocity into surface
+        other.hsp -= _normX * _velDot;
+        other.vsp -= _normY * _velDot;
+
+        // Apply friction
+        var _tangentX = -_normY;
+        var _tangentY = _normX;
+        var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
+        other.hsp -= _tangentX * _tangentDot * (1 - other.flipperFriction);
+        other.vsp -= _tangentY * _tangentDot * (1 - other.flipperFriction);
     }
 }
 

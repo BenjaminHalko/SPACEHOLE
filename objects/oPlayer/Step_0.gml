@@ -99,12 +99,19 @@ if (swinging) {
     }
     
     // Jump off wall (biased upward)
-    if (wallContact && jumpTimer) {
+    if (wallContact != noone && jumpTimer) {
         var _jumpX = wallNormalX * (1 - jumpUpBias);
         var _jumpY = lerp(wallNormalY, -1, jumpUpBias);
         var _len = sqrt(_jumpX * _jumpX + _jumpY * _jumpY);
-        hsp += (_jumpX / _len) * jumpStrength;
-        vsp += (_jumpY / _len) * jumpStrength;
+        var _str = jumpStrength;
+        if (wallContact.object_index == oFlipper) {
+            wallContact.image_angle += 30 * wallContact.image_xscale;
+            _str *= 2;
+        }
+        hsp += (_jumpX / _len) * _str;
+        vsp += (_jumpY / _len) * _str;
+        
+        
     }
     
     // Dash

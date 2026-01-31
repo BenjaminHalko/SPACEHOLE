@@ -16,7 +16,7 @@ dashTimer = 0;
 jumpTimer = 0;
 
 // Wall contact / jump
-wallContact = false;
+wallContact = noone;
 wallNormalX = 0;
 wallNormalY = -1;
 jumpStrength = 8;
