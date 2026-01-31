@@ -93,7 +93,7 @@ if (swinging) {
     else if (x > RES_WIDTH and hsp > 0)
         hsp = -abs(hsp * 0.8);
     
-    swingTarget = instance_nearest(x, y, oMaskEnemy);
+    swingTarget = instance_nearest(x, y, oPlanet);
     if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 120) {
         swingTarget = noone;
     }
