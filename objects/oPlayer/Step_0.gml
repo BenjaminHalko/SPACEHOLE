@@ -1,6 +1,6 @@
 /// @desc Update Player
 
-if (global.gameOver) {
+if (global.gameState != GameState.NORMAL) {
     exit;
 }
 
@@ -15,7 +15,7 @@ with (pMask) {
 
 death = Approach(death, _maskCollision, _maskCollision ? deathSpd : deathRecovery);
 if (death >= 1) {
-    global.gameOver = true;
+    global.gameState = GameState.DEATH;
 }
 
 if (_maskCollision and y > oDoomZone.mask.y) {

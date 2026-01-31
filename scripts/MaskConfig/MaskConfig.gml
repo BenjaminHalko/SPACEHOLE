@@ -225,7 +225,7 @@ function MaskBasicRectangle() : __MaskParent() constructor {
 }
 
 function MaskEndZone() : __MaskParent() constructor {
-    static Height = RES_HEIGHT * 2;
+    static Height = RES_HEIGHT * 1.5;
     static Segments = 30;
     static MinStep = 15;
     static MaxStep = 40;
@@ -239,8 +239,8 @@ function MaskEndZone() : __MaskParent() constructor {
 
     // Initialize points for triangle strip: alternating top (lightning) and bottom points
     for (var i = 0; i <= Segments; i++) {
-        array_push(points, [0, 0]); // Top point (lightning vertex)
-        array_push(points, [0, Height]); // Bottom point
+        array_push(points, [i / Segments * RES_WIDTH, 0]); // Top point (lightning vertex)
+        array_push(points, [i / Segments * RES_WIDTH, Height]); // Bottom point
         array_push(__sideOffsets, 0);
     }
 

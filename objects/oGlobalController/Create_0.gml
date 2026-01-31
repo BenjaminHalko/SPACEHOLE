@@ -3,6 +3,12 @@
 #macro RES_WIDTH 480
 #macro RES_HEIGHT global.windowHeight
 
+enum GameState {
+    NORMAL,
+    DEATH,
+    ROOM_TRANSITION
+}
+
 randomize();
 
 RES_HEIGHT = 270;
@@ -25,7 +31,7 @@ global.uDissolveCol = shader_get_uniform(shDissolve, "u_edgeColor");
 global.uDissolveWidth = shader_get_uniform(shDissolve, "u_edgeWidth");
 
 // Game State
-global.gameOver = false;
+global.gameState = GameState.NORMAL;
 
 // Load Save Data
 ini_open(SAVEFILE);
