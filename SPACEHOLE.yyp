@@ -115,7 +115,6 @@
     {"id":{"name":"ScreenShake","path":"scripts/ScreenShake/ScreenShake.yy",},},
     {"id":{"name":"window_shape_ctr","path":"scripts/window_shape_ctr/window_shape_ctr.yy",},},
     {"id":{"name":"shBackground","path":"shaders/shBackground/shBackground.yy",},},
-    {"id":{"name":"shBlackHole","path":"shaders/shBlackHole/shBlackHole.yy",},},
     {"id":{"name":"shDissolve","path":"shaders/shDissolve/shDissolve.yy",},},
     {"id":{"name":"mMusic","path":"sounds/mMusic/mMusic.yy",},},
     {"id":{"name":"sArrow","path":"sprites/sArrow/sArrow.yy",},},
