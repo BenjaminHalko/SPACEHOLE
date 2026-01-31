@@ -22,7 +22,7 @@ wallNormalY = -1;
 jumpStrength = 8;
 jumpUpBias = 0.8; // 0 = pure normal, 1 = pure up
 wallFriction = 1; // 0 = full stop, 1 = no friction
-flipperFriction = 0.7; // 0 = full stop, 1 = no friction
+flipperFriction = 0.9; // 0 = full stop, 1 = no friction
 
 // Swing
 swingTarget = noone;

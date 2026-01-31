@@ -10,7 +10,6 @@ RES_HEIGHT = 270;
 getOsType();
 
 surface_resize(application_surface, RES_WIDTH, RES_HEIGHT);
-//application_surface_draw_enable(false);
 
 if (DESKTOP) {
     window_shape_init();
