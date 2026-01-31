@@ -57,15 +57,15 @@ if (swinging) {
         var _tangentDir = _dir + 90;
         var _tangentSpeed = dot_product(hsp, vsp, lengthdir_x(1, _tangentDir), lengthdir_y(1, _tangentDir));
         // Convert to angular velocity (degrees per frame)
-        swingSpeed = (_tangentSpeed / max(_dist, 1)) * (180 / pi);
-        
-        swingSpeed = clamp(swingSpeed, -4, 4);
+        swingSpeed = (_tangentSpeed / max(_dist, 1)) * (180 / pi) * 1.5;
+
+        swingSpeed = clamp(swingSpeed, -8, 8);
     }
 
     // Apply gravity as angular acceleration
     // sin(angle from vertical) determines how much gravity affects swing
     // _dir is from pivot's perspective, so we use cos(_dir) for horizontal offset
-    var _gravityAccel = -(grv / max(ropeLength, 1)) * cos(degtorad(_dir)) * (180 / pi);
+    var _gravityAccel = -(grv * 0.7 / max(ropeLength, 1)) * cos(degtorad(_dir)) * (180 / pi);
     swingSpeed += _gravityAccel;
 
     // Small amount of damping for feel
@@ -85,13 +85,13 @@ if (swinging) {
     vsp = (_yTarget - y);
 } else {
     if (swingingPrev) {
-        hsp *= 1.5;
-        vsp *= 1.5;
+        hsp *= 1.2;
+        vsp *= 1.2;
     }
     if (x < 0 and hsp < 0)
-        hsp = abs(hsp * 0.8);
+        hsp = abs(hsp);
     else if (x > RES_WIDTH and hsp > 0)
-        hsp = -abs(hsp * 0.8);
+        hsp = -abs(hsp);
     
     swingTarget = instance_nearest(x, y, oPlanet);
     if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 120) {

@@ -1,8 +1,8 @@
 // Speed
 hsp = 0;
-vsp = -2;
+vsp = 0;
 moveSpd = 4;
-grv = 0.3;
+grv = 0.35;
 
 deathSpd = 1 / 60 / 2;
 deathRecovery = 2 / 60;
