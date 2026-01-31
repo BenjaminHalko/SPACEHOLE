@@ -255,19 +255,19 @@ function PlayerFlipperCollision() {
 
         // Store wall contact info
         other.wallContact = true;
-        other.wallNormalX = _worldNormX * 2;
-        other.wallNormalY = _worldNormY * 2;
+        other.wallNormalX = _normX * 2;
+        other.wallNormalY = _normY * 2;
 
         // Reflect velocity
-        var _dot = other.hsp * _worldNormX + other.vsp * _worldNormY;
+        var _dot = other.hsp * _normX + other.vsp * _normY;
         if (_dot < 0) {
-            other.hsp -= _worldNormX * _dot;
-            other.vsp -= _worldNormY * _dot;
+            other.hsp -= _normX * _dot;
+            other.vsp -= _normY * _dot;
         }
 
         // Apply friction
-        var _tangentX = -_worldNormY;
-        var _tangentY = _worldNormX;
+        var _tangentX = -_normY;
+        var _tangentY = _normX;
         var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
         other.hsp -= _tangentX * _tangentDot * (1 - other.flipperFriction);
         other.vsp -= _tangentY * _tangentDot * (1 - other.flipperFriction);

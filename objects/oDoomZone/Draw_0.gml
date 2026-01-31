@@ -1,4 +1,4 @@
-/// @desc Draw BG
+/// @desc Draw mask cutouts (transparent)
 
 gpu_set_blendmode_ext(bm_zero, bm_zero);
 

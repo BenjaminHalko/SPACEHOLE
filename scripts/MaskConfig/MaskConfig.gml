@@ -6,14 +6,25 @@ function __MaskParent() constructor {
     pointsLine = [];
     pointOffsets = [];
 
+    // Colors for vertex shading
+    centerColor = c_black;
+    edgeColor = merge_colour(c_black, c_purple, 0.3);
+    centerAlpha = 0.9;
+    edgeAlpha = 0.7;
+
     Draw = function() {
         var _ptsLen = array_length(points);
-        
+
         draw_primitive_begin(pr_trianglestrip);
         for (var i = 0; i < _ptsLen; i++) {
             draw_vertex(x + points[i][0], y + points[i][1]);
         }
         draw_primitive_end();
+    }
+
+    /// @desc Draw with vertex colors - override in child classes
+    DrawColoured = function() {
+        Draw();
     }
     
     static DrawOutline = function() {
@@ -55,16 +66,31 @@ function __MaskParent() constructor {
 function MaskBasicCircle() : __MaskParent() constructor {
     static BaseRadius = 32;
     static Sides = 70;
-    
+
     repeat(Sides) {
         array_push(points, [0, 0], [0, 0], [0, 0]);
         var _len = array_length(points);
         array_push(pointsLine, points[_len - 2], points[_len - 1]);
         array_push(pointOffsets, [0, 0]);
     }
-    
+
     static HasCollision = function(_x, _y) {
         return point_distance(_x, _y, x, y) < BaseRadius * size;
+    }
+
+    DrawColoured = function() {
+        // Draw triangles with vertex colors: center dark, edges glowing
+        draw_primitive_begin(pr_trianglelist);
+        for (var i = 0; i < Sides; i++) {
+            var _index = i * 3;
+            // Center vertex (dark)
+            draw_vertex_colour(x + points[_index][0], y + points[_index][1], centerColor, centerAlpha);
+            // Edge vertex 1 (glow)
+            draw_vertex_colour(x + points[_index + 1][0], y + points[_index + 1][1], edgeColor, edgeAlpha);
+            // Edge vertex 2 (glow)
+            draw_vertex_colour(x + points[_index + 2][0], y + points[_index + 2][1], edgeColor, edgeAlpha);
+        }
+        draw_primitive_end();
     }
     
     static UpdateOffsets = function() {
@@ -113,6 +139,21 @@ function MaskBasicRectangle() : __MaskParent() constructor {
         var _len = array_length(points);
         array_push(pointsLine, points[_len - 2], points[_len - 1]);
         array_push(pointOffsets, [0, 0]);
+    }
+
+    DrawColoured = function() {
+        // Draw triangles with vertex colors: center dark, edges glowing
+        draw_primitive_begin(pr_trianglelist);
+        for (var i = 0; i < Sides; i++) {
+            var _index = i * 3;
+            // Center vertex (dark)
+            draw_vertex_colour(x + points[_index][0], y + points[_index][1], centerColor, centerAlpha);
+            // Edge vertex 1 (glow)
+            draw_vertex_colour(x + points[_index + 1][0], y + points[_index + 1][1], edgeColor, edgeAlpha);
+            // Edge vertex 2 (glow)
+            draw_vertex_colour(x + points[_index + 2][0], y + points[_index + 2][1], edgeColor, edgeAlpha);
+        }
+        draw_primitive_end();
     }
 
     /// @param {real} x1 Top-left x
@@ -280,6 +321,20 @@ function MaskEndZone() : __MaskParent() constructor {
     
     static HasCollision = function(_x, _y) {
         return _y > y;
+    }
+
+    DrawColoured = function() {
+        // Draw triangle strip with vertex colors: top edge glowing, bottom dark
+        draw_primitive_begin(pr_trianglestrip);
+        for (var i = 0; i <= Segments; i++) {
+            var _topIndex = i * 2;
+            var _bottomIndex = _topIndex + 1;
+            // Top vertex (edge glow)
+            draw_vertex_colour(x + points[_topIndex][0], y + points[_topIndex][1], edgeColor, edgeAlpha);
+            // Bottom vertex (dark)
+            draw_vertex_colour(x + points[_bottomIndex][0], y + points[_bottomIndex][1], centerColor, centerAlpha);
+        }
+        draw_primitive_end();
     }
 
     static Update = function() {
