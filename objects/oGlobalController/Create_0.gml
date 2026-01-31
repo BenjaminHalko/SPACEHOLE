@@ -29,6 +29,14 @@ if (DESKTOP) {
 global.uDissolve = shader_get_uniform(shDissolve, "u_dissolve");
 global.uDissolveCol = shader_get_uniform(shDissolve, "u_edgeColor");
 global.uDissolveWidth = shader_get_uniform(shDissolve, "u_edgeWidth");
+global.uPlanetTime = shader_get_uniform(shPlanet, "iTime");
+global.uPlanetResolution = shader_get_uniform(shPlanet, "iResolution");
+global.uPlanetDissolve = shader_get_uniform(shPlanet, "u_dissolve");
+global.uPlanetCol = shader_get_uniform(shPlanet, "u_edgeColor");
+global.uPlanetWidth = shader_get_uniform(shPlanet, "u_edgeWidth");
+global.uPlanetPos = shader_get_uniform(shPlanet, "u_planetPos");
+global.uPlanetColorA = shader_get_uniform(shPlanet, "u_colorA");
+global.uPlanetColorB = shader_get_uniform(shPlanet, "u_colorB");
 
 // Game State
 global.gameState = GameState.NORMAL;

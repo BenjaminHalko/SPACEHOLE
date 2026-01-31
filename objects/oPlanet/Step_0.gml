@@ -2,7 +2,7 @@
 
 event_inherited();
 
-image_index = (oPlayer.swingTarget == id and oPlayer.swinging);
+death = ApproachEase(death, (oPlayer.swingTarget == id and oPlayer.swinging) ? oPlayer.death : 0, 0.05, 0.8);
 
 // Offset
 mask.UpdateOffsets();
