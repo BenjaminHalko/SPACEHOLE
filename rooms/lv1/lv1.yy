@@ -1,16 +1,16 @@
 {
   "$GMRoom":"v1",
-  "%Name":"lvIntro",
+  "%Name":"lv1",
   "creationCodeFile":"",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_E10563A","path":"rooms/lvIntro/lvIntro.yy",},
-    {"name":"inst_4FA41252","path":"rooms/lvIntro/lvIntro.yy",},
-    {"name":"inst_4291393E","path":"rooms/lvIntro/lvIntro.yy",},
-    {"name":"inst_3100F193","path":"rooms/lvIntro/lvIntro.yy",},
-    {"name":"inst_45DC2F5D","path":"rooms/lvIntro/lvIntro.yy",},
+    {"name":"inst_E10563A","path":"rooms/lv1/lv1.yy",},
+    {"name":"inst_4291393E","path":"rooms/lv1/lv1.yy",},
+    {"name":"inst_3100F193","path":"rooms/lv1/lv1.yy",},
+    {"name":"inst_45DC2F5D","path":"rooms/lv1/lv1.yy",},
+    {"name":"inst_733E25AF","path":"rooms/lv1/lv1.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -20,11 +20,11 @@
         {"$GMRInstance":"v4","%Name":"inst_45DC2F5D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_45DC2F5D","objectId":{"name":"oPlanet","path":"objects/oPlanet/oPlanet.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":144.0,"y":32.0,},
       ],"layers":[],"name":"MaskZone","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"LevelObjs","depth":100,"effectEnabled":true,"effectType":null,"gridX":16,"gridY":16,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
-        {"$GMRInstance":"v4","%Name":"inst_4FA41252","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4FA41252","objectId":{"name":"oSemiSolid","path":"objects/oSemiSolid/oSemiSolid.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":-21.768715,"scaleX":12.0,"scaleY":1.0,"x":16.0,"y":256.0,},
         {"$GMRInstance":"v4","%Name":"inst_4291393E","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4291393E","objectId":{"name":"oLauncher","path":"objects/oLauncher/oLauncher.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":-8.607877,"scaleX":1.0,"scaleY":1.0,"x":320.0,"y":256.0,},
+        {"$GMRInstance":"v4","%Name":"inst_733E25AF","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_733E25AF","objectId":{"name":"oSemiSolid","path":"objects/oSemiSolid/oSemiSolid.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":-23.07896,"scaleX":18.333332,"scaleY":8.333333,"x":160.0,"y":944.0,},
       ],"layers":[],"name":"LevelObjs","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
   ],
-  "name":"lvIntro",
+  "name":"lv1",
   "parent":{
     "name":"Levels",
     "path":"folders/Levels.yy",
@@ -40,7 +40,7 @@
   "resourceType":"GMRoom",
   "resourceVersion":"2.0",
   "roomSettings":{
-    "Height":400,
+    "Height":1000,
     "inheritRoomSettings":false,
     "persistent":false,
     "Width":480,

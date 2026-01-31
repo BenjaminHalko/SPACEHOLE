@@ -2,7 +2,7 @@
 
 mask = new MaskEndZone();
 mask.x = 0;
-mask.y = 400;
+mask.y = room_height;
 
 
 doomZoneSpeed = 0;

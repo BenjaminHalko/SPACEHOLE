@@ -82,7 +82,7 @@
     {"id":{"name":"oWall","path":"objects/oWall/oWall.yy",},},
     {"id":{"name":"pEntity","path":"objects/pEntity/pEntity.yy",},},
     {"id":{"name":"pMask","path":"objects/pMask/pMask.yy",},},
-    {"id":{"name":"lvIntro","path":"rooms/lvIntro/lvIntro.yy",},},
+    {"id":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
     {"id":{"name":"lvTestDoors","path":"rooms/lvTestDoors/lvTestDoors.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
@@ -142,7 +142,7 @@
     {"roomId":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
     {"roomId":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"roomId":{"name":"lvTestDoors","path":"rooms/lvTestDoors/lvTestDoors.yy",},},
-    {"roomId":{"name":"lvIntro","path":"rooms/lvIntro/lvIntro.yy",},},
+    {"roomId":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

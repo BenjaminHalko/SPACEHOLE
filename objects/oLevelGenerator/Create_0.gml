@@ -31,4 +31,4 @@ GenerateLevel = function(_level, _flipped) {
 };
 
 
-GenerateLevel(lvIntro, false);
+GenerateLevel(lv1, false);
