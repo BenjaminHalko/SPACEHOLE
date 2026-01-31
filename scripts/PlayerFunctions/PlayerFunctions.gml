@@ -142,49 +142,60 @@ function PlayerWallCollision() {
 
 function PlayerFlipperCollision() {
     with (oFlipper) {
-        // Triangle dimensions - scale width by xscale (can be negative)
-        var _w = (sprite_width - 12) * image_xscale;
+        // Triangle in LOCAL sprite space (before any transforms)
+        var _w = sprite_width - 12;
         var _hh = sprite_height / 2;
 
-        // Triangle vertices in SCALED local space:
-        // A (0, hh)  = origin corner (right angle vertex)
-        // B (w, hh)  = far corner (w is negative if flipped)
-        // C (0, -hh) = top of origin side
-        var _ax = 0, _ay = _hh;
-        var _bx = _w, _by = _hh;
-        var _cx = 0, _cy = -_hh;
-
-        // Transform player to flipper's rotated local space (no scale division)
-        var _rad = degtorad(-image_angle);
+        // Local vertices: A(0,hh), B(w,hh), C(0,-hh)
+        // Transform each vertex to WORLD space
+        var _rad = degtorad(image_angle);
         var _cos = cos(_rad);
         var _sin = sin(_rad);
+        var _xs = image_xscale;
 
-        var _dx = other.x - x;
-        var _dy = other.y - y;
+        // World vertex A (origin corner, right angle)
+        var _ax = x + 0 * _xs * _cos - _hh * _sin;
+        var _ay = y + 0 * _xs * _sin + _hh * _cos;
 
-        var _localX = _dx * _cos + _dy * _sin;
-        var _localY = -_dx * _sin + _dy * _cos;
+        // World vertex B (far corner of bottom edge)
+        var _bx = x + _w * _xs * _cos - _hh * _sin;
+        var _by = y + _w * _xs * _sin + _hh * _cos;
 
+        // World vertex C (top of origin side)
+        var _cx = x + 0 * _xs * _cos - (-_hh) * _sin;
+        var _cy = y + 0 * _xs * _sin + (-_hh) * _cos;
+
+        // Player position and radius
+        var _playerX = other.x;
+        var _playerY = other.y;
         var _radius = other.radius;
 
-        // Find closest point on triangle perimeter
+        // Find closest point on triangle perimeter (in world space)
         var _closestX, _closestY;
         var _minDistSq = infinity;
 
-        // Edge A-B (bottom, horizontal - but B can be left or right of A)
-        var _px = clamp(_localX, min(0, _w), max(0, _w));
-        var _py = _hh;
-        var _distSq = sqr(_localX - _px) + sqr(_localY - _py);
+        // Edge A-B (bottom edge)
+        var _abx = _bx - _ax;
+        var _aby = _by - _ay;
+        var _abLenSq = _abx * _abx + _aby * _aby;
+        var _t = clamp(((_playerX - _ax) * _abx + (_playerY - _ay) * _aby) / _abLenSq, 0, 1);
+        var _px = _ax + _t * _abx;
+        var _py = _ay + _t * _aby;
+        var _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
         if (_distSq < _minDistSq) {
             _minDistSq = _distSq;
             _closestX = _px;
             _closestY = _py;
         }
 
-        // Edge C-A (vertical at x=0)
-        _px = 0;
-        _py = clamp(_localY, -_hh, _hh);
-        _distSq = sqr(_localX - _px) + sqr(_localY - _py);
+        // Edge C-A (left/origin edge)
+        var _cax = _ax - _cx;
+        var _cay = _ay - _cy;
+        var _caLenSq = _cax * _cax + _cay * _cay;
+        _t = clamp(((_playerX - _cx) * _cax + (_playerY - _cy) * _cay) / _caLenSq, 0, 1);
+        _px = _cx + _t * _cax;
+        _py = _cy + _t * _cay;
+        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
         if (_distSq < _minDistSq) {
             _minDistSq = _distSq;
             _closestX = _px;
@@ -192,13 +203,13 @@ function PlayerFlipperCollision() {
         }
 
         // Edge B-C (hypotenuse)
-        var _bcx = _cx - _bx;  // 0 - _w = -_w
-        var _bcy = _cy - _by;  // -_hh - _hh = -sprite_height
+        var _bcx = _cx - _bx;
+        var _bcy = _cy - _by;
         var _bcLenSq = _bcx * _bcx + _bcy * _bcy;
-        var _t = clamp(((_localX - _bx) * _bcx + (_localY - _by) * _bcy) / _bcLenSq, 0, 1);
+        _t = clamp(((_playerX - _bx) * _bcx + (_playerY - _by) * _bcy) / _bcLenSq, 0, 1);
         _px = _bx + _t * _bcx;
         _py = _by + _t * _bcy;
-        _distSq = sqr(_localX - _px) + sqr(_localY - _py);
+        _distSq = sqr(_playerX - _px) + sqr(_playerY - _py);
         if (_distSq < _minDistSq) {
             _minDistSq = _distSq;
             _closestX = _px;
@@ -213,34 +224,34 @@ function PlayerFlipperCollision() {
         var _dist = sqrt(_minDistSq);
         var _overlap = _radius - _dist;
 
-        // Push normal (local space, from closest point toward player)
+        // Push normal (world space, from closest point toward player)
         var _normX, _normY;
         if (_dist > 0.001) {
-            _normX = (_localX - _closestX) / _dist;
-            _normY = (_localY - _closestY) / _dist;
+            _normX = (_playerX - _closestX) / _dist;
+            _normY = (_playerY - _closestY) / _dist;
         } else {
-            // Center on edge - use hypotenuse outward normal
-            // Perpendicular pointing away from triangle interior
+            // Fallback: use perpendicular to hypotenuse pointing outward
             var _bcLen = sqrt(_bcLenSq);
-            _normX = -_bcy / _bcLen * sign(image_xscale);
-            _normY = _bcx / _bcLen * sign(image_xscale);
+            // Perpendicular to B->C, choosing direction away from A
+            _normX = _bcy / _bcLen;
+            _normY = -_bcx / _bcLen;
+            // Check if this points toward or away from A, flip if needed
+            var _toAx = _ax - _bx;
+            var _toAy = _ay - _by;
+            if (_normX * _toAx + _normY * _toAy > 0) {
+                _normX = -_normX;
+                _normY = -_normY;
+            }
         }
 
-        // Transform closest point to world space for mask check
-        var _worldClosestX = x + _closestX * _cos - _closestY * _sin;
-        var _worldClosestY = y + _closestX * _sin + _closestY * _cos;
-
-        if (PointIsMasked(_worldClosestX, _worldClosestY)) {
+        // Check mask at closest point
+        if (PointIsMasked(_closestX, _closestY)) {
             continue;
         }
 
-        // Transform normal back to world space
-        var _worldNormX = _normX * _cos - _normY * _sin;
-        var _worldNormY = _normX * _sin + _normY * _cos;
-
         // Push player out
-        other.x += _worldNormX * _overlap;
-        other.y += _worldNormY * _overlap;
+        other.x += _normX * _overlap;
+        other.y += _normY * _overlap;
 
         // Store wall contact info
         other.wallContact = true;
@@ -316,14 +327,26 @@ function PlayerLauncherCollision() {
             if (!_hasExposedCollision) {
                 continue;  // Fully masked - skip collision
             }
-
-            // Launch player in direction + 90
-            var _launchDir = image_angle + 90;
-            var _launchSpeed = 14;
-
-            other.hsp = lengthdir_x(_launchSpeed, _launchDir);
-            other.vsp = lengthdir_y(_launchSpeed, _launchDir);
-            other.dashTimer = 10;
+            
+            if (object_index == oKey) {
+                if (!active) {
+                    active = true;
+                    with (oDoor) {
+                        if (doorID == other.doorID) {
+                            active = true;
+                        }
+                    }
+                    ScreenShake(2, 30);
+                }
+            } else {
+                // Launch player in direction + 90
+                var _launchDir = image_angle + 90;
+                var _launchSpeed = 14;
+                
+                other.hsp = lengthdir_x(_launchSpeed, _launchDir);
+                other.vsp = lengthdir_y(_launchSpeed, _launchDir);
+                other.dashTimer = 10;
+            }
         }
     }
 }

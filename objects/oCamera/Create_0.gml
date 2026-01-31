@@ -10,5 +10,7 @@ shakeLength = 0;
 shakeMagnitude = 0;
 shakeRemain = 0;
 
-x = follow.x;
+x = viewWidthHalf;
 y = follow.y;
+xTo = viewWidthHalf;
+yTo = 0;
