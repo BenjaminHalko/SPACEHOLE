@@ -19,7 +19,7 @@ function LeaderboardPost(_level) {
         userID: global.userID
 	}
 	
-	if (_score.points < global.pb[$ _level]) {
+	if (_score.points < global.pb[$ _level] or global.pb[$ _level] <= 0) {
 		global.pb[$ _level] = _score.points;
 		if (!global.noInternet)
 			Save("score", _level, _score.points);
