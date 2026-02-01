@@ -118,7 +118,6 @@
     {"id":{"name":"sAudioLine","path":"sprites/sAudioLine/sAudioLine.yy",},},
     {"id":{"name":"sDoor","path":"sprites/sDoor/sDoor.yy",},},
     {"id":{"name":"sFlipper","path":"sprites/sFlipper/sFlipper.yy",},},
-    {"id":{"name":"sKey_backup","path":"sprites/sKey_backup/sKey_backup.yy",},},
     {"id":{"name":"sKey","path":"sprites/sKey/sKey.yy",},},
     {"id":{"name":"sLauncher","path":"sprites/sLauncher/sLauncher.yy",},},
     {"id":{"name":"sLogo","path":"sprites/sLogo/sLogo.yy",},},
@@ -134,8 +133,8 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
-    {"roomId":{"name":"rMenu","path":"rooms/rMenu/rMenu.yy",},},
     {"roomId":{"name":"lv3","path":"rooms/lv3/lv3.yy",},},
+    {"roomId":{"name":"rMenu","path":"rooms/rMenu/rMenu.yy",},},
     {"roomId":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
     {"roomId":{"name":"lv2","path":"rooms/lv2/lv2.yy",},},
   ],
