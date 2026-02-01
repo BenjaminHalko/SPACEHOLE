@@ -132,10 +132,10 @@ if (swinging) {
         hsp *= 1.5;
         vsp *= 1.5;
     }
-    if (x < 0 and hsp < 6)
-        hsp = max(6, abs(hsp));
-    else if (x > RES_WIDTH and hsp > -6)
-        hsp = min(-6, -abs(hsp));
+    if (x < 0 and hsp < 2)
+        hsp = max(2, abs(hsp));
+    else if (x > RES_WIDTH and hsp > -2)
+        hsp = min(-2, -abs(hsp));
     
     swingTarget = instance_nearest(x, y, oPlanet);
     if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 90 + 30 * abs(swingTarget.image_xscale)) {
