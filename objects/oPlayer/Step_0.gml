@@ -1,6 +1,37 @@
 /// @desc Update Player
 
+// Particles
+if (particle-- <= 0) {
+    particle = 5;
+    var _p = instance_create_depth(x + lengthdir_x(10, image_angle-90),y + lengthdir_y(10, image_angle-90),depth+1, oPlayerSpeedBoost);
+    _p.image_blend = c_lime;
+    _p.speed = 2;
+    _p.direction = image_angle - 90;
+    _p.image_angle = image_angle + 90;
+}
+
+
+if (global.gameState == GameState.END) {
+    y -= 10;
+    x = ApproachEase(x, RES_WIDTH / 2, 2, 0.8)
+    oCamera.yTo = y - 10;
+    image_angle = ApproachEase(image_angle, Wave(-10, 10, 1, 0), 10, 0.8);
+}
+
 if (global.gameState != GameState.NORMAL) {
+    exit;
+}
+
+var _end = true;
+with(pEntity) {
+    if (y < oCamera.y + RES_WIDTH / 2 or y < other.y) {
+        _end = false;
+        break;
+    }
+}
+
+if (_end) {
+    global.gameState = GameState.END;
     exit;
 }
 
@@ -96,7 +127,7 @@ if (swinging) {
         hsp = -abs(hsp);
     
     swingTarget = instance_nearest(x, y, oPlanet);
-    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 110 + 10 * abs(swingTarget.image_xscale)) {
+    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 100 + 20 * abs(swingTarget.image_xscale)) {
         swingTarget = noone;
     }
     

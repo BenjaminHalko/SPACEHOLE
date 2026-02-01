@@ -34,3 +34,5 @@ ropeLength = 90;
 sides = 5;
 
 lightning = new LightningEffect();
+
+particle = 0;

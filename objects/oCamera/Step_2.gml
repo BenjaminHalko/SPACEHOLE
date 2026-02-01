@@ -4,6 +4,12 @@
 x += (xTo - x) / 12;
 y += (yTo - y) / 8;
 
+if (global.gameState == GameState.END) {
+    y += (yTo - y) / Wave(2, 8, 3, 0);
+} else {
+    y += (yTo - y) / 8;
+}
+
 //Screenshake
 x += random_range(-shakeRemain,shakeRemain);
 y += random_range(-shakeRemain,shakeRemain);

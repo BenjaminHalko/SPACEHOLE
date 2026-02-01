@@ -5,6 +5,7 @@
 
 enum GameState {
     NORMAL,
+    END,
     DEATH,
     ROOM_TRANSITION
 }

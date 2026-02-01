@@ -77,6 +77,7 @@
     {"id":{"name":"oPlanet","path":"objects/oPlanet/oPlanet.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oPlayerDash","path":"objects/oPlayerDash/oPlayerDash.yy",},},
+    {"id":{"name":"oPlayerSpeedBoost","path":"objects/oPlayerSpeedBoost/oPlayerSpeedBoost.yy",},},
     {"id":{"name":"oSemiSolid","path":"objects/oSemiSolid/oSemiSolid.yy",},},
     {"id":{"name":"oTransition","path":"objects/oTransition/oTransition.yy",},},
     {"id":{"name":"oWall","path":"objects/oWall/oWall.yy",},},
