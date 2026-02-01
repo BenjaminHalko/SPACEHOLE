@@ -11,7 +11,7 @@ if (draw) {
 	draw_set_color(c_white);
 	
 	var _x = 72 + _camX;
-	var _y = 120 + _camY;
+	var _y = RES_HEIGHT / 3 + _camY;
 	
 	draw_text(_x-10, _y, "PLACE");
 	draw_text(_x+42, _y, "NAME");
@@ -44,7 +44,7 @@ if (draw) {
             _stringScale = 46 / max(46, string_width(_scores[i].name));
         }
 		draw_text_transformed(_x+22, _scoreY, _scores[i].name, _stringScale, 1, 0);
-        draw_text(_x+96, _scoreY, DisplayNumber(_scores[i].points));
+        draw_text(_x+88, _scoreY, DisplayNumber(_scores[i].points));
 		
 	}
 	draw_set_alpha(1);

@@ -8,7 +8,7 @@ if (room == rInit) {
 // Window Height
 var _height = ceil((RES_WIDTH / window_get_width()) * window_get_height());
 
-if (_height != RES_HEIGHT and false) {
+if (_height != RES_HEIGHT) {
     RES_HEIGHT = _height;
     surface_resize(application_surface, RES_WIDTH, RES_HEIGHT);
     camera_set_view_size(view_camera[0], RES_WIDTH, RES_HEIGHT);
