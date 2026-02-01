@@ -22,6 +22,8 @@ if (global.gameState != GameState.NORMAL) {
     exit;
 }
 
+global.score++;
+
 var _end = true;
 with(pEntity) {
     if (y < oCamera.y + RES_WIDTH / 2 or y < other.y) {
@@ -31,7 +33,7 @@ with(pEntity) {
 }
 
 if (_end) {
-    global.gameState = GameState.END;
+    FinishLevel();
     exit;
 }
 

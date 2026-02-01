@@ -36,3 +36,5 @@ sides = 5;
 lightning = new LightningEffect();
 
 particle = 0;
+
+global.score = 0;

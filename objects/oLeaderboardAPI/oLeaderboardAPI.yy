@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Leaderboard API",
-    "path":"folders/Global/Extensions/Leaderboard API.yy",
+    "path":"folders/Global/Leaderboard API.yy",
   },
   "parentObjectId":null,
   "persistent":true,

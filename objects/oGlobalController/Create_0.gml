@@ -41,13 +41,20 @@ global.uPlanetColorB = shader_get_uniform(shPlanet, "u_colorB");
 
 // Game State
 global.gameState = GameState.NORMAL;
+global.maxLevels = 8;
 
 // Load Save Data
 ini_open(SAVEFILE);
 global.username = ini_read_string("settings","username","");
 global.audioVol = ini_read_real("settings","vol",0.7);
-global.pb =  ini_read_real("score","score",0);
+global.pb = {};
+for(var i = 0; i < global.maxLevels; i++) {
+    var _level = $"lv{i}";
+    global.pb[$ _level] = ini_read_real("score", _level, 0);
+}
 ini_close();
+
+global.username = "Jim";
 
 if (string_length(global.username) > 10)
     global.username = "";

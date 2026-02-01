@@ -1,6 +1,9 @@
 /// @desc
 
-scores = [];
+scores = {};
+for(var i = 0; i < global.maxLevels; i++) {
+    scores[$ $"lv{i}"] = [];
+}
 
 draw = false;
 scoreOffset = 0;
@@ -12,10 +15,9 @@ scrollSpd = 1;
 
 moved = false;
 
-global.highscore = 0;
 global.gxGames = false;
 global.userID = "";
 global.noInternet = false;
+global.level = 0;
 
 LeaderboardGet();
-//room_goto_next();

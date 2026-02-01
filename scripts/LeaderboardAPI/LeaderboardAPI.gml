@@ -1,46 +1,49 @@
 /// @desc Get the current leaderboards
-function LeaderboardGet(_page=undefined) {
-    FirebaseRealTime(FIREBASE_LEADERBOARD_URL).Path("/").Read();
+function LeaderboardGet(_room=undefined) {
+    if (!is_undefined(_room)) {
+        _room = $"/lv{_room}/";   
+    } else {
+        _room = "/";
+    }
+    FirebaseRealTime(FIREBASE_LEADERBOARD_URL).Path(_room).Read();
 }
 
 /// @desc Post a score to the leaderboards
 /// @param {struct} score
-function LeaderboardPost() {
+function LeaderboardPost(_level) {
+    _level = $"lv{_level}";
+    
 	var _score = {
 		name: global.username,
 		points: global.score,
-		level: global.round,
         userID: global.userID
 	}
 	
-	if (_score.points > global.pb) {
-		global.pb = _score.points;
+	if (_score.points < global.pb[$ _level]) {
+		global.pb[$ _level] = _score.points;
 		if (!global.noInternet)
-			Save("score", "score", _score.points);
+			Save("score", _level, _score.points);
 	}
 	with(oLeaderboardAPI) {
-		var _index = array_find_index(scores, function(_val) {
+        var _scores = scores[$ _level];
+		var _index = array_find_index(_scores, function(_val) {
             if (global.gxGames)
                 return _val.userID == global.userID;
 			return _val.name == global.username;
 		});
 		
-		if _index == -1 or scores[_index].points < _score.points {
-			if (_index == -1) array_push(scores, _score);
+		if _index == -1 or _scores[_index].points > _score.points {
+			if (_index == -1) array_push(_scores, _score);
 			else {
-				scores[_index].points = _score.points;
-				scores[_index].level = _score.level;
+				_scores[_index].points = _score.points;
 			}
 			
-			array_sort(scores, function(_ele1,_ele2) {
-				return (_ele2.points - _ele1.points)
+			array_sort(_scores, function(_ele1,_ele2) {
+				return (_ele1.points - _ele2.points)
 			});
 			
-			global.highscore = scores[0].points;
-			
-            FirebaseRealTime(FIREBASE_LEADERBOARD_URL).Path(_score.name).Set(json_stringify({
-                points: _score.points,
-                level: _score.level
+            FirebaseRealTime(FIREBASE_LEADERBOARD_URL).Path($"{_level}/{_score.name}").Set(json_stringify({
+                points: _score.points
             }));
 		}
 	}

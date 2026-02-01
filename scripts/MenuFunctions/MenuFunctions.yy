@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"LeaderboardAPI",
+  "%Name":"MenuFunctions",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"LeaderboardAPI",
+  "name":"MenuFunctions",
   "parent":{
-    "name":"Leaderboard API",
-    "path":"folders/Global/Leaderboard API.yy",
+    "name":"Menu",
+    "path":"folders/Menu.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

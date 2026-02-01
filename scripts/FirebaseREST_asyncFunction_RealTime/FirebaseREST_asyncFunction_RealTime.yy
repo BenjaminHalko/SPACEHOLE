@@ -6,7 +6,7 @@
   "name":"FirebaseREST_asyncFunction_RealTime",
   "parent":{
     "name":"Tools",
-    "path":"folders/Global/Extensions/Leaderboard API/Firebase/Firebase RealTime/Extensions/Firebase REST API Library (Don't Touch)/Tools.yy",
+    "path":"folders/Global/Extensions/Firebase/Firebase RealTime/Extensions/Firebase REST API Library (Don't Touch)/Tools.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

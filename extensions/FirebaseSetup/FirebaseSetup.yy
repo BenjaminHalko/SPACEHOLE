@@ -64,7 +64,7 @@
   "packageId":"",
   "parent":{
     "name":"Firebase",
-    "path":"folders/Global/Extensions/Leaderboard API/Firebase.yy",
+    "path":"folders/Global/Extensions/Firebase.yy",
   },
   "productId":"",
   "resourceType":"GMExtension",
