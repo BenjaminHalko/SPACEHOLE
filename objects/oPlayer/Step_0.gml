@@ -1,7 +1,7 @@
 /// @desc Update Player
 
 // Particles
-if (particle-- <= 0) {
+if (particle-- <= 0 and global.gameState != GameState.DEATH) {
     particle = 5;
     var _p = instance_create_depth(x + lengthdir_x(10, image_angle-90),y + lengthdir_y(10, image_angle-90),depth+1, oPlayerSpeedBoost);
     _p.image_blend = c_lime;
