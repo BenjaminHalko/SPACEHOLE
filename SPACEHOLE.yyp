@@ -128,6 +128,7 @@
     {"id":{"name":"sAudioLine","path":"sprites/sAudioLine/sAudioLine.yy",},},
     {"id":{"name":"sDoor","path":"sprites/sDoor/sDoor.yy",},},
     {"id":{"name":"sFlipper","path":"sprites/sFlipper/sFlipper.yy",},},
+    {"id":{"name":"sKey_backup","path":"sprites/sKey_backup/sKey_backup.yy",},},
     {"id":{"name":"sKey","path":"sprites/sKey/sKey.yy",},},
     {"id":{"name":"sLauncher","path":"sprites/sLauncher/sLauncher.yy",},},
     {"id":{"name":"sMaskedZone","path":"sprites/sMaskedZone/sMaskedZone.yy",},},
