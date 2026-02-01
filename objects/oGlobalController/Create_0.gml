@@ -47,6 +47,8 @@ global.planetCount = 0;
 global.levelNames = [
     "1: ORBIT",
     "2: LAUNCH",
+    "3: OPEN",
+    "4: ACCESS",
     "X: SPACEHOLE"
 ];
 global.maxLevels = array_length(global.levelNames);

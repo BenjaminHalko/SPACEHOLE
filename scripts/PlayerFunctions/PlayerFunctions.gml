@@ -239,9 +239,9 @@ function PlayerLauncherCollision() {
             if (object_index == oKey) {
                 if (!active) {
                     active = true;
-                    with (oDoor) {
+                    with (oMaskedZone) {
                         if (doorID == other.doorID) {
-                            active = true;
+                            doorID = -1;
                         }
                     }
                     ScreenShake(2, 30);
