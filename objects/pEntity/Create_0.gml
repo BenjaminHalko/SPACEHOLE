@@ -1,6 +1,6 @@
 /// @desc Setup Entity
 
-flipped = (RoomLoader.__xScale == -1);
+flipped = false;
 if (flipped) {
     xMove = RES_WIDTH - xMove;
 }
