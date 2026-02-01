@@ -23,7 +23,7 @@ if (async_load[? "type"] == "FirebaseRealTime_Read" or async_load[? "type"] == "
 			}
 			
 			array_sort(_scores, function(_ele1,_ele2){
-				return (_ele2.points - _ele1.points)
+				return (_ele1.points - _ele2.points)
 			});
 			
             //if (!moved)
