@@ -18,11 +18,16 @@ if (_height != RES_HEIGHT) {
 // Fullscreen
 if (DESKTOP and (keyboard_check_pressed(vk_f4) or keyboard_check_pressed(vk_f11))) window_set_fullscreen(!window_get_fullscreen());
     
-if (keyboard_check_pressed(ord("R"))) {
-    transition(rGame);
+
+if (!instance_exists(oMenu)) {
+    if (keyboard_check_pressed(ord("R"))) {
+    if (room == rMenu) room_goto(rMenu);
+    else transition(room);
 }
 
 if (keyboard_check_pressed(ord("E"))) {
     global.username = "Jim2";
     FinishLevel();
 }
+}
+

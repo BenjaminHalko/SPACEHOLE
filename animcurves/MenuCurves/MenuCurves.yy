@@ -1,0 +1,19 @@
+{
+  "$GMAnimCurve":"",
+  "%Name":"MenuCurves",
+  "channels":[
+    {"$GMAnimCurveChannel":"","%Name":"logo","colour":4290799884,"name":"logo","points":[
+        {"th0":-0.1,"th1":0.09176967,"tv0":0.0,"tv1":0.38974345,"x":0.0,"y":0.0,},
+        {"th0":-0.23777254,"th1":0.15567303,"tv0":0.34767336,"tv1":-0.22762662,"x":0.62593985,"y":0.85351306,},
+        {"th0":-0.11422652,"th1":0.1,"tv0":-0.46795982,"tv1":0.0,"x":1.0,"y":1.0,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
+  ],
+  "function":2,
+  "name":"MenuCurves",
+  "parent":{
+    "name":"Menu",
+    "path":"folders/Menu.yy",
+  },
+  "resourceType":"GMAnimCurve",
+  "resourceVersion":"2.0",
+}

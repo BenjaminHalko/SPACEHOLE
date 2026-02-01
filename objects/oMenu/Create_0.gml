@@ -6,4 +6,4 @@ blink = false;
 acceptMenuInput = false;
 volAcceptMenuInput = false;
 
-disableSelect = false;
+menuCursorY = 0;

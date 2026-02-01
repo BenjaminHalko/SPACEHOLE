@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shVibrance",
+  "name":"shVibrance",
+  "parent":{
+    "name":"Menu",
+    "path":"folders/Menu.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

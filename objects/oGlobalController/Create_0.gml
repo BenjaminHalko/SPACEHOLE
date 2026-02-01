@@ -54,8 +54,6 @@ for(var i = 0; i < global.maxLevels; i++) {
 }
 ini_close();
 
-global.username = "Jim";
-
 if (string_length(global.username) > 10)
     global.username = "";
 

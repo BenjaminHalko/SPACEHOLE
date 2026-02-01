@@ -22,15 +22,6 @@ if (draw) {
     }
 	
 	if (keySelect) {
-		draw = false;
-		if (global.inGame) {
-			oGUI.newPB = false;
-			oGUI.alarm[0] = 1;
-			audio_play_sound(snStart, 2, false);
-		} else {
-			oMenu.disableSelect = true;
-			audio_play_sound(snBlip, 2, false);
-		}
 	}
 }
 	

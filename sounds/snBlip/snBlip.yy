@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snBlip",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":0.13154195,
+  "exportDir":"",
+  "name":"snBlip",
+  "parent":{
+    "name":"SoundFX",
+    "path":"folders/Audio/SoundFX.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snBlip.wav",
+  "volume":0.15,
+}
