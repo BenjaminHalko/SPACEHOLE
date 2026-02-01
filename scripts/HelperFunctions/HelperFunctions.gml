@@ -110,6 +110,10 @@ function RotateVector(_x, _y, _angle) {
 	}
 }
 
+function DisplayNumber(_num) {
+	return string_replace_all(string_format(_num/60,2,2)," ","0");
+}
+
 function Save(_section, _key, _value) {
 	ini_open(SAVEFILE);
 	if is_real(_value) ini_write_real(_section, _key, _value);
