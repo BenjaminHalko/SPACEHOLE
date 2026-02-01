@@ -96,7 +96,7 @@ if (swinging) {
         hsp = -abs(hsp);
     
     swingTarget = instance_nearest(x, y, oPlanet);
-    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 120) {
+    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 100 + 20 * abs(swingTarget.image_xscale)) {
         swingTarget = noone;
     }
     
