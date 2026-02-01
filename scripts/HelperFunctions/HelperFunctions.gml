@@ -111,6 +111,7 @@ function RotateVector(_x, _y, _angle) {
 }
 
 function DisplayNumber(_num) {
+    if (!is_numeric(_num)) _num = 0;
 	return string_replace_all(string_format(_num/60,2,2)," ","0");
 }
 
