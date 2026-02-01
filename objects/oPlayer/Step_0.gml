@@ -15,7 +15,7 @@ if (global.gameState == GameState.END) {
     y -= 10;
     x = ApproachEase(x, RES_WIDTH / 2, 2, 0.8)
     oCamera.yTo = y - 10;
-    image_angle = ApproachEase(image_angle, Wave(-10, 10, 1, 0), 10, 0.8);
+    image_angle = ApproachEase(image_angle, Wave(-16, 16, 1, 0), 2, 0.8);
 }
 
 if (global.gameState != GameState.NORMAL) {
