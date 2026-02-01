@@ -7,13 +7,3 @@ function FinishLevel() {
         instance_create_layer(0, 0, "Global", oEndScreen);
     });
 }
-
-function SetLevel(_level) {
-    if (_level == global.level) return;
-    global.level = _level;
-
-    
-    
-    if (global.level == -1) return;
-    
-}

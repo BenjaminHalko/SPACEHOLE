@@ -1,7 +1,7 @@
 /// @desc Update Player
 
 // Particles
-if (particle-- <= 0 and global.gameState != GameState.DEATH) {
+if (particle-- <= 0 and global.gameState != GameState.DEATH and death < 0.98) {
     particle = 5;
     var _p = instance_create_depth(x + lengthdir_x(10, image_angle-90),y + lengthdir_y(10, image_angle-90),depth+1, oPlayerSpeedBoost);
     _p.image_blend = c_lime;
@@ -38,20 +38,26 @@ if (_end) {
 }
 
 // Death
+var _reallyDead = false;
 var _maskCollision = place_meeting(x, y, pMask);
 with (pMask) {
     if (mask.HasCollision(other.x, other.y)) {
         _maskCollision = true;
+        if (object_index == oDoomZone) _reallyDead = true;
         break;
     }
 }
 
-death = Approach(death, _maskCollision, _maskCollision ? deathSpd : deathRecovery);
+death = Approach(death, _maskCollision, (_maskCollision ? deathSpd : deathRecovery) * (1 + _reallyDead * 2));
 if (death >= 1) {
     global.gameState = GameState.DEATH;
-    call_later(1, time_source_units_seconds, function() {
+    if (_reallyDead) {
         transition(room);
-    });
+    } else {
+        call_later(1 - _reallyDead * 0.8, time_source_units_seconds, function() {
+            transition(room);
+        });
+    }
 }
 
 if (_maskCollision and y > oDoomZone.mask.y) {

@@ -21,6 +21,3 @@ global.noInternet = false;
 global.level = -1;
 
 LeaderboardGet();
-
-
-SetLevel(0);
