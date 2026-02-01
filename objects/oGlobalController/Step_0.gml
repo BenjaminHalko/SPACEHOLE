@@ -23,5 +23,6 @@ if (keyboard_check_pressed(ord("R"))) {
 }
 
 if (keyboard_check_pressed(ord("E"))) {
+    global.username = "Jim2";
     FinishLevel();
 }

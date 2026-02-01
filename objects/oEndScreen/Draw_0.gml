@@ -11,6 +11,9 @@ draw_set_valign(fa_middle);
 draw_set_font(fSpace);
 
 
+var _newBest = (global.score == global.pb[$ $"lv{global.level}"]);
+
+
 draw_text(_camX+RES_WIDTH/2, _camY+RES_HEIGHT / 6 + Wave(-5, 5, 3, 0.2), $"LEVEL {global.level + 1} COMPLETE!");
 
 
@@ -22,6 +25,5 @@ draw_text_transformed(_camX+RES_WIDTH / 4 * 3, _camY+RES_HEIGHT / 4 * 3, Display
 
 draw_set_valign(fa_bottom);
 draw_text_transformed(_camX+RES_WIDTH / 4 * 3, _camY+RES_HEIGHT / 7 * 3, "TIME", 0.5, 0.5, _wave);
-
 
 draw_text_transformed(_camX+RES_WIDTH / 4 * 3, _camY+RES_HEIGHT / 4 * 3, "BEST", 0.5, 0.5, _wave);
