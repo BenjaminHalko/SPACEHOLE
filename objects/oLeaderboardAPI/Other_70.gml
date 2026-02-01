@@ -1,6 +1,7 @@
 /// @desc Get Scores
 
 if (async_load[? "type"] == "FirebaseRealTime_Read" or async_load[? "type"] == "FirebaseRealTime_Listener") {
+    show_debug_message("HELLO");
     if (async_load[? "status"] == 200) {
         var _parseData = function(_value, _level) {
 			var _names = variable_struct_get_names(_value);
@@ -39,12 +40,13 @@ if (async_load[? "type"] == "FirebaseRealTime_Read" or async_load[? "type"] == "
                 for(var i = 0; i < array_length(_names); i++) {
                     _parseData(_value[$ _names[i]], _names[i]);
                 }
+            } else {
+                _parseData(_value, _path);
             }
 		}
 	}
 } else if (async_load[? "type"] == "FirebaseRealTime_Set") {
     var _path = async_load[? "path"];
-    _path = string_trim_start(_path, ["lv"]);
     _path = string_copy(_path, 1, string_pos("/", _path) - 1);
     LeaderboardGet(_path);
 }
