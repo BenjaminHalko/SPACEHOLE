@@ -5,7 +5,9 @@ if (!surface_exists(surface) or surHeight != RES_HEIGHT) {
 
 switch(phase) {
     case -1: {
-        introPercent = Approach(introPercent, 1, 0.012);
+        if (--wait <= 0) {
+            introPercent = Approach(introPercent, 1, 0.012);
+        }
         scaleTo = 0.7;
         if (introPercent == 1) {
             phase++;

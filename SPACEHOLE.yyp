@@ -91,6 +91,7 @@
     {"id":{"name":"pEntity","path":"objects/pEntity/pEntity.yy",},},
     {"id":{"name":"pMask","path":"objects/pMask/pMask.yy",},},
     {"id":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
+    {"id":{"name":"lv2","path":"rooms/lv2/lv2.yy",},},
     {"id":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
     {"id":{"name":"rMenu","path":"rooms/rMenu/rMenu.yy",},},
     {"id":{"name":"__RoomLoaderDataCore","path":"scripts/__RoomLoaderDataCore/__RoomLoaderDataCore.yy",},},
@@ -155,6 +156,7 @@
     {"roomId":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
     {"roomId":{"name":"rMenu","path":"rooms/rMenu/rMenu.yy",},},
     {"roomId":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
+    {"roomId":{"name":"lv2","path":"rooms/lv2/lv2.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

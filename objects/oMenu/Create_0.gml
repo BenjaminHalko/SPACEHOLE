@@ -2,8 +2,8 @@
 
 usernameFlash = 0;
 blink = false;
-option = 0;
+option = (global.username == "" and !OPERA);
 acceptMenuInput = false;
 volAcceptMenuInput = false;
 
-menuCursorY = 0;
+menuCursorY = 48 * option;

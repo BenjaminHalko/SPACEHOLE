@@ -10,6 +10,8 @@ image_yscale = scaleTo;
 x = RES_WIDTH * xTo;
 y = RES_HEIGHT * yTo;
 
+wait = 15;
+
 
 phase = -1;
 introPercent = 0;
@@ -17,4 +19,4 @@ phasePercent = 0;
 introCurve = animcurve_get_channel(MenuCurves, "logo");
 
 audio_stop_all();
-audio_play_sound(mMusic, 1, true, 1, 3.2 - 1 / 0.012 / 60);
+audio_play_sound(mMusic, 1, true, 1, 3.2 - (1 / 0.012 + wait) / 60);
