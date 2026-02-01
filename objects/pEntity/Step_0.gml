@@ -12,6 +12,4 @@ if (moveSpeed > 0) {
         x = xstart + xMove * _percent;
         y = ystart + yMove * _percent;
     }
-    
-    MoveLinkedObjects();
 }
