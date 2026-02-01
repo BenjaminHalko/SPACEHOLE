@@ -27,11 +27,17 @@ for(var i = 0; i < _sides; i++) {
     );
 }
 draw_primitive_end();
-shader_reset();
 
-shader_set(shDissolve);
-shader_set_uniform_f_array(global.uDissolveCol, colorDissolve);
-shader_set_uniform_f(global.uDissolveWidth, 0.08);
-shader_set_uniform_f(global.uDissolve, animcurve_channel_evaluate(deathCurve, death));
-draw_circle(x, y, radius, true);
+shader_set_uniform_f(global.uPlanetColorA, 1.0, 1.0, 1.0);
+shader_set_uniform_f(global.uPlanetColorB, 1.0, 1.0, 1.0);
+draw_primitive_begin(pr_linestrip);
+for(var i = 0; i < _sides+1; i++) {
+    draw_vertex_texture(
+        x + lengthdir_x(radius, i / _sides * 360),
+        y + lengthdir_y(radius, i / _sides * 360),
+        0.5,
+        0.5
+    );
+}
+draw_primitive_end();
 shader_reset();
