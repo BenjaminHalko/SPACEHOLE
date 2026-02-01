@@ -14,7 +14,7 @@ draw_set_font(fSpace);
 var _newBest = (global.score == global.pb[$ $"lv{global.level}"]);
 
 
-draw_text(_camX+RES_WIDTH/2, _camY+RES_HEIGHT / 6 + Wave(-5, 5, 3, 0.2), $"LEVEL {global.level + 1} COMPLETE!");
+draw_text(_camX+RES_WIDTH/2, _camY+RES_HEIGHT / 6 + Wave(-5, 5, 3, 0.2), $"- {global.levelNames[global.level]} -\nCOMPLETE!");
 
 
 

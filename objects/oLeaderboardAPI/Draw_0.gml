@@ -41,7 +41,7 @@ if (draw) {
 		draw_text(_scoreX-18, _scoreY, _place);
         var _stringScale = 1;
         if (!global.gxGames) {
-            _stringScale = 46 / max(46, string_width(_scores[i].name));
+            //_stringScale = 46 / max(46, string_width(_scores[i].name));
         }
 		draw_text_transformed(_x+22, _scoreY, _scores[i].name, _stringScale, 1, 0);
         draw_text(_x+88, _scoreY, DisplayNumber(_scores[i].points));
@@ -56,9 +56,4 @@ if (draw) {
 	if (scoreOffsetTarget < array_length(_scores)-scoresPerPage) {
 		draw_sprite_ext(sArrow, 0, RES_WIDTH/2, _y+94, 1, -1, 0, c_white, 1);	
 	}
-	
-	draw_set_color(c_dkgray);
-	draw_set_halign(fa_center);
-	draw_text(RES_WIDTH/2,170,"PRESS ENTER TO");
-	draw_text(RES_WIDTH/2,178,"CONTINUE");
 }

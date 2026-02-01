@@ -41,7 +41,15 @@ global.uPlanetColorB = shader_get_uniform(shPlanet, "u_colorB");
 
 // Game State
 global.gameState = GameState.NORMAL;
-global.maxLevels = 8;
+global.planetCount = 0;
+
+// Levels
+global.levelNames = [
+    "1: ORBIT",
+    "2: LAUNCH",
+    "X: SPACEHOLE"
+];
+global.maxLevels = array_length(global.levelNames);
 
 // Load Save Data
 ini_open(SAVEFILE);
@@ -61,8 +69,6 @@ audio_master_gain(global.audioVol);
 
 instance_create_layer(0,0,layer,oLeaderboardAPI);
 
-// Music
-music = audio_play_sound(mMusic, 1, true);
-audio_sound_loop_start(music, 4.8);
+audio_play_sound(mMusic, 1, true, 1, 4.8);
 
 room_goto_next();

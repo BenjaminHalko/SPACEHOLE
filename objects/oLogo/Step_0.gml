@@ -32,7 +32,9 @@ switch(phase) {
         scaleTo = ApproachEase(scaleTo, 0.6, 0.2, 0.8);
     } break;
     case 2: {
-        
+        xTo = ApproachEase(xTo, 0.7, 0.05, 0.7);
+        yTo = ApproachEase(yTo, Wave(0.49, 0.51, 2, 0) - 0.2, 0.05, 0.7);
+        scaleTo = ApproachEase(scaleTo, 0.4, 0.2, 0.8);
     } break;
 }
 

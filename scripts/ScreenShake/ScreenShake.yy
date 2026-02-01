@@ -6,7 +6,7 @@
   "name":"ScreenShake",
   "parent":{
     "name":"Camera",
-    "path":"folders/Camera.yy",
+    "path":"folders/Global/Camera.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

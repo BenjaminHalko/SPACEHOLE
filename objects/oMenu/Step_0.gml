@@ -34,6 +34,7 @@ if (DESKTOP or BROWSER or OPERA) {
                 global.pb = 0;	
             }
             oLogo.phase++;
+            instance_create_layer(0, 0, layer, oStageSelect);
             instance_destroy();
         } else {
             usernameFlash = 1;

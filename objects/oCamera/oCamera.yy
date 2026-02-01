@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Camera",
-    "path":"folders/Camera.yy",
+    "path":"folders/Global/Camera.yy",
   },
   "parentObjectId":null,
   "persistent":false,

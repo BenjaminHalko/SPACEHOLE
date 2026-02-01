@@ -1,0 +1,1 @@
+global.planetCount = 0;

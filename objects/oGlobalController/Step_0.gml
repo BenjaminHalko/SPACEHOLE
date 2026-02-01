@@ -31,3 +31,7 @@ if (keyboard_check_pressed(ord("E"))) {
 }
 }
 
+Input();
+if (room != rMenu and keyBack) {
+    transition(rMenu);
+}

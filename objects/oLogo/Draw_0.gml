@@ -20,7 +20,7 @@ if (phase == -1) {
     draw_sprite_ext(sWallTexture, 0, x, _y, 4, 3, 0, c_white, _alpha);
 }
 
-draw_sprite_ext(sWallTexture, 0, x, y, 10, 4, 0, c_white, _alpha);
+draw_sprite_ext(sWallTexture, 0, x, y + Wave(-4, 4, 2, 0.1) * (phase != -1), 10, 4, 0, c_white, _alpha);
 
 if (phase != -1) {
     var _col1 = c_purple;
@@ -37,9 +37,9 @@ surface_reset_target();
 
 var _camY = camera_get_view_y(view_camera[0]);
 
-gpu_set_blendmode_ext(bm_zero, bm_inv_src_alpha);
-draw_surface_ext(surface, -2, _camY - 2, 1, 1, 0, c_black, 1);
-gpu_set_blendmode(bm_normal);
+//gpu_set_blendmode_ext(bm_zero, bm_inv_src_alpha);
+//draw_surface_ext(surface, -2, _camY - 2, 1, 1, 0, c_black, 1);
+//gpu_set_blendmode(bm_normal);
 draw_surface_ext(surface, 3, _camY + 3, 1, 1, 0, c_black, 1);
 shader_set(shVibrance);
 draw_surface(surface, 0, _camY);

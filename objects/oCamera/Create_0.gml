@@ -13,3 +13,8 @@ x = viewWidthHalf;
 y = viewHeightHalf;
 xTo = viewWidthHalf;
 yTo = viewHeightHalf;
+
+if (instance_exists(oPlayer)) {
+    y = oPlayer.y - 10;
+    yTo = y;
+}

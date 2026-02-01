@@ -38,3 +38,6 @@ lightning = new LightningEffect();
 particle = 0;
 
 global.score = 0;
+
+oCamera.yTo = y - 10;
+oCamera.y = y - 10;
