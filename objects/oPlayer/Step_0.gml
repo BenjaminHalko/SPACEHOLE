@@ -47,6 +47,9 @@ with (pMask) {
 death = Approach(death, _maskCollision, _maskCollision ? deathSpd : deathRecovery);
 if (death >= 1) {
     global.gameState = GameState.DEATH;
+    call_later(1, time_source_units_seconds, function() {
+        transition(room);
+    });
 }
 
 if (_maskCollision and y > oDoomZone.mask.y) {
@@ -127,7 +130,7 @@ if (swinging) {
         hsp = -abs(hsp);
     
     swingTarget = instance_nearest(x, y, oPlanet);
-    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 100 + 20 * abs(swingTarget.image_xscale)) {
+    if (swingTarget != noone and point_distance(x, y, swingTarget.x, swingTarget.y) > 90 + 30 * abs(swingTarget.image_xscale)) {
         swingTarget = noone;
     }
     

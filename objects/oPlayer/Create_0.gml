@@ -4,7 +4,7 @@ vsp = 0;
 moveSpd = 4;
 grv = 0.35;
 
-deathSpd = 1 / 60 / 3;
+deathSpd = 1 / 60 / 4;
 deathRecovery = 2 / 60;
 
 // Not Speed
