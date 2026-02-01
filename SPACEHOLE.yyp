@@ -134,8 +134,8 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"rInit","path":"rooms/rInit/rInit.yy",},},
-    {"roomId":{"name":"lv3","path":"rooms/lv3/lv3.yy",},},
     {"roomId":{"name":"rMenu","path":"rooms/rMenu/rMenu.yy",},},
+    {"roomId":{"name":"lv3","path":"rooms/lv3/lv3.yy",},},
     {"roomId":{"name":"lv1","path":"rooms/lv1/lv1.yy",},},
     {"roomId":{"name":"lv2","path":"rooms/lv2/lv2.yy",},},
   ],

@@ -33,6 +33,8 @@ if (DESKTOP or BROWSER or OPERA) {
             if (global.noInternet) {
                 global.pb = 0;	
             }
+            if (!global.gxGames and !global.noInternet)
+                Save("settings","username",global.username);
             oLogo.phase++;
             instance_create_layer(0, 0, layer, oStageSelect);
             instance_destroy();
