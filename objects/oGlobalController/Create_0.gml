@@ -41,6 +41,8 @@ global.uPlanetColorB = shader_get_uniform(shPlanet, "u_colorB");
 
 // Game State
 global.gameState = GameState.NORMAL;
+global.gameScore = 0;
+global.score = 0;
 global.planetCount = 0;
 
 // Levels

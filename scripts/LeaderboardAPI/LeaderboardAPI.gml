@@ -15,7 +15,7 @@ function LeaderboardPost(_level) {
     
 	var _score = {
 		name: global.username,
-		points: global.score,
+		points: _level == "lvAll" ? global.gameScore : global.score,
         userID: global.userID
 	}
 	

@@ -19,16 +19,12 @@ if (_height != RES_HEIGHT) {
 if (DESKTOP and (keyboard_check_pressed(vk_f4) or keyboard_check_pressed(vk_f11))) window_set_fullscreen(!window_get_fullscreen());
     
 
-if (!instance_exists(oMenu)) {
-    if (keyboard_check_pressed(ord("R"))) {
-    if (room == rMenu) room_goto(rMenu);
-    else transition(room);
-}
-
-if (keyboard_check_pressed(ord("E"))) {
-    global.username = "Jim2";
-    FinishLevel();
-}
+if (room != rMenu and keyboard_check_pressed(ord("R"))) {
+    if (instance_exists(oTransition) and oTransition.targetRoom == room) {
+        oTransition.targetRoom = lv1;
+    } else {
+        transition(room);
+    }
 }
 
 Input();

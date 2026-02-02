@@ -23,6 +23,9 @@ if (global.gameState != GameState.NORMAL) {
 }
 
 global.score++;
+if (global.gameScore != -1) {
+    global.gameScore++;
+}
 
 var _end = true;
 with(pEntity) {

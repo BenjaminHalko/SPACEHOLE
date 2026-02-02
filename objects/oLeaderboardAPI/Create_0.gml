@@ -1,6 +1,8 @@
 /// @desc
 
-scores = {};
+scores = {
+    "lvAll": []
+};
 for(var i = 0; i < global.maxLevels; i++) {
     scores[$ $"lv{i}"] = [];
 }

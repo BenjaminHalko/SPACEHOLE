@@ -31,7 +31,7 @@ if (DESKTOP or BROWSER or OPERA) {
     if (option < 2 and keySelect and (option == 0 or (!keyboard_check_pressed(vk_space) and !keyboard_check_pressed(vk_shift)))) {
         if (global.username != "") {
             if (global.noInternet) {
-                global.pb = 0;	
+                global.pb = 0;
             }
             if (!global.gxGames and !global.noInternet)
                 Save("settings","username",global.username);

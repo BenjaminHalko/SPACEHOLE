@@ -2,7 +2,10 @@ menuCursorY = ApproachEase(menuCursorY, 32 * global.level, 28, 0.8);
 
 if (start) {
     if (alarm[0] <= 0) alarm[0] = 5;
-    if (blink >= 8) transition(asset_get_index($"lv{global.level + 1}"));
+    if (blink >= 8) {
+        global.gameScore = -1;
+        transition(asset_get_index($"lv{global.level + 1}"));
+    }
     exit;
 }
 
