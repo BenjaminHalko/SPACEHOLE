@@ -1,0 +1,107 @@
+name: Build Game
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Project Path
+        id: find_yyp
+        run: |
+          $yyp = Get-ChildItem -Path ${{ github.workspace }} -Filter *.yyp | Select-Object -First 1
+          "yyp-path=$yyp" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+      - name: Setup Igor
+        uses: bscotch/igor-setup@v3
+        id: igor
+        with:
+          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+          access-key: ${{ secrets.GAMEMAKER_KEY }}
+          modules: windows
+          cache: true
+      - name: Build with Igor
+        uses: bscotch/igor-build@v1
+        id: build
+        with:
+          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+          user-dir: "${{ steps.igor.outputs.user-dir }}"
+          platform: windows
+      - name: Extract Build
+        run: |
+          Expand-Archive -Path "${{ steps.build.outputs.out-dir }}\${{ steps.build.outputs.out-name }}" -DestinationPath extracted
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-windows
+          path: extracted
+          retention-days: 1
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Project Path
+        id: find_yyp
+        run: |
+          yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
+          echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
+      - name: Setup Igor
+        uses: bscotch/igor-setup@v3
+        id: igor
+        with:
+          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+          access-key: ${{ secrets.GAMEMAKER_KEY }}
+          modules: mac
+          cache: true
+      - name: Build with Igor
+        uses: BenjaminHalko/igor-build@cbe80103db5467293aa85e5d62eb193969627c91
+        id: build
+        with:
+          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+          user-dir: "${{ steps.igor.outputs.user-dir }}"
+          platform: mac
+      - name: Extract Build
+        run: |
+          unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-macos
+          path: extracted
+          retention-days: 1
+
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Project Path
+        id: find_yyp
+        run: |
+          yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
+          echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
+      - name: Setup Igor
+        uses: bscotch/igor-setup@v3
+        id: igor
+        with:
+          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+          access-key: ${{ secrets.GAMEMAKER_KEY }}
+          modules: operagx
+          cache: true
+      - name: Build with Igor
+        uses: bscotch/igor-build@v1
+        id: build
+        with:
+          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+          user-dir: ${{ steps.igor.outputs.user-dir }}
+          platform: operagx
+      - name: Extract Build
+        run: |
+          unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-linux-steam
+          path: extracted
+          retention-days: 1
