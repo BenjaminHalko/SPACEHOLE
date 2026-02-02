@@ -65,15 +65,15 @@ jobs:
       - name: Extract Build
         run: |
           unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
-      - name: Sign and Notarize App
-        uses: toitlang/action-macos-sign-notarize@v1.3.0
-        with:
-          certificate: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
-          certificate-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          username: ${{ secrets.APPLE_ID }}
-          password: ${{ secrets.APPLE_APP_PASSWORD }}
-          apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
-          app-path: extracted/SPACEHOLE.app
+      # - name: Sign and Notarize App
+      #   uses: toitlang/action-macos-sign-notarize@v1.3.0
+      #   with:
+      #     certificate: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+      #     certificate-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+      #     username: ${{ secrets.APPLE_ID }}
+      #     password: ${{ secrets.APPLE_APP_PASSWORD }}
+      #     apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
+      #     app-path: extracted/SPACEHOLE.app
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
