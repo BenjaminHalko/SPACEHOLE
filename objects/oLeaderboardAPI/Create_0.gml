@@ -15,6 +15,8 @@ scoresPerPage = 8;
 disableSelect = false;
 scrollSpd = 1;
 
+showAll = false;
+
 moved = false;
 
 global.gxGames = false;

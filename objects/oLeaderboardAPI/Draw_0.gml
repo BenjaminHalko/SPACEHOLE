@@ -13,13 +13,13 @@ if (draw) {
 	var _x = 72 + _camX;
 	var _y = RES_HEIGHT / 3 + _camY;
 	
-	draw_text(_x-10, _y, "PLACE");
+	draw_text(_x-20, _y, "PLACE");
 	draw_text(_x+42, _y, "NAME");
     draw_text(_x+106, _y, "SCORE");
 	
 	draw_set_halign(fa_left);
     
-    var _scores = scores[$ $"lv{global.level}"];
+    var _scores = scores[$ showAll ? "lvAll" : $"lv{global.level}"];
 	
 	for(var i = max(0, scoreOffsetTarget-round(1*scrollSpd)); i < min(array_length(_scores), scoreOffsetTarget+scoresPerPage+round(1*scrollSpd)); i++) {
         if (global.gxGames)
@@ -38,7 +38,7 @@ if (draw) {
 		else if ((i+1) % 10 == 3 and (i+1) % 100 != 13) _place += "rd";
 		else _place += "th";
 		
-		draw_text(_scoreX-18, _scoreY, _place);
+		draw_text(_scoreX-26, _scoreY, _place);
         var _stringScale = 1;
         if (!global.gxGames) {
             //_stringScale = 46 / max(46, string_width(_scores[i].name));
