@@ -55,6 +55,7 @@
       ],"init":"","kind":1,"name":"","origname":"extensions\\window_shape.dll","ProxyFiles":[
         {"$GMProxyFile":"","%Name":"window_shape_x64.dll","name":"window_shape_x64.dll","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":6,},
         {"$GMProxyFile":"","%Name":"window_shape.dylib","name":"window_shape.dylib","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":1,},
+        {"$GMProxyFile":"","%Name":"window_shape.so","name":"window_shape.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
       ],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},
     {"$GMExtensionFile":"v1","%Name":"","constants":[],"copyToTargets":9223372036854775807,"filename":"window_shape.gml","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"window_shape_init","argCount":0,"args":[],"documentation":"","externalName":"window_shape_init","help":"window_shape_init()","hidden":false,"kind":2,"name":"window_shape_init","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
