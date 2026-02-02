@@ -11,8 +11,7 @@ draw = false;
 scoreOffset = 0;
 scoreOffsetTarget = 0;
 
-scoresPerPage = 8;
-disableSelect = false;
+scoresPerPage = 32;
 scrollSpd = 1;
 
 showAll = false;

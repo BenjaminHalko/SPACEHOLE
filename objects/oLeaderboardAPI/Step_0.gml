@@ -2,15 +2,12 @@
 
 if (draw) {
 	Input();
-	if(disableSelect) {
-		keySelect = false;
-		disableSelect = false;
-	}
 	if (scoreOffset == scoreOffsetTarget) {
-		if (array_length(scores)-scoresPerPage <= 0) {
+        var _scores = scores[$ showAll ? "lvAll" : $"lv{global.level}"];
+		if (array_length(_scores)-scoresPerPage <= 0) {
 			scoreOffsetTarget = 0;
 		} else {
-			scoreOffsetTarget = median(scoreOffsetTarget + round((keyDown - keyUp)*max(scrollSpd - 1, 1)), 0, array_length(scores)-scoresPerPage);
+			scoreOffsetTarget = median(scoreOffsetTarget + round((keyDown - keyUp)*max(scrollSpd - 1, 1)), 0, array_length(_scores)-scoresPerPage);
 		}
 	}
 	scoreOffset = Approach(scoreOffset, scoreOffsetTarget, max(scrollSpd - 1, 1)*0.4);
@@ -20,8 +17,5 @@ if (draw) {
     } else {
         scrollSpd = 1;
     }
-	
-	if (keySelect) {
-	}
 }
 	

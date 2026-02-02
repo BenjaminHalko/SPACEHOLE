@@ -33,5 +33,13 @@ if (room != rMenu and keyBack) {
 }
 
 if (keyboard_check_pressed(ord("B"))) {
-    screen_save("save.png");
+    //screen_save("save.png");
+    
+    
+    repeat(50) {
+        global.username = chr(irandom_range(ord("A"), ord("Z")));
+        show_debug_message(global.username);
+        LeaderboardPost(0);
+    }
+    
 }
