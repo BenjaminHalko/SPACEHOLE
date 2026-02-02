@@ -90,16 +90,26 @@ jobs:
         run: |
           # Find the .app bundle
           APP_PATH=$(find extracted -name "*.app" -type d | head -n 1)
+          echo "Signing app at: $APP_PATH"
 
-          # Sign all executables and dylibs inside the app
-          find "$APP_PATH/Contents" -type f \( -name "*.dylib" -o -perm +111 \) -exec \
-            codesign --force --options runtime --timestamp \
-            --sign "$APPLE_IDENTITY" {} \; 2>/dev/null || true
+          # Sign all Mach-O binaries inside the app (dylibs, frameworks, executables)
+          find "$APP_PATH" -type f | while read -r file; do
+            if file "$file" | grep -q "Mach-O"; then
+              echo "Signing: $file"
+              codesign --force --options runtime --timestamp \
+                --sign "$APPLE_IDENTITY" "$file"
+            fi
+          done
 
           # Sign the main app bundle
+          echo "Signing main bundle: $APP_PATH"
           codesign --force --options runtime --timestamp \
             --sign "$APPLE_IDENTITY" \
             "$APP_PATH"
+
+          # Verify signature
+          echo "Verifying signature..."
+          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
       - name: Notarize App
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -112,12 +122,25 @@ jobs:
           # Create a zip for notarization
           ditto -c -k --keepParent "$APP_PATH" "$APP_NAME.zip"
 
-          # Submit for notarization
-          xcrun notarytool submit "$APP_NAME.zip" \
+          # Submit for notarization and capture submission ID
+          SUBMISSION_OUTPUT=$(xcrun notarytool submit "$APP_NAME.zip" \
             --apple-id "$APPLE_ID" \
             --password "$APPLE_APP_PASSWORD" \
             --team-id "$APPLE_TEAM_ID" \
-            --wait
+            --wait 2>&1)
+          echo "$SUBMISSION_OUTPUT"
+
+          # Extract submission ID and check result
+          SUBMISSION_ID=$(echo "$SUBMISSION_OUTPUT" | grep "id:" | head -1 | awk '{print $2}')
+
+          if echo "$SUBMISSION_OUTPUT" | grep -q "status: Invalid"; then
+            echo "Notarization failed. Fetching log..."
+            xcrun notarytool log "$SUBMISSION_ID" \
+              --apple-id "$APPLE_ID" \
+              --password "$APPLE_APP_PASSWORD" \
+              --team-id "$APPLE_TEAM_ID"
+            exit 1
+          fi
 
           # Staple the notarization ticket
           xcrun stapler staple "$APP_PATH"
