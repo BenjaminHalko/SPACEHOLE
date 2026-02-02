@@ -15,7 +15,7 @@ if (draw) {
 	
 	draw_text(_x-20, _y, "PLACE");
 	draw_text(_x+42, _y, "NAME");
-    draw_text(_x+106, _y, "SCORE");
+    draw_text(_x+110, _y, "SCORE");
 	
 	draw_set_halign(fa_left);
     
@@ -38,13 +38,13 @@ if (draw) {
 		else if ((i+1) % 10 == 3 and (i+1) % 100 != 13) _place += "rd";
 		else _place += "th";
 		
-		draw_text(_scoreX-26, _scoreY, _place);
+		draw_text(_scoreX-32, _scoreY, _place);
         var _stringScale = 1;
         if (!global.gxGames) {
             //_stringScale = 46 / max(46, string_width(_scores[i].name));
         }
-		draw_text_transformed(_x+22, _scoreY, _scores[i].name, _stringScale, 1, 0);
-        draw_text(_x+88, _scoreY, DisplayNumber(_scores[i].points));
+		draw_text_transformed(_x+8, _scoreY, _scores[i].name, _stringScale, 1, 0);
+        draw_text(_x+90, _scoreY, DisplayNumber(_scores[i].points));
 		
 	}
 	draw_set_alpha(1);
