@@ -37,6 +37,10 @@ lightning = new LightningEffect();
 
 particle = 0;
 
+if (room == rGameEnd) {
+    global.gameState = GameState.END;
+}
+
 global.score = 0;
 
 if (room == lv1) {

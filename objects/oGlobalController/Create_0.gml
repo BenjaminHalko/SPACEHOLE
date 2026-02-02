@@ -59,7 +59,9 @@ global.maxLevels = array_length(global.levelNames);
 ini_open(SAVEFILE);
 global.username = ini_read_string("settings","username","");
 global.audioVol = ini_read_real("settings","vol",0.7);
-global.pb = {};
+global.pb = {
+    "lvAll": ini_read_real("score", "lvAll", 0)
+};
 for(var i = 0; i < global.maxLevels; i++) {
     var _level = $"lv{i}";
     global.pb[$ _level] = ini_read_real("score", _level, 0);

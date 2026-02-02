@@ -10,7 +10,7 @@ if (draw) {
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
 	
-	var _x = 72 + _camX;
+	var _x = 64 + _camX;
 	var _y = RES_HEIGHT / 3 + _camY;
 	
 	draw_text(_x-20, _y, "PLACE");

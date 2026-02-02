@@ -8,7 +8,12 @@ if (transitionPercent == 1 and leading) {
 } else {
 	transitionPercent = Approach(transitionPercent, leading, transitionSpd);
 	if (transitionPercent == 0) {
-        global.gameState = GameState.NORMAL;
+        if (room == rGameEnd) {
+            global.gameState = GameState.END;
+        } else {
+            global.gameState = GameState.NORMAL;
+        }
+        
 		instance_destroy();
 	}
     

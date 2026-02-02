@@ -18,7 +18,7 @@ if (global.gameState == GameState.END) {
     image_angle = ApproachEase(image_angle, Wave(-16, 16, 1, 0), 7, 0.8);
 }
 
-if (global.gameState != GameState.NORMAL) {
+if (global.gameState != GameState.NORMAL or room == rGameEnd) {
     exit;
 }
 

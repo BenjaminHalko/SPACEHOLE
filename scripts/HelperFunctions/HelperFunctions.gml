@@ -112,7 +112,11 @@ function RotateVector(_x, _y, _angle) {
 
 function DisplayNumber(_num) {
     if (!is_numeric(_num)) _num = 0;
-	return string_replace_all(string_format(_num/60,2,2)," ","0");
+    var _seconds = string_replace_all(string_format((_num/60) % 60,2,2)," ","0")
+    if (_num > 60 * 60) {
+        return $"{(_num div (60 * 60))}:{_seconds}";
+    }
+	return _seconds;
 }
 
 function Save(_section, _key, _value) {
