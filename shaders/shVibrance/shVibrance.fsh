@@ -4,7 +4,7 @@
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
-const float amount = 1.0;
+const float amount = 1.5;
 const vec4 coeff = vec4(0.299,0.587,0.114, 0.);
 
 void main()
