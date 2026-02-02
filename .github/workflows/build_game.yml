@@ -65,85 +65,15 @@ jobs:
       - name: Extract Build
         run: |
           unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
-      - name: Import Code Signing Certificate
-        env:
-          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-        run: |
-          # Create temporary keychain
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
-
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # Import certificate
-          echo "$APPLE_CERTIFICATE_BASE64" | base64 --decode > $RUNNER_TEMP/certificate.p12
-          security import $RUNNER_TEMP/certificate.p12 -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-      - name: Sign App
-        env:
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
-        run: |
-          # Find the .app bundle
-          APP_PATH=$(find extracted -name "*.app" -type d | head -n 1)
-          echo "Signing app at: $APP_PATH"
-
-          # Sign all Mach-O binaries inside the app (dylibs, frameworks, executables)
-          find "$APP_PATH" -type f | while read -r file; do
-            if file "$file" | grep -q "Mach-O"; then
-              echo "Signing: $file"
-              codesign --force --options runtime --timestamp \
-                --sign "$APPLE_IDENTITY" "$file"
-            fi
-          done
-
-          # Sign the main app bundle
-          echo "Signing main bundle: $APP_PATH"
-          codesign --force --options runtime --timestamp \
-            --sign "$APPLE_IDENTITY" \
-            "$APP_PATH"
-
-          # Verify signature
-          echo "Verifying signature..."
-          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
-      - name: Notarize App
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          APP_PATH=$(find extracted -name "*.app" -type d | head -n 1)
-          APP_NAME=$(basename "$APP_PATH" .app)
-
-          # Create a zip for notarization
-          ditto -c -k --keepParent "$APP_PATH" "$APP_NAME.zip"
-
-          # Submit for notarization and capture submission ID
-          SUBMISSION_OUTPUT=$(xcrun notarytool submit "$APP_NAME.zip" \
-            --apple-id "$APPLE_ID" \
-            --password "$APPLE_APP_PASSWORD" \
-            --team-id "$APPLE_TEAM_ID" \
-            --wait 2>&1)
-          echo "$SUBMISSION_OUTPUT"
-
-          # Extract submission ID and check result
-          SUBMISSION_ID=$(echo "$SUBMISSION_OUTPUT" | grep "id:" | head -1 | awk '{print $2}')
-
-          if echo "$SUBMISSION_OUTPUT" | grep -q "status: Invalid"; then
-            echo "Notarization failed. Fetching log..."
-            xcrun notarytool log "$SUBMISSION_ID" \
-              --apple-id "$APPLE_ID" \
-              --password "$APPLE_APP_PASSWORD" \
-              --team-id "$APPLE_TEAM_ID"
-            exit 1
-          fi
-
-          # Staple the notarization ticket
-          xcrun stapler staple "$APP_PATH"
+      - name: Sign and Notarize App
+        uses: toitlang/action-macos-sign-notarize@v1
+        with:
+          certificate: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          certificate-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          username: ${{ secrets.APPLE_ID }}
+          password: ${{ secrets.APPLE_APP_PASSWORD }}
+          apple-team-id: ${{ secrets.APPLE_TEAM_ID }}
+          app-path: extracted/*.app
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
