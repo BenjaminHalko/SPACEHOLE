@@ -15,6 +15,7 @@ shader_reset();
 
 
 if (swingTarget != noone) {
+    draw_set_colour(c_lime);
     lightning.Draw(
         x,
         y,
