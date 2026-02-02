@@ -9,6 +9,7 @@ with (pMask) {
 
 gpu_set_blendmode(bm_normal);
 
+draw_set_colour(c_lime);
 with (pMask) {
     if (id != other.id)
     mask.DrawOutline();
