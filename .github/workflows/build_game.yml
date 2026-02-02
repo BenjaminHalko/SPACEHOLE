@@ -128,7 +128,7 @@ jobs:
           retention-days: 1
 
   deploy:
-    needs: [build-windows, build-macos, build-linux]
+    needs: [build-windows, build-macos, build-web]
     runs-on: ubuntu-latest
     steps:
       - name: Download Builds
