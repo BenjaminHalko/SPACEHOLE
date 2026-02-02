@@ -20,6 +20,7 @@ if (keyBack) {
 if (keyLeft or keyRight) {
     if (acceptMenuInput) {
         global.level = Wrap(global.level + keyRight - keyLeft, 0, global.maxLevels - 1);
+        ShowLeaderboard();
         acceptMenuInput = false;
         audio_play_sound(snBlip,2,false);
     }

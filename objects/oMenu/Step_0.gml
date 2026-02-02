@@ -35,8 +35,16 @@ if (DESKTOP or BROWSER or OPERA) {
             }
             if (!global.gxGames and !global.noInternet)
                 Save("settings","username",global.username);
-            oLogo.phase++;
-            instance_create_layer(0, 0, layer, oStageSelect);
+            
+            
+            // Next phase
+            // oLogo.phase++;
+            // instance_create_layer(0, 0, layer, oStageSelect);
+            global.gameScore = -1;
+            global.level = 0;
+            transition(asset_get_index($"lv{global.level + 1}"));
+            
+            
             instance_destroy();
         } else {
             usernameFlash = 1;

@@ -52,10 +52,10 @@ if (draw) {
 	draw_set_alpha(1);
 	
 	if (scoreOffsetTarget != 0) {
-		draw_sprite(sArrow, 0, RES_WIDTH/2, _y+18);	
+		//draw_sprite(sArrow, 0, RES_WIDTH/2, _y+18);	
 	}
 	
 	if (scoreOffsetTarget < array_length(_scores)-scoresPerPage) {
-		draw_sprite_ext(sArrow, 0, RES_WIDTH/2, _y+94, 1, -1, 0, c_white, 1);	
+		//draw_sprite_ext(sArrow, 0, RES_WIDTH/2, _y+94, 1, -1, 0, c_white, 1);	
 	}
 }

@@ -48,3 +48,21 @@ function LeaderboardPost(_level) {
 		}
 	}
 }
+
+function ShowLeaderboard() {
+	with(oLeaderboardAPI) {
+        draw = true;
+        var _scores = scores[$ showAll ? "lvAll" : $"lv{global.level}"];
+		var _index = array_find_index(_scores, function(_val) {
+			return _val.name == global.username;
+		});
+		
+		if (_index != -1) {
+			scoreOffsetTarget = max(0, min(_index-5, array_length(_scores)-scoresPerPage));
+			scoreOffset = scoreOffsetTarget;
+		} else {
+			scoreOffsetTarget = 0;
+			scoreOffset = 0;
+		}	
+	}
+}
