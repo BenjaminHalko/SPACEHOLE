@@ -151,8 +151,8 @@ jobs:
 
       - name: Upload to itch.io
         run: |
-          butler push build/build-windows BenjaminHalko/spacehole:windows
-          butler push build/build-macos BenjaminHalko/spacehole:macos
-          butler push build/build-web BenjaminHalko/spacehole:web
+          butler push build/build-windows benjamin-halko/spacehole:windows
+          butler push build/build-macos benjamin-halko/spacehole:macos
+          butler push build/build-web benjamin-halko/spacehole:web
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
