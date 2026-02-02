@@ -26,7 +26,7 @@ if (draw) {
             draw_set_color((_scores[i].userID == global.userID) ? c_yellow : c_white);
         else
             draw_set_color((_scores[i].name == global.username) ? c_yellow : c_white);
-		draw_set_alpha(1 - median(0, 1, abs((i - scoreOffset) - 3.5) - 3.5));
+		draw_set_alpha(1 - median(0, 1, abs((i - scoreOffset) - (scoresPerPage-1)/2) - (scoresPerPage-1)/2));
 		var _scoreY = _y + (i - scoreOffset) * 9 + 16;
         var _scoreX = _x;
         if (i >= 999)
@@ -45,6 +45,8 @@ if (draw) {
         }
 		draw_text_transformed(_x+8, _scoreY, _scores[i].name, _stringScale, 1, 0);
         draw_text(_x+90, _scoreY, DisplayNumber(_scores[i].points));
+        
+        
 		
 	}
 	draw_set_alpha(1);

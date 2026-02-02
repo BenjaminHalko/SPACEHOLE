@@ -3,7 +3,7 @@ function FinishLevel() {
     
     LeaderboardPost(global.level);
     
-    if (global.gameScore != -1 and global.level == global.maxLevels-1) or true {
+    if (global.gameScore != -1 and global.level == global.maxLevels-1) {
         LeaderboardPost("All");
     }
     

@@ -11,7 +11,7 @@ draw = false;
 scoreOffset = 0;
 scoreOffsetTarget = 0;
 
-scoresPerPage = 32;
+scoresPerPage = 16;
 scrollSpd = 1;
 
 showAll = false;
