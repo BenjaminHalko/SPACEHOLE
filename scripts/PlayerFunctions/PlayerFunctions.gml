@@ -140,48 +140,6 @@ function PlayerWallCollision() {
     }
 }
 
-/// @func PlayerFlipperCollision()
-/// @desc Handles flipper collision using place_meeting
-function PlayerFlipperCollision() {
-    with (oFlipper) {
-        if (!place_meeting(x, y, other)) continue;
-
-        // Skip if both player and flipper positions are masked
-        if (PointIsMasked(other.x, other.y) && PointIsMasked(x, y)) continue;
-
-        // Surface normal (points up from flipper)
-        var _rad = degtorad(image_angle);
-        var _normX = -sin(_rad);
-        var _normY = -cos(_rad);
-
-        // Set wall contact for jumping
-        other.wallContact = id;
-        other.wallNormalX = _normX;
-        other.wallNormalY = _normY;
-
-        // Semi-solid: only collide when moving toward surface
-        var _velDot = other.hsp * _normX + other.vsp * _normY;
-        if (_velDot >= 0) continue;
-
-        // Push player out along normal until no longer colliding
-        while (place_meeting(x, y, other)) {
-            other.x += _normX;
-            other.y += _normY;
-        }
-
-        // Remove velocity into surface
-        other.hsp -= _normX * _velDot;
-        other.vsp -= _normY * _velDot;
-
-        // Apply friction
-        var _tangentX = -_normY;
-        var _tangentY = _normX;
-        var _tangentDot = other.hsp * _tangentX + other.vsp * _tangentY;
-        other.hsp -= _tangentX * _tangentDot * (1 - other.flipperFriction);
-        other.vsp -= _tangentY * _tangentDot * (1 - other.flipperFriction);
-    }
-}
-
 function PlayerLauncherCollision() {
     with (oLauncher) {
         // Check circle vs rectangle overlap

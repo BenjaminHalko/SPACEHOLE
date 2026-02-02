@@ -83,12 +83,13 @@ if (y - radius < oDoomZone.mask.y) {
 }
 
 // Jump
+Input();
 jumpTimer--;
-if (keyboard_check_pressed(vk_space)) {
+if (keySelect) {
     jumpTimer = 10;
 }
 
-swinging = swingTarget != noone and keyboard_check(vk_space);
+swinging = swingTarget != noone and keySelectHold;
 
 // Movement
 if (swinging) {
@@ -176,7 +177,6 @@ y += vsp;
 
 // Wall Collision
 PlayerWallCollision();
-PlayerFlipperCollision();
 
 image_angle = ApproachEase(image_angle, -hsp * 15, 10, 0.8);
 lightning.Step();

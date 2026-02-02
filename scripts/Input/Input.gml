@@ -4,6 +4,7 @@ function Input() {
 	var _gpLeft = 0;
 	var _gpRight = 0;
 	var _gpSelect = false;
+	var _gpSelectHold = false;
 	var _gpBack = false;
 	
 	for(var i = 0; i < gamepad_get_device_count(); i++) {
@@ -12,6 +13,7 @@ function Input() {
 		_gpUp = gamepad_button_check(i,gp_padu) or max(0, -gamepad_axis_value(i,gp_axislv));
 		_gpDown = gamepad_button_check(i,gp_padd) or max(0, gamepad_axis_value(i,gp_axislv));
 		for(var j = gp_face1; j <= gp_face4; j++) if(gamepad_button_check_pressed(i,j)) _gpSelect = true;
+		for(var j = gp_face1; j <= gp_face4; j++) if(gamepad_button_check(i,j)) _gpSelectHold = true;
 		if(gamepad_button_check_pressed(i,gp_start) or gamepad_button_check_pressed(i,gp_select)) _gpBack = true;
 		
 		if(_gpLeft or _gpRight or _gpDown or _gpUp or _gpSelect or _gpBack) break;
@@ -21,6 +23,7 @@ function Input() {
 	keyRight = keyboard_check(vk_right) or keyboard_check(ord("D")) or _gpRight;
 	keyUp = keyboard_check(vk_up) or keyboard_check(ord("W")) or _gpUp;
 	keyDown = keyboard_check(vk_down) or keyboard_check(ord("S")) or _gpDown;
-	keySelect = keyboard_check_pressed(vk_enter) or keyboard_check_pressed(vk_shift) or _gpSelect;
+	keySelect = keyboard_check_pressed(vk_enter) or keyboard_check_pressed(vk_shift) or keyboard_check_pressed(vk_space) or _gpSelect;
+	keySelectHold = keyboard_check(vk_enter) or keyboard_check(vk_shift) or keyboard_check(vk_space) or _gpSelectHold;
 	keyBack = keyboard_check_pressed(vk_backspace) or keyboard_check_pressed(vk_escape) or _gpBack;
 }
