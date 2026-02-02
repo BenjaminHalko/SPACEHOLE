@@ -49,7 +49,7 @@ global.planetCount = 0;
 global.levelNames = [
     "1: ORBIT",
     "2: LAUNCH",
-    "3: OPEN",
+    "3: GLIDE",
     "4: ACCESS",
     "X: SPACEHOLE"
 ];
