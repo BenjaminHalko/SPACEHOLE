@@ -121,6 +121,7 @@
     {"id":{"name":"sMaskedZone","path":"sprites/sMaskedZone/sMaskedZone.yy",},},
     {"id":{"name":"sPlanet","path":"sprites/sPlanet/sPlanet.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
+    {"id":{"name":"sScreenshots","path":"sprites/sScreenshots/sScreenshots.yy",},},
     {"id":{"name":"sSemiSolid","path":"sprites/sSemiSolid/sSemiSolid.yy",},},
     {"id":{"name":"sWall","path":"sprites/sWall/sWall.yy",},},
     {"id":{"name":"sWallTexture","path":"sprites/sWallTexture/sWallTexture.yy",},},

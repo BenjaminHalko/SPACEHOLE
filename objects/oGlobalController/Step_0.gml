@@ -35,3 +35,7 @@ Input();
 if (room != rMenu and keyBack) {
     transition(rMenu);
 }
+
+if (keyboard_check_pressed(ord("B"))) {
+    screen_save("save.png");
+}

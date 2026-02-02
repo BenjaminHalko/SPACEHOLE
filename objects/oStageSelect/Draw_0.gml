@@ -16,3 +16,5 @@ for (var i = 0; i < global.maxLevels; i++) {
     }
     _menuY += 32;
 }
+
+draw_sprite(sScreenshots, global.level, _menuX, RES_HEIGHT / 2 + _camY);
