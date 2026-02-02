@@ -23,8 +23,8 @@ if (phase == -1) {
 draw_sprite_ext(sWallTexture, 0, x, y + Wave(-4, 4, 2, 0.1) * (phase != -1), 10, 4, 0, c_white, _alpha);
 
 if (phase != -1) {
-    var _col1 = c_purple;
-    var _col2 = c_green;
+    var _col1 = c_white;
+    var _col2 = c_blue;
     draw_set_alpha(0.2 * _alpha);
     draw_rectangle_colour(bbox_left, bbox_top, bbox_right, bbox_bottom, _col1, _col1, _col2, _col2, false);
     draw_set_alpha(1);
