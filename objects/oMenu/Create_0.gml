@@ -2,7 +2,7 @@
 
 usernameFlash = 0;
 blink = false;
-option = (global.username == "" and !OPERA);
+option = (global.username == "" and !global.gxGames);
 acceptMenuInput = false;
 volAcceptMenuInput = false;
 
