@@ -18,7 +18,6 @@ if (_height != RES_HEIGHT) {
 // Fullscreen
 if (DESKTOP and (keyboard_check_pressed(vk_f4) or keyboard_check_pressed(vk_f11))) window_set_fullscreen(!window_get_fullscreen());
     
-
 if (room != rMenu and keyboard_check_pressed(ord("R"))) {
     if (instance_exists(oTransition) and oTransition.targetRoom == room) {
         oTransition.targetRoom = lv1;
@@ -30,16 +29,4 @@ if (room != rMenu and keyboard_check_pressed(ord("R"))) {
 Input();
 if (room != rMenu and keyBack) {
     transition(rMenu);
-}
-
-if (keyboard_check_pressed(ord("B"))) {
-    //screen_save("save.png");
-    
-    
-    repeat(50) {
-        global.username = chr(irandom_range(ord("A"), ord("Z")));
-        show_debug_message(global.username);
-        LeaderboardPost(0);
-    }
-    
 }
