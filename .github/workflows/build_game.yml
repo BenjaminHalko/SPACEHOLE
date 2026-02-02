@@ -65,6 +65,62 @@ jobs:
       - name: Extract Build
         run: |
           unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+      - name: Import Code Signing Certificate
+        env:
+          APPLE_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          # Create temporary keychain
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # Import certificate
+          echo "$APPLE_CERTIFICATE_BASE64" | base64 --decode > $RUNNER_TEMP/certificate.p12
+          security import $RUNNER_TEMP/certificate.p12 -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+      - name: Sign App
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
+        run: |
+          # Find the .app bundle
+          APP_PATH=$(find extracted -name "*.app" -type d | head -n 1)
+
+          # Sign all executables and dylibs inside the app
+          find "$APP_PATH/Contents" -type f \( -name "*.dylib" -o -perm +111 \) -exec \
+            codesign --force --options runtime --timestamp \
+            --sign "$APPLE_IDENTITY" {} \; 2>/dev/null || true
+
+          # Sign the main app bundle
+          codesign --force --options runtime --timestamp \
+            --sign "$APPLE_IDENTITY" \
+            "$APP_PATH"
+      - name: Notarize App
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          APP_PATH=$(find extracted -name "*.app" -type d | head -n 1)
+          APP_NAME=$(basename "$APP_PATH" .app)
+
+          # Create a zip for notarization
+          ditto -c -k --keepParent "$APP_PATH" "$APP_NAME.zip"
+
+          # Submit for notarization
+          xcrun notarytool submit "$APP_NAME.zip" \
+            --apple-id "$APPLE_ID" \
+            --password "$APPLE_APP_PASSWORD" \
+            --team-id "$APPLE_TEAM_ID" \
+            --wait
+
+          # Staple the notarization ticket
+          xcrun stapler staple "$APP_PATH"
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
@@ -83,14 +139,14 @@ jobs:
           echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
       - name: Setup cache
         id: cache-system-libraries
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
-          path: "emsdk-cache"
+          path: emsdk-cache
           key: emsdk-cache
       - uses: mymindstorm/setup-emsdk@v14
         with:
           version: 3.1.47
-          actions-cache-folder: "emsdk-cache"
+          actions-cache-folder: emsdk-cache
       - name: Setup Igor
         uses: bscotch/igor-setup@v3
         id: igor
