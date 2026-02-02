@@ -56,7 +56,7 @@ jobs:
           modules: mac
           cache: true
       - name: Build with Igor
-        uses: BenjaminHalko/igor-build@cbe80103db5467293aa85e5d62eb193969627c91
+        uses: bscotch/igor-build@v1
         id: build
         with:
           yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
@@ -109,9 +109,20 @@ jobs:
       - name: Extract Build
         run: |
           unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+      - name: Patch Build
+        run: |
+          sed -i 's/runner\.js/SPACEHOLE.js/g' extracted/runner-sw.js
+          cat > /tmp/insert.txt << 'EOF'
+                      const g_pWadLoadCallback = function () {};
+                      var bodyElement = document.getElementById("canvas");
+                      bodyElement.addEventListener("click", function () {
+                          canvasElement.focus();
+                      });
+          EOF
+          sed -i '/const CHANGE_ASPECT_RATIO = true;/r /tmp/insert.txt' extracted/index.html
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-linux-steam
+          name: build-web
           path: extracted
           retention-days: 1
