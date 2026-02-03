@@ -85,20 +85,7 @@ jobs:
       - name: Sign and enable Hardened Runtime
         run: |
           APP_PATH=$(find extracted -name "*.app" | head -1)
-
-          # Create entitlements file
-          cat > "$RUNNER_TEMP/entitlements.plist" <<'EOF'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>com.apple.security.cs.disable-library-validation</key>
-            <true/>
-          </dict>
-          </plist>
-          EOF
-
-          codesign --force --deep --options runtime --entitlements "$RUNNER_TEMP/entitlements.plist" --sign "Developer ID Application" "$APP_PATH"
+          codesign --force --deep --options runtime --sign "Developer ID Application" "$APP_PATH"
       - name: Notarize app
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
