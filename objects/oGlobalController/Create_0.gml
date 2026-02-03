@@ -71,7 +71,8 @@ ini_close();
 if (string_length(global.username) > 10)
     global.username = "";
 
-audio_master_gain(global.audioVol);
+var _vol = log10(global.audioVol + 1) / log10(2);
+audio_master_gain(_vol);
 
 instance_create_layer(0,0,layer,oLeaderboardAPI);
 

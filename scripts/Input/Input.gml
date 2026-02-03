@@ -23,7 +23,7 @@ function Input() {
 	keyRight = keyboard_check(vk_right) or keyboard_check(ord("D")) or _gpRight;
 	keyUp = keyboard_check(vk_up) or keyboard_check(ord("W")) or _gpUp;
 	keyDown = keyboard_check(vk_down) or keyboard_check(ord("S")) or _gpDown;
-	keySelect = keyboard_check_pressed(vk_enter) or keyboard_check_pressed(vk_shift) or keyboard_check_pressed(vk_space) or _gpSelect;
-	keySelectHold = keyboard_check(vk_enter) or keyboard_check(vk_shift) or keyboard_check(vk_space) or _gpSelectHold;
+	keySelect = keyboard_check_pressed(vk_enter) or keyboard_check_pressed(vk_shift) or keyboard_check_pressed(vk_space) or mouse_check_button_pressed(mb_left) or _gpSelect;
+	keySelectHold = keyboard_check(vk_enter) or keyboard_check(vk_shift) or keyboard_check(vk_space) or mouse_check_button(mb_left) or _gpSelectHold;
 	keyBack = keyboard_check_pressed(vk_backspace) or keyboard_check_pressed(vk_escape) or _gpBack;
 }

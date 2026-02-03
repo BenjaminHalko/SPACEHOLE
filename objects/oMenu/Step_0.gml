@@ -69,13 +69,14 @@ if (DESKTOP or BROWSER or OPERA) {
         keyboard_lastkey = vk_nokey;
     }
 
-    if (option == (global.gxGames ? 1 :2)) {
+    if (option == (global.gxGames ? 1 : 2)) {
         if (keyLeft or keyRight) {
             if (volAcceptMenuInput) {
                 volAcceptMenuInput = false;
                 global.audioVol = clamp(global.audioVol + (keyRight - keyLeft) * 0.1, 0, 1);
+                var _vol = log10(global.audioVol + 1) / log10(2);
                 Save("settings","vol",global.audioVol);
-                audio_master_gain(global.audioVol);
+                audio_master_gain(_vol);
                 audio_play_sound(snBlip,2,false);
             }
         } else {

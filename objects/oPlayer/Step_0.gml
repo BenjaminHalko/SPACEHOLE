@@ -15,7 +15,7 @@ if (global.gameState == GameState.END) {
     y -= 10;
     x = ApproachEase(x, RES_WIDTH / 2, 5, 0.8)
     oCamera.yTo = y - 10;
-    image_angle = ApproachEase(image_angle, Wave(-16, 16, 1, 0), 7, 0.8);
+    image_angle = ApproachCircleEase(image_angle, Wave(-16, 16, 1, 0), 7, 0.8);
 }
 
 if (global.gameState != GameState.NORMAL or room == rGameEnd) {
@@ -131,6 +131,8 @@ if (swinging) {
     var _yTarget = swingTarget.y + lengthdir_y(_dist, _dir);
     hsp = (_xTarget - x);
     vsp = (_yTarget - y);
+    
+    image_angle = ApproachCircleEase(image_angle, point_direction(0, 0, hsp, vsp) - 90, 10, 0.8);
 } else {
     if (swingingPrev) {
         hsp *= 1.5;
@@ -165,6 +167,8 @@ if (swinging) {
             image_angle: image_angle
         });
     }
+    
+    image_angle = ApproachCircleEase(image_angle, -hsp * 15, 10, 0.8);
 }
 
 x += hsp;
@@ -173,7 +177,6 @@ y += vsp;
 // Wall Collision
 PlayerWallCollision();
 
-image_angle = ApproachEase(image_angle, -hsp * 15, 10, 0.8);
 lightning.Step();
 
 swingingPrev = swinging;
