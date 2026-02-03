@@ -15,7 +15,7 @@ if (draw) {
 	
 	draw_text(_x-20, _y, "PLACE");
 	draw_text(_x+42, _y, "NAME");
-    draw_text(_x+110, _y, "SCORE");
+    draw_text(_x+110, _y, "TIME");
 	
 	draw_set_halign(fa_left);
     
