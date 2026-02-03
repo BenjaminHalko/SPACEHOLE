@@ -8,6 +8,7 @@ function FinishLevel() {
     }
     
     call_later(0.5, time_source_units_seconds, function() {
+        audio_play_sound(snStart, 1, false);
         instance_create_layer(0, 0, "Global", oEndScreen);
     });
 }
