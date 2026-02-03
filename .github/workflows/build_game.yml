@@ -84,15 +84,31 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
       - name: Sign and enable Hardened Runtime
         run: |
-          APP_PATH=$(find extracted -name "*.app" | head -1)
-          codesign --force --deep --options runtime --sign "Developer ID Application" "$APP_PATH"
+          APP_PATH=$(echo extracted/*.app)
+
+          # Sign all dylibs and binaries inside the app first
+          find "$APP_PATH" -type f \( -name "*.dylib" -o -name "*.so" \) | while read -r file; do
+            echo "Signing: $file"
+            codesign --force --options runtime --timestamp --sign "Developer ID Application" "$file"
+          done
+
+          # Sign the main executable
+          MAIN_EXEC="$APP_PATH/Contents/MacOS/$(basename "$APP_PATH" .app)"
+          if [ -f "$MAIN_EXEC" ]; then
+            echo "Signing main executable: $MAIN_EXEC"
+            codesign --force --options runtime --timestamp --sign "Developer ID Application" "$MAIN_EXEC"
+          fi
+
+          # Sign the app bundle
+          echo "Signing app bundle: $APP_PATH"
+          codesign --force --options runtime --timestamp --sign "Developer ID Application" "$APP_PATH"
       - name: Notarize app
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          APP_PATH=$(find extracted -name "*.app" | head -1)
+          APP_PATH=$(echo extracted/*.app)
           ZIP_PATH="$RUNNER_TEMP/app.zip"
 
           # Create zip for notarization
