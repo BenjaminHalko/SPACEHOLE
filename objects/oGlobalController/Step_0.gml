@@ -21,7 +21,9 @@ if (!OPERA) {
 if (DESKTOP and (keyboard_check_pressed(vk_f4) or keyboard_check_pressed(vk_f11))) window_set_fullscreen(!window_get_fullscreen());
     
 if (room != rMenu and keyboard_check_pressed(ord("R"))) {
-    if (instance_exists(oTransition) and oTransition.targetRoom == room) {
+    if (room == rGameEnd) {
+        transition(lv1);
+    } else if (instance_exists(oTransition) and oTransition.targetRoom == room) {
         oTransition.targetRoom = lv1;
     } else {
         transition(room);
