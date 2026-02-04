@@ -1,4 +1,4 @@
-if (global.gameState != GameState.END and room != rMenu and (!instance_exists(oTransition) or oTransition.targetRoom != rGameEnd)) {
+if (global.gameState != GameState.END and room != rMenu and room != rGameEnd and (!instance_exists(oTransition) or oTransition.targetRoom != rGameEnd)) {
     draw_set_colour(c_white);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
