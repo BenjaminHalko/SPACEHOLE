@@ -35,3 +35,7 @@ var _p = _palettes[_seed];
 colorA = [_p[0], _p[1], _p[2]];
 colorB = [_p[3], _p[4], _p[5]];
 colorDissolve = [_p[6], _p[7], _p[8]];
+
+if (finalOrb) {
+    oDoomZone.maxHeight = y + 100;
+}
