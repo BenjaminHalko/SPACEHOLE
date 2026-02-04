@@ -8,7 +8,9 @@ death = ApproachEase(death, (oPlayer.swingTarget == id and oPlayer.swinging) ? o
 mask.UpdateOffsets();
 
 // Grow
-targetSize = Approach(targetSize, maxGrow, growSpeed / 60);
+if (!finalOrb) {
+    targetSize = Approach(targetSize, maxGrow, growSpeed / 60);
+}
 
 // Update Mask
 mask.size = ApproachEase(mask.size, targetSize, 0.5, 0.8);
