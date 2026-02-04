@@ -3,6 +3,7 @@
 Input();
 
 if (keySelect) {
+    global.score = 0;
     if (room == rGameEnd) {
         transition(rMenu);
     } else if (global.level == global.maxLevels - 1) {
