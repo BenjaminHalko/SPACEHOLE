@@ -1,6 +1,9 @@
 //
 // Animated space/aurora background shader
 //
+
+precision highp float;
+
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
@@ -44,10 +47,9 @@ float fbm(vec2 p, int octaves) {
     float frequency = 1.0;
 
     for (int i = 0; i < 6; i++) {
-        if (i >= octaves) break;
-        value += amplitude * noise(p * frequency);
-        frequency *= 2.0;
-        amplitude *= 0.5;
+        value += amplitude * noise(p * frequency) * float(i < octaves);
+        frequency *= 2.0 * float(i < octaves);
+        amplitude *= 0.5 * float(i < octaves);
     }
 
     return value;

@@ -18,9 +18,13 @@ switch(phase) {
     case 0: {
         Input();
         if (keySelect) {
-            phase++;
-            phasePercent = 0;
-            instance_create_layer(0, 0, layer, oMenu);
+            if (MOBILE) {
+                GameStart();
+            } else {
+                phase++;
+                phasePercent = 0;
+                instance_create_layer(0, 0, layer, oMenu);
+            }
         }
         introPercent = ApproachEase(introPercent, 1, 0.1, 0.8);
         phasePercent = ApproachEase(phasePercent, 1, 0.1, 0.8);

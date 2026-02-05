@@ -71,6 +71,10 @@ ini_close();
 if (string_length(global.username) > 10)
     global.username = "";
 
+if (global.username == "" and MOBILE) {
+    global.username = "Jim";
+}
+
 var _vol = log10(global.audioVol + 1) / log10(2);
 audio_master_gain(_vol);
 

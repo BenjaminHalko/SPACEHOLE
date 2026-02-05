@@ -12,3 +12,9 @@ function FinishLevel() {
         instance_create_layer(0, 0, "Global", oEndScreen);
     });
 }
+
+function GameStart() {
+    global.gameScore = -1;
+    global.level = 0;
+    transition(asset_get_index($"lv{global.level + 1}"));
+}

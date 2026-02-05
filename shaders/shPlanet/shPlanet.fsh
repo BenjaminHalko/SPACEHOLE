@@ -1,3 +1,5 @@
+precision highp float;
+
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
@@ -72,9 +74,9 @@ vec3 fbm(vec3 x, float H, float L, int oc) {
     vec3 v = vec3(0.0);
     float f = 1.0;
     for(int i = 0; i < 10; i++) {
-        if(i >= oc) break;
+        float mask = step(float(i), float(oc) - 0.5);
         float w = pow(f, -H);
-        v += noise3(x)*w;
+        v += noise3(x) * w * mask;
         x *= L;
         f *= L;
     }
@@ -85,12 +87,13 @@ vec3 smf(vec3 x, float H, float L, int oc, float off) {
     vec3 v = vec3(1.0);
     float f = 1.0;
     for(int i = 0; i < 10; i++) {
-        if(i >= oc) break;
-        v *= off + f*(noise3(x)*2.0-1.0);
+        float mask = step(float(i), float(oc) - 0.5);
+        vec3 contribution = off + f * (noise3(x) * 2.0 - 1.0);
+        v *= mix(vec3(1.0), contribution, mask);
         f *= H;
         x *= L;
     }
-    return v;    
+    return v;
 }
 
 vec4 map(vec3 p) {
