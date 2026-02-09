@@ -141,11 +141,27 @@ jobs:
 
           # Staple the notarization ticket
           xcrun stapler staple "$APP_PATH"
+      - name: Create DMG
+        run: |
+          APP_PATH=$(echo extracted/*.app)
+          APP_NAME=$(basename "$APP_PATH" .app)
+
+          # Create a temporary directory for DMG contents
+          DMG_DIR="$RUNNER_TEMP/dmg_contents"
+          mkdir -p "$DMG_DIR"
+          cp -R "$APP_PATH" "$DMG_DIR/"
+          ln -s /Applications "$DMG_DIR/Applications"
+
+          # Create the DMG
+          hdiutil create -volname "$APP_NAME" \
+            -srcfolder "$DMG_DIR" \
+            -ov -format UDZO \
+            "extracted/$APP_NAME.dmg"
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
           name: build-macos
-          path: extracted
+          path: extracted/*.dmg
           retention-days: 1
 
   build-web:
@@ -219,7 +235,7 @@ jobs:
       - name: Upload to itch.io
         run: |
           butler push build/build-windows benjamin-halko/spacehole:windows
-          butler push build/build-macos benjamin-halko/spacehole:macos
+          butler push build/build-macos/*.dmg benjamin-halko/spacehole:macos
           butler push build/build-web benjamin-halko/spacehole:web
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
