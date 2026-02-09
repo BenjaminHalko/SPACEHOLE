@@ -20,13 +20,27 @@ if (!OPERA) {
 // Fullscreen
 if (DESKTOP and (keyboard_check_pressed(vk_f4) or keyboard_check_pressed(vk_f11))) window_set_fullscreen(!window_get_fullscreen());
     
-if (room != rMenu and keyboard_check_pressed(ord("R"))) {
-    if (room == rGameEnd) {
-        transition(lv1);
-    } else if (instance_exists(oTransition) and oTransition.targetRoom == room) {
-        oTransition.targetRoom = lv1;
-    } else {
-        transition(room);
+if (room != rMenu) {
+    var _restart = keyboard_check_pressed(ord("R"));
+    var _fullRestart = _restart and (instance_exists(oTransition) and oTransition.targetRoom == room);
+    
+    if (device_mouse_check_button_pressed(mb_left, 2)) {
+        _restart = true;
+    }
+    
+    if (device_mouse_check_button_pressed(mb_left, 3)) {
+        _restart = true;
+        _fullRestart = true;
+    }
+    
+    if (_restart) {
+        if (room == rGameEnd) {
+            transition(lv1);
+        } else if (_fullRestart) {
+            oTransition.targetRoom = lv1;
+        } else {
+            transition(room);
+        }
     }
 }
 
