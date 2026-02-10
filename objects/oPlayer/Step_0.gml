@@ -135,6 +135,7 @@ if (swinging) {
     image_angle = ApproachCircleEase(image_angle, point_direction(0, 0, hsp, vsp) - 90, 10, 0.8);
 } else {
     if (swingingPrev) {
+        image_angle = Wrap(image_angle, -180, 180);
         hsp *= 1.5;
         vsp *= 1.5;
     }
@@ -168,7 +169,7 @@ if (swinging) {
         });
     }
     
-    image_angle = ApproachCircleEase(image_angle, -hsp * 15, 10, 0.8);
+    image_angle = ApproachEase(image_angle, -hsp * 15, 10, 0.8);
 }
 
 x += hsp;
