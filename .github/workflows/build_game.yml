@@ -239,7 +239,7 @@ jobs:
           sed -i 's/1.0.0/1.0.${{ github.run_number }}/g' options/android/options_android.yy
       - name: Create keystore and local-settings-override-file for igor-setup
         run: |
-          KEYSTORE_PASSWORD=$(openssl rand -base64 32)
+          KEYSTORE_PASSWORD=$(openssl rand -hex 16)
           KEYSTORE_PATH="${{ github.workspace }}/release.keystore"
           keytool -genkeypair \
             -v \
