@@ -228,6 +228,12 @@ jobs:
         run: |
           yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
           echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        id: setup-java
+        with:
+          distribution: temurin
+          java-version: "17"
       - name: Set Android version code
         run: |
           sed -i 's/1.0.0/1.0.${{ github.run_number }}/g' options/android/options_android.yy
@@ -250,16 +256,12 @@ jobs:
           \"machine.Platform Settings.Android.Keystore.keystore_password\": \"$KEYSTORE_PASSWORD\",
           \"machine.Platform Settings.Android.Keystore.keystore_alias_password\": \"$KEYSTORE_PASSWORD\",
           \"machine.Platform Settings.Android.Keystore.alias\": \"release\"
+          \"machine.Platform Settings.Android.Paths.jdk_location\": \"${{ steps.setup-java.outputs.path }}\"
           }" > local_settings.json
       - name: Set up ffmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
         with:
           ffmpeg-version: "6.1.0"
-      - name: Set up Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
       - name: Set Up Android SDK's platform-tools
         run: |
           ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
