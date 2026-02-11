@@ -4,7 +4,7 @@
   "name":"Android",
   "option_android_application_tag_inject":"",
   "option_android_arch_arm64":true,
-  "option_android_arch_armv7":false,
+  "option_android_arch_armv7":true,
   "option_android_arch_x86_64":false,
   "option_android_attribute_allow_backup":false,
   "option_android_build_tools":"",
@@ -79,7 +79,7 @@
   "option_android_tv_isgame":true,
   "option_android_tv_supports_leanback":true,
   "option_android_use_facebook":false,
-  "option_android_version":"1.0.0.0",
+  "option_android_version":"1.0.0",
   "resourceType":"GMAndroidOptions",
   "resourceVersion":"2.0",
 }

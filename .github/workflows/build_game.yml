@@ -4,167 +4,222 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get Project Path
-        id: find_yyp
-        run: |
-          $yyp = Get-ChildItem -Path ${{ github.workspace }} -Filter *.yyp | Select-Object -First 1
-          "yyp-path=$yyp" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-      - name: Setup Igor
-        uses: bscotch/igor-setup@v3
-        id: igor
-        with:
-          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
-          access-key: ${{ secrets.GAMEMAKER_KEY }}
-          modules: windows
-          cache: true
-      - name: Build with Igor
-        uses: bscotch/igor-build@v1
-        id: build
-        with:
-          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
-          user-dir: "${{ steps.igor.outputs.user-dir }}"
-          platform: windows
-      - name: Extract Build
-        run: |
-          Expand-Archive -Path "${{ steps.build.outputs.out-dir }}\${{ steps.build.outputs.out-name }}" -DestinationPath extracted
-      - name: Upload Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-windows
-          path: extracted
-          retention-days: 1
+  # build-windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Get Project Path
+  #       id: find_yyp
+  #       run: |
+  #         $yyp = Get-ChildItem -Path ${{ github.workspace }} -Filter *.yyp | Select-Object -First 1
+  #         "yyp-path=$yyp" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+  #     - name: Setup Igor
+  #       uses: bscotch/igor-setup@v3
+  #       id: igor
+  #       with:
+  #         target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         access-key: ${{ secrets.GAMEMAKER_KEY }}
+  #         modules: windows
+  #         cache: true
+  #     - name: Build with Igor
+  #       uses: bscotch/igor-build@v1
+  #       id: build
+  #       with:
+  #         yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         user-dir: "${{ steps.igor.outputs.user-dir }}"
+  #         platform: windows
+  #     - name: Extract Build
+  #       run: |
+  #         Expand-Archive -Path "${{ steps.build.outputs.out-dir }}\${{ steps.build.outputs.out-name }}" -DestinationPath extracted
+  #     - name: Upload Build
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: build-windows
+  #         path: extracted
+  #         retention-days: 1
 
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get Project Path
-        id: find_yyp
-        run: |
-          yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
-          echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
-      - name: Install signing certificate
-        env:
-          CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
-          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-        run: |
-          CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+  # build-macos:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Get Project Path
+  #       id: find_yyp
+  #       run: |
+  #         yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
+  #         echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
+  #     - name: Install signing certificate
+  #       env:
+  #         CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
+  #         CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+  #       run: |
+  #         CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
+  #         KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+  #         KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
 
-          echo -n "$CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+  #         echo -n "$CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
 
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security import $CERTIFICATE_PATH -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-      - name: Setup Igor
-        uses: bscotch/igor-setup@v3
-        id: igor
-        with:
-          target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
-          access-key: ${{ secrets.GAMEMAKER_KEY }}
-          modules: mac
-          cache: true
-      - name: Build with Igor
-        uses: bscotch/igor-build@v1
-        id: build
-        with:
-          yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
-          user-dir: "${{ steps.igor.outputs.user-dir }}"
-          platform: mac
-      - name: Extract Build
-        run: |
-          unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
-      - name: Sign and enable Hardened Runtime
-        run: |
-          APP_PATH=$(echo extracted/*.app)
+  #         security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+  #         security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+  #         security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+  #         security import $CERTIFICATE_PATH -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+  #         security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+  #         security list-keychain -d user -s $KEYCHAIN_PATH
+  #     - name: Setup Igor
+  #       uses: bscotch/igor-setup@v3
+  #       id: igor
+  #       with:
+  #         target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         access-key: ${{ secrets.GAMEMAKER_KEY }}
+  #         modules: mac
+  #         cache: true
+  #     - name: Build with Igor
+  #       uses: bscotch/igor-build@v1
+  #       id: build
+  #       with:
+  #         yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         user-dir: "${{ steps.igor.outputs.user-dir }}"
+  #         platform: mac
+  #     - name: Extract Build
+  #       run: |
+  #         unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+  #     - name: Sign and enable Hardened Runtime
+  #       run: |
+  #         APP_PATH=$(echo extracted/*.app)
 
-          # Sign all dylibs and binaries inside the app first
-          find "$APP_PATH" -type f \( -name "*.dylib" -o -name "*.so" \) | while read -r file; do
-            echo "Signing: $file"
-            codesign --force --options runtime --timestamp --sign "Developer ID Application" "$file"
-          done
+  #         # Sign all dylibs and binaries inside the app first
+  #         find "$APP_PATH" -type f \( -name "*.dylib" -o -name "*.so" \) | while read -r file; do
+  #           echo "Signing: $file"
+  #           codesign --force --options runtime --timestamp --sign "Developer ID Application" "$file"
+  #         done
 
-          # Sign the main executable
-          MAIN_EXEC="$APP_PATH/Contents/MacOS/$(basename "$APP_PATH" .app)"
-          if [ -f "$MAIN_EXEC" ]; then
-            echo "Signing main executable: $MAIN_EXEC"
-            codesign --force --options runtime --timestamp --sign "Developer ID Application" "$MAIN_EXEC"
-          fi
+  #         # Sign the main executable
+  #         MAIN_EXEC="$APP_PATH/Contents/MacOS/$(basename "$APP_PATH" .app)"
+  #         if [ -f "$MAIN_EXEC" ]; then
+  #           echo "Signing main executable: $MAIN_EXEC"
+  #           codesign --force --options runtime --timestamp --sign "Developer ID Application" "$MAIN_EXEC"
+  #         fi
 
-          # Sign the app bundle
-          echo "Signing app bundle: $APP_PATH"
-          codesign --force --options runtime --timestamp --sign "Developer ID Application" "$APP_PATH"
-      - name: Notarize app
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          APP_PATH=$(echo extracted/*.app)
-          ZIP_PATH="$RUNNER_TEMP/app.zip"
+  #         # Sign the app bundle
+  #         echo "Signing app bundle: $APP_PATH"
+  #         codesign --force --options runtime --timestamp --sign "Developer ID Application" "$APP_PATH"
+  #     - name: Notarize app
+  #       env:
+  #         APPLE_ID: ${{ secrets.APPLE_ID }}
+  #         APPLE_ID_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+  #         APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+  #       run: |
+  #         APP_PATH=$(echo extracted/*.app)
+  #         ZIP_PATH="$RUNNER_TEMP/app.zip"
 
-          # Create zip for notarization
-          ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
+  #         # Create zip for notarization
+  #         ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
-          # Submit for notarization
-          xcrun notarytool submit "$ZIP_PATH" \
-            --apple-id "$APPLE_ID" \
-            --password "$APPLE_ID_PASSWORD" \
-            --team-id "$APPLE_TEAM_ID" \
-            --wait \
-            --output-format json | tee "$RUNNER_TEMP/notarization_result.json"
+  #         # Submit for notarization
+  #         xcrun notarytool submit "$ZIP_PATH" \
+  #           --apple-id "$APPLE_ID" \
+  #           --password "$APPLE_ID_PASSWORD" \
+  #           --team-id "$APPLE_TEAM_ID" \
+  #           --wait \
+  #           --output-format json | tee "$RUNNER_TEMP/notarization_result.json"
 
-          # Extract submission ID and fetch the log (shows details on failure)
-          SUBMISSION_ID=$(python3 -c "import sys,json; print(json.load(open('$RUNNER_TEMP/notarization_result.json')).get('id',''))")
-          if [ -n "$SUBMISSION_ID" ]; then
-            echo "Fetching notarization log for submission $SUBMISSION_ID..."
-            xcrun notarytool log "$SUBMISSION_ID" \
-              --apple-id "$APPLE_ID" \
-              --password "$APPLE_ID_PASSWORD" \
-              --team-id "$APPLE_TEAM_ID" || true
-          fi
+  #         # Extract submission ID and fetch the log (shows details on failure)
+  #         SUBMISSION_ID=$(python3 -c "import sys,json; print(json.load(open('$RUNNER_TEMP/notarization_result.json')).get('id',''))")
+  #         if [ -n "$SUBMISSION_ID" ]; then
+  #           echo "Fetching notarization log for submission $SUBMISSION_ID..."
+  #           xcrun notarytool log "$SUBMISSION_ID" \
+  #             --apple-id "$APPLE_ID" \
+  #             --password "$APPLE_ID_PASSWORD" \
+  #             --team-id "$APPLE_TEAM_ID" || true
+  #         fi
 
-          # Check status and fail if not accepted
-          STATUS=$(python3 -c "import sys,json; print(json.load(open('$RUNNER_TEMP/notarization_result.json')).get('status',''))")
-          if [ "$STATUS" != "Accepted" ]; then
-            echo "Notarization failed with status: $STATUS"
-            exit 1
-          fi
+  #         # Check status and fail if not accepted
+  #         STATUS=$(python3 -c "import sys,json; print(json.load(open('$RUNNER_TEMP/notarization_result.json')).get('status',''))")
+  #         if [ "$STATUS" != "Accepted" ]; then
+  #           echo "Notarization failed with status: $STATUS"
+  #           exit 1
+  #         fi
 
-          # Staple the notarization ticket
-          xcrun stapler staple "$APP_PATH"
-      - name: Create DMG
-        run: |
-          APP_PATH=$(echo extracted/*.app)
-          APP_NAME=$(basename "$APP_PATH" .app)
+  #         # Staple the notarization ticket
+  #         xcrun stapler staple "$APP_PATH"
+  #     - name: Create DMG
+  #       run: |
+  #         APP_PATH=$(echo extracted/*.app)
+  #         APP_NAME=$(basename "$APP_PATH" .app)
 
-          # Create a temporary directory for DMG contents
-          DMG_DIR="$RUNNER_TEMP/dmg_contents"
-          mkdir -p "$DMG_DIR"
-          cp -R "$APP_PATH" "$DMG_DIR/"
-          ln -s /Applications "$DMG_DIR/Applications"
+  #         # Create a temporary directory for DMG contents
+  #         DMG_DIR="$RUNNER_TEMP/dmg_contents"
+  #         mkdir -p "$DMG_DIR"
+  #         cp -R "$APP_PATH" "$DMG_DIR/"
+  #         ln -s /Applications "$DMG_DIR/Applications"
 
-          # Create the DMG
-          hdiutil create -volname "$APP_NAME" \
-            -srcfolder "$DMG_DIR" \
-            -ov -format UDZO \
-            "extracted/$APP_NAME.dmg"
-      - name: Upload Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-macos
-          path: extracted/*.dmg
-          retention-days: 1
+  #         # Create the DMG
+  #         hdiutil create -volname "$APP_NAME" \
+  #           -srcfolder "$DMG_DIR" \
+  #           -ov -format UDZO \
+  #           "extracted/$APP_NAME.dmg"
+  #     - name: Upload Build
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: build-macos
+  #         path: extracted/*.dmg
+  #         retention-days: 1
 
-  build-web:
+  # build-web:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Get Project Path
+  #       id: find_yyp
+  #       run: |
+  #         yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
+  #         echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
+  #     - name: Setup cache
+  #       id: cache-system-libraries
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: emsdk-cache
+  #         key: emsdk-cache
+  #     - uses: mymindstorm/setup-emsdk@v14
+  #       with:
+  #         version: 3.1.47
+  #         actions-cache-folder: emsdk-cache
+  #     - name: Setup Igor
+  #       uses: bscotch/igor-setup@v3
+  #       id: igor
+  #       with:
+  #         target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         access-key: ${{ secrets.GAMEMAKER_KEY }}
+  #         modules: operagx
+  #         cache: true
+  #     - name: Build with Igor
+  #       uses: bscotch/igor-build@v1
+  #       id: build
+  #       with:
+  #         yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
+  #         user-dir: ${{ steps.igor.outputs.user-dir }}
+  #         platform: operagx
+  #     - name: Extract Build
+  #       run: |
+  #         unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
+  #     - name: Patch Build
+  #       run: |
+  #         sed -i 's/runner\.js/SPACEHOLE.js/g' extracted/runner-sw.js
+  #         cat > /tmp/insert.txt << 'EOF'
+  #                     const g_pWadLoadCallback = function () {};
+  #                     var bodyElement = document.getElementById("canvas");
+  #                     bodyElement.addEventListener("click", function () {
+  #                         canvasElement.focus();
+  #                     });
+  #         EOF
+  #         sed -i '/const CHANGE_ASPECT_RATIO = true;/r /tmp/insert.txt' extracted/index.html
+  #     - name: Upload Build
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: build-web
+  #         path: extracted
+  #         retention-days: 1
+
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -173,23 +228,46 @@ jobs:
         run: |
           yyp=$(find "${{ github.workspace }}" -maxdepth 1 -type f -name "*.yyp" | head -n 1)
           echo "yyp-path=$yyp" >> $GITHUB_OUTPUT
-      - name: Setup cache
-        id: cache-system-libraries
-        uses: actions/cache@v4
+      - name: Set Android version code
+        run: |
+          sed -i 's/1.0.0/1.0.${{ github.run_number }}/g' options/android/options_android.yy
+      - name: Create keystore and local-settings-override-file for igor-setup
+        run: |
+          KEYSTORE_PASSWORD=$(openssl rand -base64 32)
+          KEYSTORE_PATH="${{ github.workspace }}/release.keystore"
+          keytool -genkeypair \
+            -v \
+            -keystore "$KEYSTORE_PATH" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -alias release \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -keypass "$KEYSTORE_PASSWORD" \
+            -dname "CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=US"
+          echo "{
+          \"machine.Platform Settings.Android.Keystore.filename\": \"$KEYSTORE_PATH\",
+          \"machine.Platform Settings.Android.Keystore.keystore_password\": \"$KEYSTORE_PASSWORD\",
+          \"machine.Platform Settings.Android.Keystore.keystore_alias_password\": \"$KEYSTORE_PASSWORD\",
+          \"machine.Platform Settings.Android.Keystore.alias\": \"release\"
+          }" > local_settings.json
+      - name: Set up ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
         with:
-          path: emsdk-cache
-          key: emsdk-cache
-      - uses: mymindstorm/setup-emsdk@v14
-        with:
-          version: 3.1.47
-          actions-cache-folder: emsdk-cache
+          ffmpeg-version: "6.1.0"
+      - name: Set Up Android SDK's platform-tools
+        run: |
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+          --sdk_root=$ANDROID_SDK_ROOT \
+          "platform-tools"
       - name: Setup Igor
         uses: bscotch/igor-setup@v3
         id: igor
         with:
+          local-settings-override-file: ${{ github.workspace }}/local_settings.json
           target-yyp: ${{ steps.find_yyp.outputs.yyp-path }}
           access-key: ${{ secrets.GAMEMAKER_KEY }}
-          modules: operagx
+          modules: android
           cache: true
       - name: Build with Igor
         uses: bscotch/igor-build@v1
@@ -197,45 +275,47 @@ jobs:
         with:
           yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
           user-dir: ${{ steps.igor.outputs.user-dir }}
-          platform: operagx
+          platform: android
       - name: Extract Build
         run: |
           unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
-      - name: Patch Build
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        id: playupload
+        with:
+          releaseFiles: extracted/*
+          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
+          packageName: com.benjaminhalko.spacehole
+          track: internalsharing
+      - name: Download signed universal APK from Google Play
         run: |
-          sed -i 's/runner\.js/SPACEHOLE.js/g' extracted/runner-sw.js
-          cat > /tmp/insert.txt << 'EOF'
-                      const g_pWadLoadCallback = function () {};
-                      var bodyElement = document.getElementById("canvas");
-                      bodyElement.addEventListener("click", function () {
-                          canvasElement.focus();
-                      });
-          EOF
-          sed -i '/const CHANGE_ASPECT_RATIO = true;/r /tmp/insert.txt' extracted/index.html
+          mkdir -p signedbuild
+          curl -L -o signedbuild/universal.apk "${{ steps.playupload.outputs.internalSharingDownloadUrl }}"
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
-          name: build-web
-          path: extracted
+          name: build-android
+          path: signedbuild
           retention-days: 1
 
-  deploy:
-    needs: [build-windows, build-macos, build-web]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Builds
-        uses: actions/download-artifact@v4
-        with:
-          pattern: build-*
-          path: build
+  # deploy:
+  #   needs: [build-windows, build-macos, build-web, build-android]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Builds
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         pattern: build-*
+  #         path: build
 
-      - name: Setup butler
-        uses: remarkablegames/setup-butler@v2
+  #     - name: Setup butler
+  #       uses: remarkablegames/setup-butler@v2
 
-      - name: Upload to itch.io
-        run: |
-          butler push build/build-windows benjamin-halko/spacehole:windows
-          butler push build/build-macos/*.dmg benjamin-halko/spacehole:macos
-          butler push build/build-web benjamin-halko/spacehole:web
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+  #     - name: Upload to itch.io
+  #       run: |
+  #         butler push build/build-windows benjamin-halko/spacehole:windows
+  #         butler push build/build-macos/*.dmg benjamin-halko/spacehole:macos
+  #         butler push build/build-web benjamin-halko/spacehole:web
+  #         butler push build/build-android benjamin-halko/spacehole:android
+  #       env:
+  #         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

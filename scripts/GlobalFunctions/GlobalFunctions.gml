@@ -5,7 +5,7 @@
 #macro BROWSER (global.ostype == OS.OSBROWSER)
 #macro OPERA (global.ostype == OS.OSOPERA)
 #macro DESKTOP (global.ostype == OS.OSDESKTOP)
-#macro MOBILE (global.ostype == OS.OSMOBILE or os_type == os_android or global.mobileOperaGX)
+#macro MOBILE (global.ostype == OS.OSMOBILE or os_type == os_android or os_type == os_ios or global.mobileOperaGX)
 
 enum OS {
 	OSBROWSER,
@@ -17,7 +17,7 @@ enum OS {
 function getOsType() {
 	if(os_type == os_operagx) global.ostype = OS.OSOPERA;
 	else if(os_browser != browser_not_a_browser) global.ostype = OS.OSBROWSER;
-	else if(os_type == os_android) global.ostype = OS.OSMOBILE;
+	else if(os_type == os_android or os_type == os_ios) global.ostype = OS.OSMOBILE;
 	else global.ostype = OS.OSDESKTOP;
 	
 	if OPERA {
@@ -27,4 +27,6 @@ function getOsType() {
 	} else {
 		global.mobileOperaGX = false;	
 	}
+    
+    global.mobileOperaGX = true;
 }

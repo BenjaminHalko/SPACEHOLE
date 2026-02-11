@@ -20,7 +20,7 @@ if (phase == -1) {
     draw_sprite_ext(sWallTexture, 0, x, _y, 4, 3, 0, c_white, _alpha);
 }
 
-draw_sprite_ext(sWallTexture, 0, x, y + Wave(-4, 4, 2, 0.1) * (phase != -1), 10, 4, 0, c_white, _alpha);
+draw_sprite_ext(sWallTexture, 0, x, y + Wave(-4, 4, 2, 0.1) * (phase != -1), 10, 4 + (phase != -1), 0, c_white, _alpha);
 
 if (phase != -1) {
     var _col1 = c_white;

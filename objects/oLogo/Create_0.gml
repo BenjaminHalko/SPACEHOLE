@@ -18,5 +18,7 @@ introPercent = 0;
 phasePercent = 0;
 introCurve = animcurve_get_channel(MenuCurves, "logo");
 
+editingUsername = false;
+
 audio_stop_all();
 audio_play_sound(mMusic, 1, true, 1, 3.2 - (1 / 0.012 + wait) / 60);

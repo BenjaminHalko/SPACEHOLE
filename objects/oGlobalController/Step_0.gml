@@ -24,11 +24,11 @@ if (room != rMenu) {
     var _restart = keyboard_check_pressed(ord("R"));
     var _fullRestart = _restart and (instance_exists(oTransition) and oTransition.targetRoom == room);
     
-    if (device_mouse_check_button_pressed(mb_left, 2)) {
+    if (device_mouse_check_button_pressed(1, mb_left)) {
         _restart = true;
     }
     
-    if (device_mouse_check_button_pressed(mb_left, 3)) {
+    if (device_mouse_check_button_pressed(2, mb_left)) {
         _restart = true;
         _fullRestart = true;
     }
@@ -40,6 +40,7 @@ if (room != rMenu) {
             oTransition.targetRoom = lv1;
         } else {
             transition(room);
+            oTransition.targetRoom = room;
         }
     }
 }
