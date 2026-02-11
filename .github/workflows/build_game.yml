@@ -239,6 +239,7 @@ jobs:
           sed -i 's/1.0.0/1.0.${{ github.run_number }}/g' options/android/options_android.yy
       - name: Create keystore and local-settings-override-file for igor-setup
         run: |
+          KEYSTORE_PASSWORD=$(openssl rand -hex 16)
           KEYSTORE_PATH="${{ github.workspace }}/release.keystore"
           keytool -genkeypair \
             -v \
@@ -247,13 +248,14 @@ jobs:
             -keysize 2048 \
             -validity 10000 \
             -alias release \
-            -storepass android \
-            -keypass android \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -keypass "$KEYSTORE_PASSWORD" \
             -dname "CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=US"
+          ENCODED_PASSWORD=$(echo -n "$KEYSTORE_PASSWORD" | base64)
           echo '{
           "machine.Platform Settings.Android.Keystore.filename": "'"$KEYSTORE_PATH"'",
-          "machine.Platform Settings.Android.Keystore.keystore_password": "android",
-          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "android",
+          "machine.Platform Settings.Android.Keystore.keystore_password": "'"$ENCODED_PASSWORD"'",
+          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "'"$ENCODED_PASSWORD"'",
           "machine.Platform Settings.Android.Keystore.alias": "release",
           "machine.Platform Settings.Android.Paths.jdk_location": "${{ steps.setup-java.outputs.path }}"
           }' > local_settings.json
