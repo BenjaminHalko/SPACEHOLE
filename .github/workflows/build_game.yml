@@ -284,7 +284,7 @@ jobs:
         id: playupload
         with:
           releaseFiles: extracted/*
-          serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.benjaminhalko.spacehole
           track: internalsharing
       - name: Download signed universal APK from Google Play
