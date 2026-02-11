@@ -255,7 +255,7 @@ jobs:
           \"machine.Platform Settings.Android.Keystore.filename\": \"$KEYSTORE_PATH\",
           \"machine.Platform Settings.Android.Keystore.keystore_password\": \"$KEYSTORE_PASSWORD\",
           \"machine.Platform Settings.Android.Keystore.keystore_alias_password\": \"$KEYSTORE_PASSWORD\",
-          \"machine.Platform Settings.Android.Keystore.alias\": \"release\"
+          \"machine.Platform Settings.Android.Keystore.alias\": \"release\",
           \"machine.Platform Settings.Android.Paths.jdk_location\": \"${{ steps.setup-java.outputs.path }}\"
           }" > local_settings.json
       - name: Set up ffmpeg
