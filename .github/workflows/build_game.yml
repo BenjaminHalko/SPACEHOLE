@@ -285,7 +285,7 @@ jobs:
           releaseFiles: ${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.benjaminhalko.spacehole
-          track: qa
+          track: internal
       - name: Download signed APK
         run: |
           mkdir -p signedbuild
