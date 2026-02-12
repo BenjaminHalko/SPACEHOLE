@@ -237,35 +237,22 @@ jobs:
       - name: Set Android version code
         run: |
           sed -i 's/1.0.0/1.0.${{ github.run_number }}/g' options/android/options_android.yy
-      - name: Create keystore and local-settings-override-file for igor-setup
+      - name: Create the keystore file from secrets
+        id: write_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: "temp.keystore"
+          encodedString: ${{ secrets.KEYSTORE_BASE64 }}
+      - name: Create the local-settings-override-file for igor-setup
         run: |
-          KEYSTORE_PASSWORD=$(openssl rand -hex 16)
-          KEYSTORE_PATH="${{ github.workspace }}/release.keystore"
-          keytool -genkeypair \
-            -v \
-            -keystore "$KEYSTORE_PATH" \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -alias release \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -keypass "$KEYSTORE_PASSWORD" \
-            -dname "CN=CI"
-          KEY_HEX=$(echo -n "benjamin.g.halko" | xxd -p | tr 'a-f' 'A-F')
-          ENCODED_PASSWORD=$(python3 -c "
-          import base64
-          from itertools import cycle
-          p = '$KEYSTORE_PASSWORD'.encode()
-          k = '$KEY_HEX'.encode()
-          print(base64.b64encode(bytes(a^b for a,b in zip(p,cycle(k)))).decode())
-          ")
           echo '{
-          "machine.Platform Settings.Android.Keystore.filename": "'"$KEYSTORE_PATH"'",
-          "machine.Platform Settings.Android.Keystore.keystore_password": "'"$ENCODED_PASSWORD"'",
-          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "'"$ENCODED_PASSWORD"'",
-          "machine.Platform Settings.Android.Keystore.alias": "release",
+          "machine.Platform Settings.Android.Keystore.filename": "${{ steps.write_file.outputs.filePath }}",
+          "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}",
+          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}",
+          "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}",
           "machine.Platform Settings.Android.Paths.jdk_location": "${{ steps.setup-java.outputs.path }}"
-          }' > local_settings.json
+          }' \
+          > local_settings.json
       - name: Set up ffmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
         with:
