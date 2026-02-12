@@ -253,9 +253,9 @@ jobs:
             -dname "CN=CI"
           ENCODED_PASSWORD=$(echo -n "$KEYSTORE_PASSWORD" | base64)
           echo '{
-          "machine.Platform Settings.Android.Keystore.filename": "$KEYSTORE_PATH",
-          "machine.Platform Settings.Android.Keystore.keystore_password": "$ENCODED_PASSWORD",
-          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "$ENCODED_PASSWORD",
+          "machine.Platform Settings.Android.Keystore.filename": "'"$KEYSTORE_PATH"'",
+          "machine.Platform Settings.Android.Keystore.keystore_password": "'"$ENCODED_PASSWORD"'",
+          "machine.Platform Settings.Android.Keystore.keystore_alias_password": "'"$ENCODED_PASSWORD"'",
           "machine.Platform Settings.Android.Keystore.alias": "release",
           "machine.Platform Settings.Android.Keystore.common_name": "CI",
           "machine.Platform Settings.Android.Paths.jdk_location": "${{ steps.setup-java.outputs.path }}"
