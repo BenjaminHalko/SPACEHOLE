@@ -291,17 +291,13 @@ jobs:
           yyp-path: ${{ steps.find_yyp.outputs.yyp-path }}
           user-dir: ${{ steps.igor.outputs.user-dir }}
           platform: android
-      - name: Extract Build
-        run: |
-          unzip "${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}" -d extracted
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         id: playupload
         with:
-          releaseFiles: extracted/*
+          releaseFiles: ${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.benjaminhalko.spacehole
-          track: internalsharing
       - name: Download signed universal APK from Google Play
         run: |
           mkdir -p signedbuild
