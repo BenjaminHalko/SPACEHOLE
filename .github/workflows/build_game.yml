@@ -285,6 +285,7 @@ jobs:
           releaseFiles: ${{ steps.build.outputs.out-dir }}/${{ steps.build.outputs.out-name }}
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.benjaminhalko.spacehole
+          status: draft
       - name: Download signed universal APK from Google Play
         run: |
           mkdir -p signedbuild
