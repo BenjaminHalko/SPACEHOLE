@@ -23,8 +23,13 @@ switch(phase) {
                 
                 if (mouse_check_button_pressed(mb_left)) {
                     if (mouse_y < RES_HEIGHT * 0.2 + camera_get_view_y(view_camera[0])) {
-                        _editName = true;   
+                        _editName = true;
                     }
+                }
+                
+                if (editingUsername and !keyboard_virtual_status()) {
+                    editingUsername = false;
+                    Save("settings","username",global.username);
                 }
                 
                 if (editingUsername and !keyboard_check_pressed(vk_enter)) {

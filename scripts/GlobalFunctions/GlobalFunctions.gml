@@ -27,6 +27,4 @@ function getOsType() {
 	} else {
 		global.mobileOperaGX = false;	
 	}
-    
-    global.mobileOperaGX = true;
 }
